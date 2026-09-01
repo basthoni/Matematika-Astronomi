@@ -11,25 +11,25 @@ st.divider()
 
 # Konten Modul (Menggunakan raw string r""" agar backslash LaTeX aman)
 materi_bab_1 = r"""
-# BAB I: TRIGONOMETRI SFERIS
+# BAB I: TRIGONOMETRI Bola
 
 ### 1. Pendahuluan
-Ketika kita memandang bintang-bintang di malam yang cerah, kita mendapatkan kesan yang lazim bahwa mereka semua adalah titik-titik cahaya yang berkilauan, yang seolah-olah terletak di permukaan sebuah bola raksasa di mana masing-masing pengamat menjadi pusatnya. Mata telanjang tentu saja gagal memberikan indikasi apa pun mengenai jarak bintang-bintang tersebut dari kita; namun, hal ini memungkinkan kita untuk membuat perkiraan tentang sudut yang dibentuk di titik pengamat oleh setiap pasang bintang, dan dengan instrumen yang tepat, sudut-sudut ini dapat diukur dengan presisi yang sangat tinggi. Astronomi Sferis pada dasarnya berkaitan dengan **arah** di mana bintang-bintang tersebut dilihat, dan sangatlah mudah untuk mendefinisikan arah-arah ini dalam bentuk posisi di permukaan sebuah bola—yakni **bola langit** (*celestial sphere*)—di mana garis lurus yang menghubungkan pengamat ke bintang-bintang berpotongan dengan permukaan ini. Dalam pengertian inilah ungkapan umum "posisi sebuah bintang di bola langit" harus ditafsirkan. Jari-jari bola langit ini sepenuhnya bersifat sembarang. Fondasi dari Astronomi Sferis adalah geometri bola.
+Ketika kita memandang bintang-bintang di malam yang cerah, kita mendapatkan kesan yang lazim bahwa mereka semua adalah titik-titik cahaya yang berkilauan, yang seolah-olah terletak di permukaan sebuah bola raksasa di mana masing-masing pengamat menjadi pusatnya. Mata telanjang tentu saja gagal memberikan indikasi apa pun mengenai jarak bintang-bintang tersebut dari kita; namun, hal ini memungkinkan kita untuk membuat perkiraan tentang sudut yang dibentuk di titik pengamat oleh setiap pasang bintang, dan dengan instrumen yang tepat, sudut-sudut ini dapat diukur dengan presisi yang sangat tinggi. Astronomi Bola pada dasarnya berkaitan dengan **arah** di mana bintang-bintang tersebut dilihat, dan sangatlah mudah untuk mendefinisikan arah-arah ini dalam bentuk posisi di permukaan sebuah bola—yakni **bola langit** (*celestial sphere*)—di mana garis lurus yang menghubungkan pengamat ke bintang-bintang berpotongan dengan permukaan ini. Dalam pengertian inilah ungkapan umum "posisi sebuah bintang di bola langit" harus ditafsirkan. Jari-jari bola langit ini sepenuhnya bersifat sembarang. Fondasi dari Astronomi Bola adalah geometri bola.
 
-### 2. Segitiga sferis
+### 2. Segitiga Bola
 Setiap bidang yang melewati pusat sebuah bola akan memotong permukaan bola tersebut membentuk sebuah lingkaran yang disebut sebagai **lingkaran besar** (*great circle*). Bidang lain mana pun yang memotong bola tetapi tidak melewati titik pusat juga akan memotong permukaan membentuk sebuah lingkaran, yang dalam hal ini disebut sebagai **lingkaran kecil** (*small circle*). 
 
 Pada Gambar 1, EAB adalah sebuah lingkaran besar, karena bidangnya melewati O, yaitu pusat bola. Misalkan QOP adalah diameter bola yang tegak lurus terhadap bidang lingkaran besar EAB. Misalkan R adalah titik mana pun pada OP dan asumsikan sebuah bidang ditarik melalui R sejajar dengan bidang EAB; permukaan bola tersebut kemudian dipotong membentuk lingkaran kecil FCD. Berdasarkan konstruksinya, OP juga tegak lurus terhadap bidang FCD. Titik-titik ujung P dan Q dari diameter tegak lurus QOP ini disebut sebagai **kutub** (*poles*) dari lingkaran besar dan dari lingkaran kecil yang sejajar tersebut. 
 
-> *(Catatan: Gambar 1 dapat ditambahkan nanti via URL atau folder lokal)*
+> ![Gambar 1 - Segitiga Bola](Gambar_1.png)*
 
-Ketika dua lingkaran besar berpotongan di satu titik, mereka dikatakan membentuk sebuah **sudut sferis** (*spherical angle*). Perhatikan dua lingkaran besar PA dan PB yang berpotongan di P. Tarik garis PS dan PT, yang merupakan garis singgung terhadap keliling PA dan PB. PT tegak lurus terhadap jari-jari OP dan sejajar dengan jari-jari OB. Demikian pula PS sejajar dengan OA. Sudut SPT mendefinisikan sudut sferis di P, dan nilainya sama dengan sudut AOB, di mana AB adalah busur yang terpotong pada lingkaran besar di antara dua lingkaran besar PA dan PB.
+Ketika dua lingkaran besar berpotongan di satu titik, mereka dikatakan membentuk sebuah **sudut Bola** (*spherical angle*). Perhatikan dua lingkaran besar PA dan PB yang berpotongan di P. Tarik garis PS dan PT, yang merupakan garis singgung terhadap keliling PA dan PB. PT tegak lurus terhadap jari-jari OP dan sejajar dengan jari-jari OB. Demikian pula PS sejajar dengan OA. Sudut SPT mendefinisikan sudut Bola di P, dan nilainya sama dengan sudut AOB, di mana AB adalah busur yang terpotong pada lingkaran besar di antara dua lingkaran besar PA dan PB.
 
-Jika tiga titik pada permukaan sferis dihubungkan oleh busur-busur lingkaran besar, bangun yang diperoleh disebut **segitiga sferis** (*spherical triangle*). Pada Gambar 1, titik A, X, dan Y membentuk segitiga sferis AXY. AX, AY, dan XY adalah **sisi-sisi**, sedangkan sudut di A, X, dan Y adalah sudut-sudutnya. Jika R adalah jari-jari bola, panjang busur lingkaran besar AY dirumuskan dengan:
+Jika tiga titik pada permukaan Bola dihubungkan oleh busur-busur lingkaran besar, bangun yang diperoleh disebut **segitiga Bola** (*spherical triangle*). Pada Gambar 1, titik A, X, dan Y membentuk segitiga Bola AXY. AX, AY, dan XY adalah **sisi-sisi**, sedangkan sudut di A, X, dan Y adalah sudut-sudutnya. Jika R adalah jari-jari bola, panjang busur lingkaran besar AY dirumuskan dengan:
 
 $$AY = R \times \text{sudut } AOY$$
 
-Karena jari-jari bola konstan, busur AY secara sederhana adalah sudut yang dibentuknya di pusat bola. Pada segitiga sferis, tidak ada sisi yang dapat bernilai sama dengan atau lebih besar dari $180^\circ$.
+Karena jari-jari bola konstan, busur AY secara sederhana adalah sudut yang dibentuknya di pusat bola. Pada segitiga Bola, tidak ada sisi yang dapat bernilai sama dengan atau lebih besar dari $180^\circ$.
 
 ### 3. Panjang busur lingkaran kecil
 Perhatikan Gambar 1 untuk busur lingkaran kecil CD. Panjangnya dirumuskan dengan:
@@ -57,7 +57,7 @@ Atau, karena PA = $90^\circ$:
 $$CD = AB \sin(PC) \dots\dots(1)$$
 
 ### 4. Lintang dan bujur terestrial
-Bumi dapat dianggap sebagai benda sferis yang berputar pada poros diameternya PQ (Gambar 2). P adalah kutub utara dan Q adalah kutub selatan. Lingkaran besar yang bidangnya tegak lurus terhadap PQ disebut **ekuator**. Setiap setengah-lingkaran besar yang dibatasi oleh P dan Q disebut **meridian**.
+Bumi dapat dianggap sebagai benda Bola yang berputar pada poros diameternya PQ (Gambar 2). P adalah kutub utara dan Q adalah kutub selatan. Lingkaran besar yang bidangnya tegak lurus terhadap PQ disebut **ekuator**. Setiap setengah-lingkaran besar yang dibatasi oleh P dan Q disebut **meridian**.
 
 > *(Catatan: Gambar 2 dapat ditambahkan nanti)*
 
@@ -72,7 +72,7 @@ Semua tempat dengan garis lintang yang sama terletak pada lingkaran kecil yang d
 $$HX = LY \cos \theta \dots\dots(2)$$
 
 ### 5. Rumus kosinus (The cosine-formula)
-Misalkan ABC adalah sebuah segitiga sferis (Gambar 3). Nyatakan sisi-sisinya BC, CA, AB masing-masing sebagai a, b, c.
+Misalkan ABC adalah sebuah segitiga Bola (Gambar 3). Nyatakan sisi-sisinya BC, CA, AB masing-masing sebagai a, b, c.
 
 > *(Catatan: Gambar 3 dapat ditambahkan nanti)*
 
@@ -81,7 +81,7 @@ Dari analisis geometri bidang singgung pada segitiga DAE dan DOE di bawah bola, 
 $$DE^2 = OA^2 [\tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A] \dots\dots(5)$$
 $$DE^2 = OA^2 [\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a] \dots\dots(6)$$
 
-Berdasarkan kedua persamaan di atas, kita akan mendapatkan rumus paling fundamental dalam trigonometri sferis, yang dikenal sebagai **rumus kosinus**:
+Berdasarkan kedua persamaan di atas, kita akan mendapatkan rumus paling fundamental dalam trigonometri Bola, yang dikenal sebagai **rumus kosinus**:
 """
 st.markdown(materi_bab_1, unsafe_allow_html=True)
 
