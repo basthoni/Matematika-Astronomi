@@ -1,6 +1,7 @@
 import streamlit as st
 
-#st.set_page_config(page_title="Bab 1 - Trigonometri Bola", layout="wide")
+# Pengaturan halaman dihilangkan dari file ini karena cukup dideklarasikan 
+# satu kali di file utama (Beranda.py).
 
 # CSS Khusus untuk membuat teks rata kanan-kiri (Justify)
 st.markdown("""
@@ -26,7 +27,7 @@ Pada Gambar 1, EAB adalah sebuah lingkaran besar, karena bidangnya melewati O, y
 """
 st.markdown(materi_bab_1_awal, unsafe_allow_html=True)
 
-# Memanggil Gambar 1 (Otomatis membaca dari folder utama)
+# Memanggil Gambar 1 (Pastikan file Gambar_1.png sudah ada di repositori GitHub)
 st.image("Gambar_1.png", caption="Gambar 1 - Segitiga Bola", use_container_width=True)
 
 materi_bab_1_lanjut_1 = r"""
@@ -82,20 +83,19 @@ Misalkan ABC adalah sebuah segitiga bola. Nyatakan sisi-sisinya BC, CA, AB masin
 Dari analisis geometri bidang singgung pada segitiga DAE dan DOE di bawah bola, kita peroleh persamaan:
 
 $$DE^2 = OA^2 [\tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A] \dots\dots(5)$$
-
 $$DE^2 = OA^2 [\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a] \dots\dots(6)$$
 
 Berdasarkan kedua persamaan di atas, kita akan mendapatkan rumus paling fundamental dalam trigonometri bola, yang dikenal sebagai **rumus kosinus**:
 """
 st.markdown(materi_bab_1_lanjut_1, unsafe_allow_html=True)
 
-with st.expander("Catatan Penjelas: Syarah Penurunan Rumus Kosinus Fundamental"):
+with st.expander("Syarah: Penurunan Rumus Kosinus Fundamental"):
     st.markdown(r"""
     1. Samakan kedua persamaan $DE^2$: $\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a = \tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A$
     2. Gunakan identitas Pythagoras $\sec^2 \theta = 1 + \tan^2 \theta$ pada ruas kiri: $(1 + \tan^2 c) + (1 + \tan^2 b) - 2 \sec b \sec c \cos a = \tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A$
-    3. Coret nilai $\tan^2 c$ dan $\tan^2 b$ di kedua ruas, lalu bagi dengan 2: $1 - \sec b \sec c \cos a = - \tan b \tan c \cos A$
-    4. Ubah ke bentuk dasar Sinus dan Kosinus: $1 - \left(\frac{\cos a}{\cos b \cos c}\right) = - \left(\frac{\sin b \sin c \cos A}{\cos b \cos c}\right)$
-    5. Kalikan seluruh ruas dengan $(\cos b \cos c)$ untuk menghilangkan penyebut, lalu pindah ruaskan sehingga menghasilkan $\cos a = \cos b \cos c + \sin b \sin c \cos A$ (Terbukti).
+    3. Coret nilai $\tan^2 c$ dan $\tan^2 b$ di kedua ruas, lalu kurangi 1, dan bagi dengan 2.
+    4. Ubah ke bentuk dasar Sinus dan Kosinus, kalikan ruas dengan $(\cos b \cos c)$ sehingga penyebutnya hilang.
+    5. Pindah ruaskan persamaan sehingga membuktikan $\cos a = \cos b \cos c + \sin b \sin c \cos A$.
     """)
 
 materi_bab_1_lanjut_2 = r"""
@@ -104,43 +104,17 @@ $$\cos a = \cos b \cos c + \sin b \sin c \cos A \dots\dots(A)$$
 Terdapat dua rumus pendampingnya untuk sisi yang lain:
 
 $$\cos b = \cos c \cos a + \sin c \sin a \cos B \dots\dots(7)$$
-
 $$\cos c = \cos a \cos b + \sin a \sin b \cos C \dots\dots(8)$$
 
-Untuk keperluan perhitungan logaritmik guna mencari sudut A, rumus kosinus dapat diubah bentuknya. Melalui pemanfaatan identitas setengah sudut, kita akan mendapati persamaan:
-"""
-st.markdown(materi_bab_1_lanjut_2, unsafe_allow_html=True)
-
-with st.expander("Catatan Penjelas: Syarah Perubahan Bentuk ke Perkalian Sinus"):
-    st.markdown(r"""
-    Perubahan bentuk ekspresi $\cos(b-c) - \cos a$ menjadi bentuk perkalian sinus didapatkan menggunakan **Rumus Selisih Kosinus**:
-    $\cos P - \cos Q = -2 \sin \left(\frac{P+Q}{2}\right) \sin \left(\frac{P-Q}{2}\right)$
-    
-    Dengan memisalkan $P = (b-c)$ dan $Q = a$, diperoleh bentuk $-2 \sin \left(\frac{b-c+a}{2}\right) \sin \left(\frac{b-c-a}{2}\right)$. Mengingat sifat fungsi sinus ganjil $\sin(-x) = -\sin(x)$, tanda minus di luar dapat dimasukkan ke fungsi sinus belakang untuk membalik urutan pembilangnya menjadi $a - (b - c)$.
-    """)
-
-materi_bab_1_lanjut_3 = r"""
-$$2 \sin \frac{a + (b - c)}{2} \sin \frac{a - (b - c)}{2} = 2 \sin b \sin c \sin^2 \frac{A}{2}$$
-
-Misalkan setengah keliling s didefinisikan dengan $2s = a + b + c \dots\dots(10)$. Maka kita memperoleh rumusan **Sinus Setengah Sudut**:
+Melalui pemanfaatan identitas setengah sudut, kita akan mendapati persamaan **Sinus Setengah Sudut** (di mana $2s = a + b + c$):
 
 $$\sin \frac{A}{2} = \sqrt{\frac{\sin (s - b) \sin (s - c)}{\sin b \sin c}} \dots\dots(11)$$
 
 Jika kita menggunakan pendekatan yang sama dan mensubstitusikan identitas $\cos A = 2 \cos^2 \frac{A}{2} - 1$ ke dalam rumus kosinus, kita akan mendapatkan persamaan untuk **Kosinus Setengah Sudut**:
 """
-st.markdown(materi_bab_1_lanjut_3, unsafe_allow_html=True)
+st.markdown(materi_bab_1_lanjut_2, unsafe_allow_html=True)
 
-with st.expander("Catatan Penjelas: Syarah Penurunan Rumus Kosinus Setengah Sudut"):
-    st.markdown(r"""
-    1. Mulai dari Rumus Kosinus (A): $\cos a = \cos b \cos c + \sin b \sin c \cos A$
-    2. Substitusikan identitas $\cos A = 2 \cos^2 \left(\frac{A}{2}\right) - 1$, lalu kalikan masuk: $\cos a = (\cos b \cos c - \sin b \sin c) + 2 \sin b \sin c \cos^2 \frac{A}{2}$
-    3. Gunakan identitas penjumlahan sudut $\cos(b+c) = \cos b \cos c - \sin b \sin c$, lalu pindah ruaskan: $2 \sin b \sin c \cos^2 \frac{A}{2} = \cos a - \cos(b+c)$
-    4. Gunakan Rumus Selisih Kosinus: $= 2 \sin \left(\frac{a+b+c}{2}\right) \sin \left(\frac{b+c-a}{2}\right)$
-    5. Substitusikan definisi setengah keliling $s = \frac{a+b+c}{2}$ (di mana $\frac{b+c-a}{2} = s - a$), sehingga: $2 \sin b \sin c \cos^2 \frac{A}{2} = 2 \sin s \sin(s-a)$
-    6. Bagi kedua ruas dengan $(\sin b \sin c)$ lalu akar-kuadratkan untuk memperoleh $\cos \frac{A}{2} = \sqrt{\frac{\sin s \sin(s-a)}{\sin b \sin c}}$ (Terbukti).
-    """)
-
-materi_bab_1_akhir = r"""
+materi_bab_1_lanjut_3 = r"""
 $$\cos \frac{A}{2} = \sqrt{\frac{\sin s \sin (s - a)}{\sin b \sin c}} \dots\dots(12)$$
 
 Melalui pembagian persamaan (11) dan (12), kita peroleh rumus **Tangen Setengah Sudut**:
@@ -151,5 +125,76 @@ $$\tan \frac{A}{2} = \sqrt{\frac{\sin (s - b) \sin (s - c)}{\sin s \sin (s - a)}
 Kita sekarang akan menurunkan pembuktian atas rumus sinus. Bertolak dari rumus kosinus sisi a, kita pindah ruaskan sehingga $\sin b \sin c \cos A = \cos a - \cos b \cos c$. Dengan mengkuadratkan kedua ruas, kita memperoleh:
 
 $$\sin^2 b \sin^2 c \cos^2 A = \cos^2 a - 2 \cos a \cos b \cos c + \cos^2 b \cos^2 c$$
+
+Substitusikan $\cos^2 A = 1 - \sin^2 A$. Melalui penjabaran aljabar kita dapat mendefinisikan sebuah perbandingan $X$. Karena nilai sisi dan sudut pada segitiga bola berada di antara $0^\circ$ hingga $180^\circ$ (sehingga nilai sinusnya selalu positif dan tanda minus diabaikan), kita mendapatkan kesebandingan fundamental yang disebut sebagai **Rumus B**:
+
+$$\frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c} \dots\dots(B)$$
 """
-st.markdown(materi_bab_1_akhir, unsafe_allow_html=True)
+st.markdown(materi_bab_1_lanjut_3, unsafe_allow_html=True)
+
+with st.expander("Syarah: Proses Aljabar Menuju Rumus Sinus"):
+    st.markdown(r"""
+    Setelah kuadrat ruas dikembangkan, kita ganti $\cos^2 A$ dengan $(1 - \sin^2 A)$.
+    1. $\sin^2 b \sin^2 c - \sin^2 b \sin^2 c \sin^2 A = \cos^2 a - 2\cos a\cos b\cos c + \cos^2 b\cos^2 c$
+    2. Susun ulang untuk mencari nilai $\sin^2 A$:
+       $\sin^2 b \sin^2 c \sin^2 A = \sin^2 b \sin^2 c - \cos^2 a + 2\cos a\cos b\cos c - \cos^2 b\cos^2 c$
+    3. Ganti $\sin^2$ di ruas kanan dengan $(1 - \cos^2)$:
+       $= (1-\cos^2 b)(1-\cos^2 c) - \cos^2 a + 2\cos a\cos b\cos c - \cos^2 b\cos^2 c$
+    4. Setelah disederhanakan, kita dapati ruas kanan bernilai identik tanpa memandang sudut apa yang diuji:
+       $\frac{\sin^2 A}{\sin^2 a} = \frac{1 - \cos^2 a - \cos^2 b - \cos^2 c + 2\cos a\cos b\cos c}{\sin^2 a \sin^2 b \sin^2 c}$
+    5. Menarik akar dari rumusan di atas menghasilkan Rumus Sinus.
+    """)
+
+materi_bab_1_lanjut_4 = r"""
+### 7. Rumus Analogi (The analogue formula)
+Jika kita menuliskan kembali persamaan (7) kemudian mensubstitusikan ekspresi $\cos a$ dari rumus dasar (A), kita akan mendapati persamaan aljabar:
+
+$$\sin c \sin a \cos B = \cos b - \cos c (\cos b \cos c + \sin b \sin c \cos A)$$
+$$\sin c \sin a \cos B = \cos b (1 - \cos^2 c) - \sin b \sin c \cos c \cos A$$
+
+Dengan membagi kedua ruas menggunakan $\sin c$, kita memperoleh hubungan yang melibatkan ketiga sisi dan dua sudut (Rumus C):
+
+$$\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A \dots\dots(C)$$
+$$\sin a \cos C = \cos c \sin b - \sin c \cos b \cos A \dots\dots(14)$$
+
+### 8. Rumus Empat Bagian (The four-parts formula)
+Pada segitiga bola $ABC$, perhatikan empat unsur berurutan, misalnya $B, a, C, b$. Sisi di antara dua sudut (sisi a) disebut "sisi dalam" (*inner side*), dan sudut di antara dua sisi (sudut C) disebut "sudut dalam" (*inner angle*). Modifikasi substitusi menghasilkan **Rumus D**:
+
+$$\cos a \cos C = \sin a \cot b - \sin C \cot B \dots\dots(D)$$
+
+Sebagai bantuan memori, rumus ini dapat dibaca:
+**$\cos(\text{sisi dlm}) \cdot \cos(\text{sudut dlm}) = \sin(\text{sisi dlm}) \cdot \cot(\text{sisi luar}) - \sin(\text{sudut dlm}) \cdot \cot(\text{sudut luar})$**
+
+### 9. Segitiga Siku-Siku dan Aturan Napier
+Jika salah satu sudut segitiga bola bernilai $90^\circ$, segitiga tersebut disebut **segitiga siku-siku** (*right-angled triangle*). Jika salah satu sisinya bernilai $90^\circ$, disebut **segitiga kuadran** (*quadrantal*). 
+
+Aturan klasik yang dicetuskan oleh John Napier menggunakan susunan melingkar dari lima "bagian" (*circular parts*). Jika satu variabel dipilih sebagai "tengah" (*middle*), dua variabel di sebelahnya adalah "yang berdekatan" (*adjacents*) dan dua sisanya adalah "yang berhadapan" (*opposites*). Hukum Napier berbunyi:
+* $\sin(\text{tengah}) = \text{hasil kali tangen dari yang berdekatan}$
+* $\sin(\text{tengah}) = \text{hasil kali kosinus dari yang berhadapan}$
+
+### 10. Rumus Polar
+Konsep segitiga polar $A'B'C'$ dibangun dengan menetapkan kutub-kutub dari sisi segitiga asli $ABC$. Pada geometri ini, sudut dan sisi saling terhubung melalui relasi suplemen: $a' = 180^\circ - A$ dan $A' = 180^\circ - a$. Dengan menerapkan rumus (A) pada segitiga polar, kita memperoleh rumus kosinus untuk sudut:
+
+$$\cos A = -\cos B \cos C + \sin B \sin C \cos a$$
+"""
+st.markdown(materi_bab_1_lanjut_4, unsafe_allow_html=True)
+
+materi_bab_1_lanjut_5 = r"""
+### 11. Rumus Haversine
+Dalam astronomi dan navigasi, banyak perhitungan jarak menjadi jauh lebih praktis dan bebas dari ambiguitas kuadran dengan menggunakan fungsi *haversine* (*half-versed-sine*). Haversine dari sudut $\theta$ didefinisikan sebagai:
+
+$$\text{hav } \theta = \frac{1}{2}(1 - \cos \theta) = \sin^2 \frac{\theta}{2} \dots\dots(21)$$
+
+Modifikasi dari rumus kosinus fundamental menghasilkan bentuk persamaan haversine yang selalu bernilai positif:
+
+$$\text{hav } a = \text{hav} (b - c) + \sin b \sin c \text{ hav } A \dots\dots(23)$$
+
+### 12. Analogi Delambre dan Napier
+Untuk referensi tingkat lanjut, berikut adalah formula-formula yang diturunkan untuk memecahkan segitiga bola ketika dua sisi dan sudut yang diapitnya diketahui (Analogi Napier):
+
+$$\tan \frac{1}{2}(A+B) = \frac{\cos \frac{1}{2}(a-b)}{\cos \frac{1}{2}(a+b)} \cot \frac{1}{2}C \dots\dots(51)$$
+$$\tan \frac{1}{2}(A-B) = \frac{\sin \frac{1}{2}(a-b)}{\sin \frac{1}{2}(a+b)} \cot \frac{1}{2}C \dots\dots(52)$$
+
+*(Akhir Bab 1)*
+"""
+st.markdown(materi_bab_1_lanjut_5, unsafe_allow_html=True)
