@@ -6,7 +6,7 @@ st.title("Modul Matematika Astronomi")
 st.subheader("Program Studi Ilmu Falak - FSH UIN Walisongo")
 st.markdown("**Disusun oleh:** Mochammad Basthoni")
 st.divider()
-
+st.image("Gambar_1.png", caption="Gambar 1 - Segitiga Bola", use_column_width=True)
 materi_bab_1 = r"""
 # BAB I
 # TRIGONOMETRI BOLA
