@@ -1,8 +1,5 @@
 import streamlit as st
 
-# Pengaturan halaman dihilangkan dari file ini karena cukup dideklarasikan 
-# satu kali di file utama (Beranda.py).
-
 # CSS Khusus untuk membuat teks rata kanan-kiri (Justify)
 st.markdown("""
 <style>
@@ -27,7 +24,7 @@ Pada Gambar 1, EAB adalah sebuah lingkaran besar, karena bidangnya melewati O, y
 """
 st.markdown(materi_bab_1_awal, unsafe_allow_html=True)
 
-# Memanggil Gambar 1 (Pastikan file Gambar_1.png sudah ada di repositori GitHub)
+# Memanggil Gambar 1
 st.image("Gambar_1.png", caption="Gambar 1 - Segitiga Bola", use_container_width=True)
 
 materi_bab_1_lanjut_1 = r"""
@@ -83,6 +80,7 @@ Misalkan ABC adalah sebuah segitiga bola. Nyatakan sisi-sisinya BC, CA, AB masin
 Dari analisis geometri bidang singgung pada segitiga DAE dan DOE di bawah bola, kita peroleh persamaan:
 
 $$DE^2 = OA^2 [\tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A] \dots\dots(5)$$
+
 $$DE^2 = OA^2 [\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a] \dots\dots(6)$$
 
 Berdasarkan kedua persamaan di atas, kita akan mendapatkan rumus paling fundamental dalam trigonometri bola, yang dikenal sebagai **rumus kosinus**:
@@ -104,6 +102,7 @@ $$\cos a = \cos b \cos c + \sin b \sin c \cos A \dots\dots(A)$$
 Terdapat dua rumus pendampingnya untuk sisi yang lain:
 
 $$\cos b = \cos c \cos a + \sin c \sin a \cos B \dots\dots(7)$$
+
 $$\cos c = \cos a \cos b + \sin a \sin b \cos C \dots\dots(8)$$
 
 Melalui pemanfaatan identitas setengah sudut, kita akan mendapati persamaan **Sinus Setengah Sudut** (di mana $2s = a + b + c$):
@@ -150,11 +149,13 @@ materi_bab_1_lanjut_4 = r"""
 Jika kita menuliskan kembali persamaan (7) kemudian mensubstitusikan ekspresi $\cos a$ dari rumus dasar (A), kita akan mendapati persamaan aljabar:
 
 $$\sin c \sin a \cos B = \cos b - \cos c (\cos b \cos c + \sin b \sin c \cos A)$$
+
 $$\sin c \sin a \cos B = \cos b (1 - \cos^2 c) - \sin b \sin c \cos c \cos A$$
 
 Dengan membagi kedua ruas menggunakan $\sin c$, kita memperoleh hubungan yang melibatkan ketiga sisi dan dua sudut (Rumus C):
 
 $$\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A \dots\dots(C)$$
+
 $$\sin a \cos C = \cos c \sin b - \sin c \cos b \cos A \dots\dots(14)$$
 
 ### 8. Rumus Empat Bagian (The four-parts formula)
@@ -193,6 +194,7 @@ $$\text{hav } a = \text{hav} (b - c) + \sin b \sin c \text{ hav } A \dots\dots(2
 Untuk referensi tingkat lanjut, berikut adalah formula-formula yang diturunkan untuk memecahkan segitiga bola ketika dua sisi dan sudut yang diapitnya diketahui (Analogi Napier):
 
 $$\tan \frac{1}{2}(A+B) = \frac{\cos \frac{1}{2}(a-b)}{\cos \frac{1}{2}(a+b)} \cot \frac{1}{2}C \dots\dots(51)$$
+
 $$\tan \frac{1}{2}(A-B) = \frac{\sin \frac{1}{2}(a-b)}{\sin \frac{1}{2}(a+b)} \cot \frac{1}{2}C \dots\dots(52)$$
 
 *(Akhir Bab 1)*
