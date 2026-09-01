@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="Bab 1 - Trigonometri Bola", layout="wide")
+#st.set_page_config(page_title="Bab 1 - Trigonometri Bola", layout="wide")
 
 # CSS Khusus untuk membuat teks rata kanan-kiri (Justify)
 st.markdown("""
