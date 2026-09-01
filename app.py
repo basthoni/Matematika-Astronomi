@@ -6,7 +6,7 @@ st.set_page_config(page_title="Modul Matematika Astronomi", page_icon="🔭", la
 # Header Modul
 st.title("Modul Matematika Astronomi")
 st.subheader("Program Studi Ilmu Falak - FSH UIN Walisongo")
-st.markdown("**Disusun oleh:** Mochammad Basthoni")
+st.markdown("**Disusun oleh:** M. Basthoni")
 st.divider()
 
 # Konten Modul (Menggunakan raw string r""" agar backslash LaTeX aman)
