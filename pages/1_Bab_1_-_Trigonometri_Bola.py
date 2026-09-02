@@ -651,3 +651,151 @@ $\therefore \log \tan D = \bar{1}.40495\ n$
 $\cos P$ bernilai negatif dan kita menempelkan huruf *n* di sebelah logaritmanya untuk mengingatkan kita pada fakta ini. Karena itu mengikut bahwa $\tan D$ bernilai negatif. Kita telah mengasumsikan pada rumus-rumus (27) dan (28) bahwa d adalah besaran positif. Kemudian, dari nilai-nilai a dan P yang diberikan, mengikut bahwa...
 """
 st.markdown(materi_bab_1_hal_19_20, unsafe_allow_html=True)
+
+# ==========================================
+# HALAMAN 21 - 24 (Kelanjutan Materi & Latihan)
+# ==========================================
+materi_bab_1_hal_21_22 = r"""
+$\cos D$ bernilai positif dan $\sin D$ bernilai negatif; dengan demikian $D$ berada di kuadran keempat, dan dari nilai $\log \tan D$ yang telah kita temukan kita memperoleh
+$$D = 360^\circ - 14^\circ 15'.6 = 345^\circ 44'.4.$$
+
+Oleh karena itu
+$$b - D \equiv 65^\circ 42' - 345^\circ 44'.4 = -280^\circ 2'.4 = 79^\circ 57'.6.$$
+
+(ii)
+$\log \tan P \equiv \log \tan 100^\circ 57' \equiv 0.71338\ n$
+$\log \sin D \equiv \log \sin 345^\circ 44'.4 \equiv \bar{1}.39151\ n$
+$\log \text{cosec } (b - D) \equiv \log \text{cosec } 79^\circ 57'.6 \equiv 0.00670$
+$\therefore \log \tan A = 0.11159$
+
+dan, karena $A$ kurang dari $180^\circ$, kita memperoleh
+$$P\hat{A}B = A = 52^\circ 16'.9.$$
+
+(iii)
+$\log \tan (b - D) \equiv \log \tan 79^\circ 57'.6 \equiv 0.75192$
+$\log \sec A \equiv \log \sec 52^\circ 16'.9 \equiv 0.21340$
+$\therefore \log \tan p = 0.96532$
+$\therefore AB \equiv p = 83^\circ 49',$
+
+sejalan dengan perhitungan-perhitungan sebelumnya dari $AB$.
+
+### 15. Rasio-rasio trigonometri untuk sudut-sudut kecil.
+Jika $\theta$ adalah sebuah sudut kecil dan dinyatakan dalam ukuran melingkar (*circular measure*/radian), kita memiliki rumus-rumus perkiraan yang sangat dikenal:
+$$\sin \theta = \theta \text{ radian}; \quad \cos \theta = 1; \quad \tan \theta = \theta \text{ radian} \dots\dots(35).$$
+
+Sekarang
+$$1 \text{ radian} = 57^\circ 17' 45'' = 3437\frac{3}{4}' = 206265'',$$
+
+sehingga
+$$1'' = \frac{1}{206265} \text{ radian},$$
+
+dan
+$$1' = \frac{1}{3438} \text{ radian, kira-kira}.$$
+
+Oleh karena itu, berdasarkan persamaan pertama dari (35), ketika $\theta$ secara berturut-turut adalah $1''$ dan $1'$,
+$$\sin 1'' = \frac{1}{206265} \dots\dots(36),$$
+dan
+$$\sin 1' = \frac{1}{3438} \dots\dots(37).$$
+
+Jika $\theta''$ melambangkan jumlah detik busur dalam $\theta$ radian, maka
+$\theta = \frac{\theta''}{206265}$ dan akibatnya
+$$\sin \theta = \frac{\theta''}{206265},$$
+
+yang mana dapat dituliskan
+$$\sin \theta'' = \theta'' \sin 1'' \dots\dots(38).$$
+Secara serupa,
+$$\sin \theta' = \theta' \sin 1' \dots\dots(39),$$
+
+di mana $\theta'$ dinyatakan dalam menit busur.
+Melalui cara yang serupa, kita mendapati
+$$\tan \theta'' = \theta'' \sin 1''.$$
+"""
+st.markdown(materi_bab_1_hal_21_22, unsafe_allow_html=True)
+
+with st.expander("Syarah: Pendekatan Tangen Sudut Kecil"):
+    st.markdown(r"""
+    Perhatikan pada baris terakhir di atas, buku menuliskan $\tan \theta'' = \theta'' \sin 1''$. Secara matematis, untuk sudut yang sangat kecil, nilai tangen hampir persis sama dengan nilai sinusnya, sehingga $\tan \theta \approx \sin \theta \approx \theta \text{ (dalam radian)}$. Inilah sebabnya buku menyamakan bentuk tangen ke pengali $\sin 1''$.
+    """)
+
+materi_bab_1_hal_22_23 = r"""
+Dalam astronomi bola, sudut-sudut tertentu kerap kali dinyatakan dalam satuan jam, menit dan detik waktu, berdasarkan relasi-relasi berikut:
+$$24 \text{ jam} = 360^\circ; \quad 1^\text{h} = 15^\circ; \quad 1^\text{m} = 15' \quad \text{dan} \quad 1^\text{s} = 15'' \dots\dots(40).$$
+
+Oleh karenanya kita memperoleh rumus-rumus perkiraan:
+$$\sin 1^\text{m} = \sin 15' = 15 \sin 1' \dots\dots(41),$$
+$$\sin 1^\text{s} = \sin 15'' = 15 \sin 1'' \dots\dots(42).$$
+
+Jika $H$ adalah suatu sudut kecil, yang mana, ketika dinyatakan dalam menit waktu, akan dilambangkan dengan $H^\text{m}$, maka
+$$\sin H = H^\text{m} \sin 1^\text{m} = 15 H^\text{m} \sin 1' \dots\dots(43).$$
+
+Secara serupa, jika kita menyatakan $H$ dalam detik waktu, kita peroleh
+$$\sin H = H^\text{s} \sin 1^\text{s} = 15 H^\text{s} \sin 1'' \dots\dots(44).$$
+
+Hasil-hasil ini akan berguna di bab-bab selanjutnya.
+
+### 16. Analogi-analogi Delambre dan Napier.
+Untuk referensi, kita memberikan rumus-rumus berikut, yang aslinya berasal dari Delambre, dan dikenal sebagai analogi-analogi Delambre:
+$$\sin \frac{1}{2}c \sin \frac{1}{2}(A - B) = \cos \frac{1}{2}C \sin \frac{1}{2}(a - b) \dots\dots(45),$$
+$$\sin \frac{1}{2}c \cos \frac{1}{2}(A - B) = \sin \frac{1}{2}C \sin \frac{1}{2}(a + b) \dots\dots(46),$$
+$$\cos \frac{1}{2}c \sin \frac{1}{2}(A + B) = \cos \frac{1}{2}C \cos \frac{1}{2}(a - b) \dots\dots(47),$$
+$$\cos \frac{1}{2}c \cos \frac{1}{2}(A + B) = \sin \frac{1}{2}C \cos \frac{1}{2}(a + b) \dots\dots(48).$$
+
+Rumus-rumus ini mudah untuk diturunkan dari rumus-rumus utama yang telah didiskusikan di halaman-halaman sebelumnya.
+
+Dengan mengambil persamaan-persamaan ini secara berpasangan, kita memperoleh analogi-analogi Napier:
+$$\tan \frac{1}{2}(a + b) = \frac{\cos \frac{1}{2}(A - B)}{\cos \frac{1}{2}(A + B)} \tan \frac{1}{2}c \dots\dots(49),$$
+$$\tan \frac{1}{2}(a - b) = \frac{\sin \frac{1}{2}(A - B)}{\sin \frac{1}{2}(A + B)} \tan \frac{1}{2}c \dots\dots(50),$$
+$$\tan \frac{1}{2}(A + B) = \frac{\cos \frac{1}{2}(a - b)}{\cos \frac{1}{2}(a + b)} \cot \frac{1}{2}C \dots\dots(51),$$
+$$\tan \frac{1}{2}(A - B) = \frac{\sin \frac{1}{2}(a - b)}{\sin \frac{1}{2}(a + b)} \cot \frac{1}{2}C \dots\dots(52).$$
+"""
+st.markdown(materi_bab_1_hal_22_23, unsafe_allow_html=True)
+
+with st.expander("Syarah: Penurunan Analogi Napier"):
+    st.markdown(r"""
+    Buku menyatakan bahwa Analogi Napier didapatkan dengan "mengambil persamaan-persamaan secara berpasangan". Secara aljabar, proses ini adalah murni proses **pembagian** antar persamaan Delambre.
+    - Persamaan (49) didapat dari membagi persamaan (46) dengan persamaan (48). Ruas kiri: $(\sin \frac{1}{2}c \cos \frac{1}{2}(A-B)) / (\cos \frac{1}{2}c \cos \frac{1}{2}(A+B))$, di mana $\sin/\cos$ dari sudut $\frac{1}{2}c$ berubah menjadi $\tan \frac{1}{2}c$. 
+    - Persamaan (50) didapat dari membagi persamaan (45) dengan (47).
+    - Persamaan (51) didapat dari membagi persamaan (47) dengan (48), lalu memindah-ruaskan komponen.
+    - Persamaan (52) didapat dari membagi persamaan (45) dengan (46).
+    """)
+
+materi_bab_1_latihan = r"""
+---
+### LATIHAN SOAL (EXERCISES)
+
+1. Di dalam segitiga bola $ABC$, $C = 90^\circ$, $a = 119^\circ 46' 36''$ dan $B = 52^\circ 25' 38''$. Hitunglah nilai-nilai dari $b, c$ dan $A$.
+*[Ans. $48^\circ 26' 49'', 109^\circ 14' 0'' \text{ dan } 113^\circ 10' 46''$.]*
+
+2. Di dalam segitiga $ABC$, $a = 57^\circ 22' 11'', b = 72^\circ 12' 19'' \text{ dan } C = 94^\circ 1' 49''$. Hitunglah nilai-nilai dari $c, A$ dan $B$.
+*[Ans. $83^\circ 46' 32'', 57^\circ 40' 45'' \text{ dan } 72^\circ 49' 50''$.]*
+
+3. Di dalam segitiga $ABC$, $c = 90^\circ, B = 62^\circ 20' 42'' \text{ dan } a = 136^\circ 19' 0''$. Hitunglah nilai-nilai dari $A, C$ dan $b$.
+*[Ans. $139^\circ 46' 13'', 69^\circ 14' 45'' \text{ dan } 71^\circ 18' 9''$.]*
+
+4. Dua buah kapal layar $X$ dan $Y$ berlayar di sepanjang paralel-paralel lintang $48^\circ \text{N}$ dan $15^\circ \text{S}$ secara berurutan, dalam cara sedemikian rupa sehingga pada setiap momen yang diberikan kedua kapal tersebut berada pada meridian bujur yang sama. Jika kecepatan $X$ adalah 15 knot, * carilah kecepatan dari $Y$.
+*(Catatan: Knot adalah satuan kecepatan yang digunakan di laut; besarnya adalah 1 mil laut per jam).*
+
+5. $A$ dan $B$ adalah dua buah tempat pada permukaan bumi dengan lintang yang sama $\phi$; selisih bujur di antara $A$ dan $B$ adalah $2l$. Buktikan bahwa (i) lintang tertinggi yang dicapai oleh lingkaran besar $AB$ adalah $\tan^{-1}(\tan \phi \sec l)$, dan (ii) jarak yang diukur di sepanjang paralel lintang di antara $A$ dan $B$ melebihi jarak lingkaran besar $AB$ sebesar
+$$2 \text{cosec } 1' [l \cos \phi - \sin^{-1}(\sin l \cos \phi)] \text{ mil laut}.$$
+
+6. Lintang paling selatan yang dicapai oleh lingkaran besar yang menghubungkan sebuah tempat $A$ di ekuator ke sebuah tempat $B$ di lintang selatan $\phi$ adalah $\phi_1$. Buktikan bahwa selisih bujur di antara $A$ dan $B$ adalah $90^\circ + \cos^{-1}(\tan \phi \cot \phi_1)$.
+
+7. Posisi dari $A$ dan $B$ secara berurutan adalah: Lat. $39^\circ 20'\text{ S}$, Long. $110^\circ 10'\text{ E}$ dan Lat. $44^\circ 30'\text{ S}$, Long. $46^\circ 20'\text{ W}$. Tunjukkan bahwa, jika sebuah kapal berlayar dari $A$ ke $B$ melewati rute sependek mungkin tanpa memotong paralel $62^\circ \text{ S}$, jarak yang dilayari adalah $5847.6$ mil laut.
+
+8. Jika elemen-elemen $a, b, c, A, B, C$ dari suatu segitiga bola menerima inkremen (kenaikan nilai) $da, \dots dC$, tunjukkan bahwa, jika
+$$K = \frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c},$$
+$$da = \cos C \cdot db + \cos B \cdot dc + K \sin b \sin c \cdot dA,$$
+$$db = \cos A \cdot dc + \cos C \cdot da + K \sin c \sin a \cdot dB,$$
+$$dc = \cos B \cdot da + \cos A \cdot db + K \sin a \sin b \cdot dC,$$
+$$dA = -\cos c \cdot dB - \cos b \cdot dC + \frac{1}{K} \sin B \sin C \cdot da,$$
+$$dB = -\cos a \cdot dC - \cos c \cdot dA + \frac{1}{K} \sin C \sin A \cdot db,$$
+$$dC = -\cos b \cdot dA - \cos a \cdot dB + \frac{1}{K} \sin A \sin B \cdot dc.$$
+
+9. Buktikan bahwa dua sisi dari sebuah segitiga bola bernilai sama jika dan hanya jika sudut-sudut yang berhadapan dengannya bernilai sama.
+$ABC$ adalah sebuah segitiga bola sama sisi di mana pergeseran (displacement) kecil dilakukan, pada sisi-sisi dan sudut-sudutnya, sedemikian rupa sehingga segitiga tersebut tetap sama sisi. Buktikan bahwa
+$$\frac{da}{dA} = \cos \frac{A}{2} \cot \frac{a}{2}.$$
+*[Glas. 1967.]*
+
+"""
+st.markdown(materi_bab_1_latihan, unsafe_allow_html=True)
+
