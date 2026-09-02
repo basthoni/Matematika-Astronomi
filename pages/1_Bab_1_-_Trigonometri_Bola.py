@@ -15,6 +15,9 @@ st.title("BAB I")
 st.header("TRIGONOMETRI BOLA")
 st.divider()
 
+# ==========================================
+# HALAMAN 1 - 10 (Sesuai Koreksi Verbatim)
+# ==========================================
 materi_bab_1_hal_1_2 = r"""
 ### 1. Pendahuluan
 Ketika kita memandang bintang-bintang di malam yang cerah, kita mendapatkan kesan yang lazim bahwa mereka semua adalah titik-titik cahaya yang berkilauan, yang seolah-olah terletak di permukaan sebuah bola raksasa di mana masing-masing pengamat menjadi pusatnya. Mata telanjang tentu saja gagal memberikan indikasi apa pun mengenai jarak bintang-bintang tersebut dari kita; namun, hal ini memungkinkan kita untuk membuat perkiraan tentang sudut yang dibentuk di titik pengamat oleh setiap pasang bintang, dan dengan instrumen yang tepat, sudut-sudut ini dapat diukur dengan presisi yang sangat tinggi. Astronomi Bola pada dasarnya berkaitan dengan **arah** di mana bintang-bintang tersebut dilihat, dan sangatlah mudah untuk mendefinisikan arah-arah ini dalam bentuk posisi di permukaan sebuah bola—yakni **bola langit** (*celestial sphere*)—di mana garis lurus yang menghubungkan pengamat ke bintang-bintang berpotongan dengan permukaan ini. Dalam pengertian inilah ungkapan umum "posisi sebuah bintang di bola langit" harus ditafsirkan. Jari-jari bola langit ini sepenuhnya bersifat sembarang. Fondasi dari Astronomi Bola adalah geometri bola.
@@ -26,7 +29,6 @@ Pada Gambar 1, EAB adalah sebuah lingkaran besar, karena bidangnya melewati O, y
 """
 st.markdown(materi_bab_1_hal_1_2, unsafe_allow_html=True)
 
-# Memanggil Gambar 1
 st.image("Gambar_1.png", caption="Gambar 1", use_container_width=True)
 
 materi_bab_1_hal_2_4 = r"""
@@ -72,7 +74,6 @@ Konsep-konsep yang diperkenalkan sejauh ini sekarang akan diilustrasikan dengan 
 """
 st.markdown(materi_bab_1_hal_2_4, unsafe_allow_html=True)
 
-# Tempat memanggil Gambar 2 (pastikan Bapak sudah mengunggah file Gambar_2.png)
 st.image("Gambar_2.png", caption="Gambar 2", use_container_width=True)
 
 materi_bab_1_hal_5_6 = r"""
@@ -93,7 +94,6 @@ Misalkan ABC adalah sebuah segitiga bola (Gambar 3). Nyatakan sisi-sisinya BC, C
 """
 st.markdown(materi_bab_1_hal_5_6, unsafe_allow_html=True)
 
-# Tempat memanggil Gambar 3 (pastikan Bapak sudah mengunggah file Gambar_3.png)
 st.image("Gambar_3.png", caption="Gambar 3", use_container_width=True)
 
 materi_bab_1_hal_7_10 = r"""
@@ -125,7 +125,22 @@ $\therefore DE^2 = OA^2 [\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a] \dots\dot
 Oleh karena itu, dari persamaan (5) dan (6),
 
 $$\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a = \tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A.$$
+"""
+st.markdown(materi_bab_1_hal_7_10, unsafe_allow_html=True)
 
+with st.expander("Syarah: Penurunan Rumus Kosinus Fundamental"):
+    st.markdown(r"""
+    Buku teks melakukan lompatan penyederhanaan aljabar dari persamaan (5) dan (6) menuju hasil akhirnya. Berikut uraian detailnya:
+    1. Samakan kedua persamaan $DE^2$: $\sec^2 c + \sec^2 b - 2 \sec b \sec c \cos a = \tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A$
+    2. Gunakan identitas Pythagoras $\sec^2 \theta = 1 + \tan^2 \theta$ pada ruas kiri: $(1 + \tan^2 c) + (1 + \tan^2 b) - 2 \sec b \sec c \cos a = \tan^2 c + \tan^2 b - 2 \tan b \tan c \cos A$
+    3. Coret nilai $\tan^2 c$ dan $\tan^2 b$ di kedua ruas, kemudian kurangi kedua ruas dengan 2.
+    4. Setelah itu bagi seluruh persamaan dengan $-2$, sehingga menyisakan: $\sec b \sec c \cos a = \tan b \tan c \cos A$ 
+    5. Ubah ke bentuk rasio dasar: $\left(\frac{1}{\cos b \cos c}\right) \cos a = \left(\frac{\sin b \sin c}{\cos b \cos c}\right) \cos A$
+    6. Kalikan seluruh ruas dengan $(\cos b \cos c)$ sehingga penyebutnya hilang.
+    7. Pindah ruaskan persamaan sehingga terbukti: $\cos a = \cos b \cos c + \sin b \sin c \cos A$.
+    """)
+
+materi_bab_1_hal_7_10_lanjut = r"""
 Sekarang $\sec^2 c = 1 + \tan^2 c$, $\sec^2 b = 1 + \tan^2 b$, dan setelah beberapa penyederhanaan kita memperoleh:
 
 $$\cos a = \cos b \cos c + \sin b \sin c \cos A \dots\dots(A).$$
@@ -198,7 +213,18 @@ $$\sin^2 b \sin^2 c - \sin^2 b \sin^2 c \sin^2 A,$$
 atau
 
 $$1 - \cos^2 b - \cos^2 c + \cos^2 b \cos^2 c - \sin^2 b \sin^2 c \sin^2 A.$$
+"""
+st.markdown(materi_bab_1_hal_7_10_lanjut, unsafe_allow_html=True)
 
+with st.expander("Syarah: Proses Aljabar Menuju Rumus Sinus"):
+    st.markdown(r"""
+    Buku mengasumsikan pembaca memahami bahwa pada ruas kiri:
+    $\sin^2 b \sin^2 c \cos^2 A$ dapat diubah dengan substitusi $\cos^2 A = 1 - \sin^2 A$.
+    Sehingga menjadi $\sin^2 b \sin^2 c (1 - \sin^2 A) = \sin^2 b \sin^2 c - \sin^2 b \sin^2 c \sin^2 A$.
+    Kemudian, pada bentuk substitusi kedua, buku mengganti $\sin^2 b \sin^2 c$ dengan $(1-\cos^2 b)(1-\cos^2 c)$, yang apabila dikalikan akan menghasilkan $1 - \cos^2 b - \cos^2 c + \cos^2 b \cos^2 c$.
+    """)
+
+materi_bab_1_hal_7_10_akhir = r"""
 Oleh karena itu:
 
 $$\sin^2 b \sin^2 c \sin^2 A = 1 - \cos^2 a - \cos^2 b - \cos^2 c + 2 \cos a \cos b \cos c.$$
@@ -245,11 +271,383 @@ Oleh karena itu, dengan membaginya dengan $\sin c$, kita peroleh:
 
 $$\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A \dots\dots(C),$$
 
-sebuah relasi yang melibatkan ketiga belas sisi dan dua sudut.
+sebuah relasi yang melibatkan ketiga sisi dan dua sudut.
 Kita dapat dengan mudah membuktikan dengan cara yang serupa, dimulai dari persamaan (8), bahwa:
 
 $$\sin a \cos C = \cos c \sin b - \sin c \cos b \cos A \dots\dots(14).$$
 
-Seperti yang telah kita lihat, rumus kosinus **A** memberikan nilai $\cos a$ dalam bentuk b, c, dan sudut apit A. Rumus-rumus **C** dan (14) adalah, dalam beberapa hal, analog dengan **A** karena rumus tersebut memberikan nilai $\sin a \times \text{kosinus}$ dari salah satu...
+Seperti yang telah kita lihat, rumus kosinus **A** memberikan nilai $\cos a$ dalam bentuk b, c, dan sudut apit A. Rumus-rumus **C** dan (14) adalah, dalam beberapa hal, analog dengan **A** karena rumus tersebut memberikan nilai $\sin a \times \text{kosinus}$ dari salah satu
 """
-st.markdown(materi_bab_1_hal_7_10, unsafe_allow_html=True)
+st.markdown(materi_bab_1_hal_7_10_akhir, unsafe_allow_html=True)
+
+
+# ==========================================
+# HALAMAN 11 - 20 (Materi Baru)
+# ==========================================
+materi_bab_1_hal_11_12 = r"""
+dua sudut B dan C, yang berdekatan dengan sisi a, dalam bentuk b, c dan A. Kita, oleh karena itu, akan merujuk pada rumus **C** atau (14) sebagai rumus analogi.
+
+Rumus **C** juga dapat dibuktikan sebagai berikut. Misalkan sisi c dari segitiga ABC kurang dari $90^\circ$ (kasus ketika c berada di antara $90^\circ$ dan $180^\circ$ dibiarkan sebagai latihan bagi mahasiswa). Perpanjang busur lingkaran besar BA ke D sehingga BD adalah $90^\circ$ (Gbr. 4).
+"""
+st.markdown(materi_bab_1_hal_11_12, unsafe_allow_html=True)
+
+st.image("Gambar_4.png", caption="Gambar 4", use_container_width=True)
+
+materi_bab_1_hal_11_12_lanjut = r"""
+Maka $AD = 90^\circ - c$ dan $C\hat{A}D = 180^\circ - A$. Hubungkan C dan D dengan sebuah busur lingkaran besar dan nyatakan dengan $x$. Dari segitiga DAC, berdasarkan **A**,
+
+$$\cos x = \cos(90^\circ - c) \cos b + \sin(90^\circ - c) \sin b \cos(180^\circ - A),$$
+
+atau
+
+$$\cos x = \sin c \cos b - \cos c \sin b \cos A \dots\dots(15).$$
+"""
+st.markdown(materi_bab_1_hal_11_12_lanjut, unsafe_allow_html=True)
+
+with st.expander("Syarah: Perubahan Trigonometri pada Rumus Analogi"):
+    st.markdown(r"""
+    Buku melompati penjelasan identitas relasi sudut trigonometri. Perubahan dari baris pertama ke persamaan (15) terjadi karena:
+    1. $\cos(90^\circ - c) = \sin c$
+    2. $\sin(90^\circ - c) = \cos c$
+    3. $\cos(180^\circ - A) = -\cos A$
+    
+    Substitusi ketiga identitas ini secara langsung menghasilkan persamaan (15).
+    """)
+
+materi_bab_1_hal_11_12_akhir = r"""
+Dari segitiga DBC, berdasarkan **A**,
+
+$$\cos x = \cos 90^\circ \cos a + \sin 90^\circ \sin a \cos B,$$
+
+atau
+
+$$\cos x = \sin a \cos B \dots\dots(16),$$
+
+dan oleh karena itu dari (15) dan (16)
+
+$$\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A,$$
+
+yang mana merupakan rumus **C**.
+
+### 8. Rumus empat bagian (The four-parts formula)
+Rumus berguna lainnya, yang dikenal sebagai rumus empat bagian, sekarang akan diturunkan. Pada segitiga bola ABC (Gbr. 5) perhatikan empat bagian berurutan B, a, C, b. Sudut C diapit oleh dua sisi a dan b dan disebut "sudut dalam" (*inner angle*). Sisi a diapit oleh dua sudut B dan C dan disebut "sisi dalam" (*inner side*). Masukkan B dan C menggunakan rumus kosinus; maka kita peroleh:
+"""
+st.markdown(materi_bab_1_hal_11_12_akhir, unsafe_allow_html=True)
+
+st.image("Gambar_5.png", caption="Gambar 5", use_container_width=True)
+
+materi_bab_1_hal_12_13 = r"""
+$$\cos b = \cos a \cos c + \sin a \sin c \cos B \dots\dots(17),$$
+$$\cos c = \cos b \cos a + \sin b \sin a \cos C \dots\dots(18).$$
+
+Substitusikan nilai $\cos c$ yang diberikan oleh (18) ke sisi sebelah kanan dari (17); maka
+
+$$\cos b = \cos a (\cos b \cos a + \sin b \sin a \cos C) + \sin a \sin c \cos B;$$
+$$\therefore \cos b \sin^2 a = \cos a \sin b \sin a \cos C + \sin a \sin c \cos B.$$
+"""
+st.markdown(materi_bab_1_hal_12_13, unsafe_allow_html=True)
+
+with st.expander("Syarah: Penurunan Aljabar pada Rumus Empat Bagian"):
+    st.markdown(r"""
+    Buku melompati langkah aljabar dari baris substitusi ke baris $\cos b \sin^2 a$. Berikut rinciannya:
+    1. Kalikan $\cos a$ ke dalam kurung: $\cos b = \cos^2 a \cos b + \cos a \sin b \sin a \cos C + \sin a \sin c \cos B$.
+    2. Pindahkan suku $\cos^2 a \cos b$ ke ruas kiri: $\cos b - \cos^2 a \cos b = \cos a \sin b \sin a \cos C + \dots$
+    3. Faktorkan ruas kiri: $\cos b(1 - \cos^2 a)$.
+    4. Menggunakan identitas $(1 - \cos^2 a) = \sin^2 a$, ruas kiri berubah menjadi $\cos b \sin^2 a$.
+    """)
+
+materi_bab_1_hal_12_13_lanjut = r"""
+Bagi seluruh ruas dengan $\sin a \sin b$; maka
+
+$$\cot b \sin a = \cos a \cos C + \frac{\sin c}{\sin b} \cos B.$$
+
+Tetapi dari rumus sinus **B**,
+$$\frac{\sin c}{\sin b} = \frac{\sin C}{\sin B}.$$
+
+Oleh karena itu,
+$$\cos a \cos C = \sin a \cot b - \sin C \cot B \dots\dots(D),$$
+
+yang dapat diubah ke dalam bentuk kata-kata, sebagai bantuan ingatan, sebagai berikut:
+
+**$\cos(\text{sisi dalam}) \cdot \cos(\text{sudut dalam}) = \sin(\text{sisi dalam}) \cdot \cot(\text{sisi lain}) - \sin(\text{sudut dalam}) \cdot \cot(\text{sudut lain}).$**
+
+### 9. Pembuktian alternatif dari rumus A, B dan C.
+Rumus-rumus **B**, **C** dan **D** telah diturunkan melalui transformasi aljabar dari rumus fundamental. Pembuktian lain dari masing-masing **A**, **B** dan **C** sekarang akan diperoleh secara singkat dari suatu konstruksi geometris yang sederhana dan instruktif. Misalkan ABC (Gbr. 6) adalah sebuah segitiga bola dan O adalah pusat dari bola. Hubungkan O ke titik-titik sudut
+"""
+st.markdown(materi_bab_1_hal_12_13_lanjut, unsafe_allow_html=True)
+
+st.image("Gambar_6.png", caption="Gambar 6", use_container_width=True)
+
+materi_bab_1_hal_13_15 = r"""
+dan ambil sembarang titik P pada OC. Dari P tarik PQ tegak lurus terhadap OA dan PR tegak lurus terhadap OB. Di bidang OAB, tarik QS tegak lurus terhadap OA dan RS tegak lurus terhadap OB. Garis-garis tegak lurus ini bertemu di S. Hubungkan PS dan OS. Jika kita menarik garis-garis singgung di A ke busur-busur lingkaran besar AB dan AC, garis-garis singgung ini, berdasarkan definisi, mengapit sudut bola A. Tetapi QS dan QP, berdasarkan konstruksi, sejajar dengan garis-garis singgung tersebut. Oleh karena itu $P\hat{Q}S = A$. Demikian pula $P\hat{R}S = B$. Juga $C\hat{O}B = a$, $C\hat{O}A = b$ dan $A\hat{O}B = c$.
+
+Langkah pertama adalah membuktikan bahwa PS tegak lurus terhadap bidang AOB. Berdasarkan konstruksi, OQ tegak lurus terhadap PQ maupun QS; oleh karena itu OQ tegak lurus terhadap bidang PQS; karena itu OQ tegak lurus terhadap PS yang mana merupakan sebuah garis yang terletak di dalam bidang PQS. Demikian pula, OR tegak lurus terhadap PS. Jadi PS tegak lurus terhadap OQ maupun OR dan karenanya tegak lurus terhadap setiap garis di dalam bidang OQ dan OR, yaitu, PS tegak lurus terhadap bidang OAB dan, secara khusus, terhadap OS, SQ dan SR. Jadi PQS dan PRS adalah segitiga-segitiga siku-siku.
+
+(1) Kita peroleh, dari segitiga siku-siku OQP dan ORP,
+$$PQ = OP \sin b ; \quad PR = OP \sin a \dots\dots(19).$$
+$$OQ = OP \cos b ; \quad OR = OP \cos a \dots\dots(20).$$
+
+Misalkan x melambangkan sudut SOQ; maka $R\hat{O}S = c - x$.
+Sekarang $OS = OQ \sec x$ dan $OS = OR \sec (c - x)$.
+Oleh karena itu $OR \cos x = OQ \cos (c - x)$;
+$\therefore$ dengan (20), $OP \cos a \cos x = OP \cos b \cos (c - x)$;
+$\therefore \cos a = \cos b \cos c + \cos b \sin c \tan x.$
+"""
+st.markdown(materi_bab_1_hal_13_15, unsafe_allow_html=True)
+
+with st.expander("Syarah: Ekspansi Aljabar Sudut Geometris"):
+    st.markdown(r"""
+    Pada baris terakhir, ekspresi $\cos b \cos(c-x)$ dijabarkan menggunakan identitas selisih kosinus:
+    $\cos(c-x) = \cos c \cos x + \sin c \sin x$.
+    Sehingga persamaan menjadi: $OP \cos a \cos x = OP \cos b (\cos c \cos x + \sin c \sin x)$.
+    Bagi kedua ruas dengan $(OP \cos x)$ untuk memperoleh: $\cos a = \cos b \cos c + \cos b \sin c \left(\frac{\sin x}{\cos x}\right)$, atau $\cos a = \cos b \cos c + \cos b \sin c \tan x$.
+    """)
+
+materi_bab_1_hal_14_15_lanjut = r"""
+Tetapi
+$$\tan x = \frac{QS}{OQ} = \frac{PQ \cos A}{OQ} = \tan b \cos A,$$
+dan oleh karena itu $\cos a = \cos b \cos c + \sin b \sin c \cos A,$
+yang mana adalah rumus **A**.
+
+(2) Lagi, dari segitiga-segitiga siku-siku PQS dan PRS,
+$$PS = PQ \sin PQS = PQ \sin A,$$
+dan
+$$PS = PR \sin PRS = PR \sin B.$$
+Oleh karena itu $PQ \sin A = PR \sin B,$
+dan $\therefore$ dengan (19),
+$$OP \sin b \sin A = OP \sin a \sin B,$$
+dari mana rumus **B** mengikutinya.
+
+(3) Kita peroleh, dari segitiga-segitiga siku-siku OSQ dan OSR,
+$$QS = OS \sin x \text{ dan } RS = OS \sin(c - x);$$
+$$\therefore RS \sin x = QS (\sin c \cos x - \cos c \sin x),$$
+atau
+$$RS = QS (\sin c \cot x - \cos c).$$
+Sekarang $RS = PR \cos B = OP \sin a \cos B,$
+dan $QS = PQ \cos A = OP \sin b \cos A,$
+dan $QS \cot x = OQ = OP \cos b.$
+Oleh karena itu $\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A,$
+yang mana adalah rumus **C**.
+"""
+st.markdown(materi_bab_1_hal_14_15_lanjut, unsafe_allow_html=True)
+
+with st.expander("Syarah: Substitusi ke Rumus C"):
+    st.markdown(r"""
+    Nilai $QS \cot x = OQ$ didapatkan secara langsung dari definisi tangen sebelumnya di mana $\tan x = \frac{QS}{OQ}$. Maka secara otomatis $\cot x = \frac{OQ}{QS}$, sehingga jika dikali silang menjadi $QS \cot x = OQ$.
+    Dengan mensubstitusikan semua relasi panjang ini ke dalam persamaan $RS = QS \sin c \cot x - QS \cos c$, kita langsung mendapatkan bentuk baku Rumus C.
+    """)
+
+materi_bab_1_hal_14_16 = r"""
+### 10. Segitiga siku-siku dan kuadran (Right-angled and quadrantal triangles)
+Ketika salah satu dari sudut bola adalah $90^\circ$, rumus-rumus **A**, **B**, **C** dan **D** mengambil bentuk yang sederhana. Hal ini juga menjadi kasus yang sama ketika salah satu sisi dari sebuah segitiga bola bernilai $90^\circ$—segitiga ini kemudian disebut sebagai bentuk **kuadran** (*quadrantal*). Aturan-aturan telah diberikan oleh Napier yang dengannya berbagai rumus sederhana dapat dituliskan secara langsung. Aturan-aturan tersebut, bagaimanapun juga, memaksakan beban tambahan pada ingatan dan adalah jauh lebih sederhana untuk mengaplikasikan salah satu dari rumus utama **A** sampai **D** pada segitiga siku-siku atau kuadran tertentu yang dimaksud. Aturan-aturannya adalah sebagai berikut:
+"""
+st.markdown(materi_bab_1_hal_14_16, unsafe_allow_html=True)
+
+st.image("Gambar_7.png", caption="Gambar 7", use_container_width=True)
+
+materi_bab_1_hal_15_16_lanjut = r"""
+(1) Segitiga siku-siku di mana $C = 90^\circ$. Susun di dalam sebuah lingkaran lima "bagian melingkar" (*circular parts*) $a, b, 90^\circ - A, 90^\circ - c, 90^\circ - B$, seperti pada Gbr. 7. Jika salah satu dari bagian melingkar dipilih sebagai "tengah" (*middle*), dua bagian yang mengapit disebut "yang berdekatan" (*adjacents*) dan dua bagian lainnya disebut "yang berhadapan" (*opposites*). Aturan-aturannya kemudian adalah:
+
+**$\sin(\text{tengah}) = \text{hasil kali tangen dari yang berdekatan};$**
+**$\sin(\text{tengah}) = \text{hasil kali kosinus dari yang berhadapan}.$**
+
+(2) Segitiga kuadran di mana $c = 90^\circ$. Susun di luar lingkaran (Gbr. 7) lima "bagian melingkar" $A, B, 90^\circ - a, C - 90^\circ, 90^\circ - b$. Maka kedua aturannya adalah sama seperti untuk segitiga siku-siku.
+
+### 11. Rumus Polar
+Rumus berguna tertentu dapat diperoleh melalui segitiga polar yang dikonstruksikan sebagai berikut (Gbr. 8). Misalkan ABC adalah sebuah segitiga bola. Lingkaran besar yang memuat busur BC memiliki dua buah kutub, satu di masing-masing belahan yang di mana bola tersebut dibelah oleh lingkaran besar itu.
+"""
+st.markdown(materi_bab_1_hal_15_16_lanjut, unsafe_allow_html=True)
+
+st.image("Gambar_8.png", caption="Gambar 8", use_container_width=True)
+
+materi_bab_1_hal_15_17 = r"""
+Misalkan A' adalah kutub di belahan bumi di mana A berada. Demikian pula B' dan C' adalah kutub-kutub yang sesuai dari CA dan AB. Perpanjang BC kedua arahnya untuk bertemu dengan A'B' dan A'C' masing-masing di L dan M. Maka, karena A' adalah kutub dari lingkaran besar LBCM, sudut bola B'A'C' (atau secara sederhana A') bernilai sama dengan busur LM. Lagi, B' adalah kutub dari AC, artinya, jarak sudut B' dari titik mana pun di AC adalah $90^\circ$; demikian pula jarak sudut A' dari titik mana pun di BC adalah $90^\circ$. Oleh karena itu jarak sudut C dari B' dan dari A' masing-masing adalah $90^\circ$; dengan kata lain, C adalah kutub dari A'B'. Karenanya $CL = 90^\circ$, dan demikian pula $BM = 90^\circ$. Sekarang $LM = LB + BM = LB + 90^\circ$. Juga $BC = a$; $\therefore LB = 90^\circ - a$. Karenanya $A' = 180^\circ - a$. Secara serupa $B' = 180^\circ - b$ dan $C' = 180^\circ - c$. Kita memperoleh dengan cara yang sama:
+
+$$a' = 180^\circ - A; \quad b' = 180^\circ - B; \quad c' = 180^\circ - C.$$
+
+Sekarang terapkan rumus **A** pada segitiga A'B'C' dan kita peroleh, misalnya,
+$$\cos a' = \cos b' \cos c' + \sin b' \sin c' \cos A'.$$
+
+Dengan menggunakan relasi yang baru saja ditemukan, kita memperoleh dari persamaan ini:
+$$-\cos A = \cos B \cos C - \sin B \sin C \cos a,$$
+
+yang mana adalah sebuah rumus untuk segitiga ABC, memberikan sudut A dalam bentuk dua sudut sisanya dan sisi yang diapit. Prosedur dalam contoh ini dapat diperluas ke salah satu rumus utama yang telah kita turunkan, dengan menuliskan $180^\circ - a$ untuk A, $180^\circ - b$ untuk B, dst., di dalam rumus **A** hingga **D**.
+
+### 12. Contoh numerik.
+Untuk mengilustrasikan solusi numerik dari suatu segitiga bola, kita akan mempertimbangkan permasalahan berikut. Pada Gbr. 9 misalkan A dan B merepresentasikan dua tempat, di lintang utara, pada permukaan bumi; lintangnya masing-masing adalah $24^\circ 18' \text{ N}$ dan $36^\circ 47' \text{ N}$, dan bujurnya masing-masing adalah $133^\circ 39' \text{ E}$ dan $125^\circ 24' \text{ W}$; 
+"""
+st.markdown(materi_bab_1_hal_15_17, unsafe_allow_html=True)
+
+st.image("Gambar_9.png", caption="Gambar 9", use_container_width=True)
+
+materi_bab_1_hal_16_18 = r"""
+diminta untuk menemukan (i) panjang busur lingkaran besar AB, (ii) sudut PAB, P menjadi kutub utara, dan (iii) titik paling utara pada lingkaran besar AB.
+PAHQ adalah meridian yang melalui A dan memotong ekuator di H. HA mengukur lintang dari A, yaitu $HA = 24^\circ 18'$. PA adalah kolintang dari A;
+$\therefore PA = 90^\circ - 24^\circ 18' = 65^\circ 42'$.
+Demikian pula $PB = 53^\circ 13'$. Misalkan meridian Greenwich berpotongan dengan ekuator di G. Maka, mengikuti tanda panah,
+$$GH = \text{bujur (E) dari } A = 133^\circ 39',$$
+dan
+$$GK = \text{bujur (W) dari } B = 125^\circ 24'.$$
+
+Oleh karena itu busur $HGK = 259^\circ 3'$,
+dan karenanya $HK$ (yang lebih pendek dari dua busur lingkaran besar yang menghubungkan H dan K) adalah $100^\circ 57'$; yaitu $A\hat{P}B = 100^\circ 57'$. Di dalam segitiga APB kita sekarang diberikan dua sisi PA dan PB serta sudut yang diapit APB.
+
+(i) *Perhitungan dari AB.* Melalui rumus **A**, kita peroleh
+$$\cos AB = \cos PA \cos PB + \sin PA \sin PB \cos APB,$$
+yang mana menjadi, dengan memasukkan data,
+$$\cos AB = \cos 65^\circ 42' \cos 53^\circ 13' - \sin 65^\circ 42' \sin 53^\circ 13' \cos 79^\circ 3'$$
+$$ \equiv M - N.$$
+
+Kita akan menggunakan logaritma lima-angka.
+$\log \cos 65^\circ 42' \cdot 0 \equiv \bar{1}.61438$
+$\log \cos 53^\circ 13' \cdot 0 \equiv \bar{1}.77728$
+$\therefore \log M = \bar{1}.39166$
+$\therefore M = 0.24641;$
+
+$\log \sin 65^\circ 42' \cdot 0 \equiv \bar{1}.95971$
+$\log \sin 53^\circ 13' \cdot 0 \equiv \bar{1}.90358$
+$\log \cos 79^\circ 3' \cdot 0 \equiv \bar{1}.27864$
+$\therefore \log N = \bar{1}.14193$
+$\therefore N = 0.13865.$
+
+Oleh karena itu, $\cos AB \equiv M - N = 0.10776;$
+$\therefore AB = 83^\circ 48'.8 \equiv 5028'.8.$
+
+Jadi jarak lingkaran besar di antara A dan B adalah $83^\circ 48'.8$ atau $5028.8$ mil laut. Ke nilai menit busur terdekat, $AB = 83^\circ 49'$.
+"""
+st.markdown(materi_bab_1_hal_16_18, unsafe_allow_html=True)
+
+with st.expander("Syarah: Notasi Logaritma Bar/Garis Atas pada Perhitungan Klasik"):
+    st.markdown(r"""
+    Dalam buku-buku era klasik, nilai logaritma yang negatif ditulis menggunakan notasi "Bar" (garis di atas angka).
+    Contoh: $\bar{1}.61438$ berarti $-1 + 0.61438$. 
+    Angka di depan koma (karakteristik) bernilai negatif, sedangkan angka di belakang koma (mantissa) tetap positif. Ini mempermudah perhitungan penjumlahan logaritma manual menggunakan tabel sebelum adanya kalkulator elektronik.
+    Selain itu, sudut $\cos 100^\circ 57'$ diubah menjadi $-\cos 79^\circ 3'$ (menggunakan sifat sudut suplemen di kuadran II), sehingga tanda minus ditarik ke depan persamaan menjadi $M - N$.
+    """)
+
+materi_bab_1_hal_17_19 = r"""
+(ii) *Perhitungan dari PAB.* Melalui rumus **A**,
+$$\cos PB = \cos AB \cos PA + \sin AB \sin PA \cos PAB.$$
+
+Di dalam persamaan ini, seluruh ketiga sisi PB, AB, PA kini telah diketahui dan oleh karenanya kita dapat menurunkan $P\hat{A}B$. Di dalam contoh ini, pertimbangan geometri sederhana menunjukkan bahwa $P\hat{A}B$ kurang dari $90^\circ$ dan akibatnya rumus sinus **B** dapat digunakan tanpa ada ambiguitas; persamaan yang tepat adalah:
+
+$$\sin PAB = \frac{\sin APB \cdot \sin PB}{\sin AB},$$
+
+semua besaran pada sisi kanan kini telah diketahui. Namun demikian, untuk tujuan ilustrasi, kita akan menghitung $P\hat{A}B$ menggunakan rumus (11). Nyatakan AB sebagai p, PB sebagai a dan PA sebagai b; maka
+
+$$2s = p + a + b = 83^\circ 49' + 53^\circ 13' + 65^\circ 42' = 202^\circ 44'.$$
+Oleh karena itu $s = 101^\circ 22'; s - p = 17^\circ 33'; s - b = 35^\circ 40'.$
+
+Di dalam contoh ini, rumus (11) ditulis sebagai:
+
+$$\sin \frac{A}{2} = \sqrt{\frac{\sin(s-b)\sin(s-p)}{\sin b \sin p}}.$$
+
+$\log \sin (s - b) \equiv \log \sin 35^\circ 40' \equiv \bar{1}.76572$
+$\log \sin (s - p) \equiv \log \sin 17^\circ 33' \equiv \bar{1}.47934$
+$\log \text{cosec } b \equiv \log \text{cosec } 65^\circ 42' \equiv 0.04029$
+$\log \text{cosec } p \equiv \log \text{cosec } 83^\circ 49' \equiv 0.00253$
+$\therefore \log \sin^2 \frac{A}{2} = \bar{1}.28788$
+$\therefore \log \sin \frac{A}{2} = \bar{1}.64394$
+$\therefore \frac{A}{2} = 26^\circ 8'$
+$\therefore A = 52^\circ 16'.$
+
+(iii) *Perhitungan lintang paling utara yang dicapai oleh lingkaran besar AB.* Misalkan C adalah titik paling utara pada AB (Gbr. 9). Maka jelas bahwa paralel lintang yang melalui C akan menyinggung lingkaran besar di C dan bahwa meridian PC akan tegak lurus terhadap lingkaran besar AB di C. Maka $P\hat{C}A$ dan $P\hat{C}B$ masing-masing adalah $90^\circ$. Di dalam segitiga PAC, kita kini mengetahui PA, $P\hat{A}C$ dan $P\hat{C}A$ dan kita diminta menemukan PC. Jelas, rumus **B** dapat digunakan; yakni
+
+$$\frac{\sin PC}{\sin PAC} = \frac{\sin PA}{\sin PCA},$$
+
+dan, karena $P\hat{C}A = 90^\circ$, kita memperoleh
+$$\sin PC = \sin PA \sin PAC.$$
+
+$\log \sin PA \equiv \log \sin 65^\circ 42' \equiv \bar{1}.95971$
+$\log \sin PAC \equiv \log \sin 52^\circ 16' \equiv \bar{1}.89810$
+$\therefore \log \sin PC = \bar{1}.85781$
+$\therefore PC = 46^\circ 7'.$
+
+Jadi lintang dari C adalah $43^\circ 53'$.
+Perhitungan untuk bujur dari C ditinggalkan sebagai latihan bagi pembaca.
+
+### 13. Rumus haversine.
+Banyak perhitungan diperpendek secara nyata dengan menggunakan "haversines". Haversine dari suatu sudut $\theta$ (ditulis $\text{hav } \theta$) didefinisikan oleh:
+
+$$\text{hav } \theta = \frac{1}{2}(1 - \cos \theta) = \sin^2 \frac{\theta}{2} \dots\dots(21).$$
+
+Karena $\cos \theta = 1 - 2 \sin^2 \frac{\theta}{2}$, kita peroleh:
+$$\cos \theta = 1 - 2 \text{ hav } \theta \dots\dots(22).$$
+"""
+st.markdown(materi_bab_1_hal_17_19, unsafe_allow_html=True)
+
+materi_bab_1_hal_19_20 = r"""
+Kita kini dapat memodifikasi rumus **A**, yang mana adalah:
+$$\cos a = \cos b \cos c + \sin b \sin c \cos A.$$
+
+Berdasarkan (22) tuliskan $(1 - 2 \text{ hav } a)$ untuk $\cos a$, dan $(1 - 2 \text{ hav } A)$ untuk $\cos A$. Maka
+$$1 - 2 \text{ hav } a = \cos (b - c) - 2 \sin b \sin c \text{ hav } A.$$
+
+Tuliskan $1 - 2 \text{ hav } (b - c)$ untuk $\cos (b - c)$. Maka kita peroleh
+$$\text{hav } a = \text{hav } (b - c) + \sin b \sin c \text{ hav } A \dots\dots(23),$$
+
+yang mana adalah bentuk dari rumus fundamental yang dinyatakan dalam persamaan-persamaan haversine.
+Dari definisi di (21), $\text{hav } \theta$ *selalu bernilai positif* dan $\text{hav } (-\theta) = \text{hav } \theta$.
+
+Nilai-nilai haversine dan logaritma haversine dari sudut-sudut mulai dari $0^\circ$ hingga $180^\circ$ dapat ditemukan pada beberapa koleksi tabel-tabel matematika yang di antaranya dapat disebutkan *Inman's Nautical Tables* (J. D. Potter, 156 Minories, London, E. 1), yang mana, sebagai tambahan atas tabel-tabel logaritma dan trigonometri yang lazim digunakan (hingga lima angka), berisikan beberapa tabel bernilai astronomi lainnya.
+
+Perhitungan dari sisi AB (Gbr. 9) menggunakan sarana haversine sekarang akan diberikan demi menunjukkan kenyamanan dari metode ini.
+Kita menulis (23) sebagai berikut untuk segitiga PAB:
+
+$$\text{hav } AB = \text{hav } (PA - PB) + \sin PA \sin PB \text{ hav } APB$$
+$$ \equiv \text{hav } (PA - PB) + X$$
+
+$\log \text{hav } APB \equiv \log \text{hav } 100^\circ 57' \equiv \bar{1}.77450$
+$\log \sin PA \equiv \log \sin 65^\circ 42' \equiv \bar{1}.95971$
+$\log \sin PB \equiv \log \sin 53^\circ 13' \equiv \bar{1}.90358$
+$\therefore \log X = \bar{1}.63779$
+$\therefore X = 0.43430$
+
+$\text{hav } (PA - PB) \equiv \text{hav } 12^\circ 29' = 0.01182$
+$\therefore \text{hav } AB = 0.44612$
+$\therefore AB = 83^\circ 49',$
+
+yang mana sejalan dengan hasil kita di hal. 17.
+
+### 14. Metode lain (Another method).
+Ketika dua buah sisi dan sudut yang diapitnya dari sebuah segitiga diketahui, metode berikut ini terkadang digunakan ketika dibutuhkan untuk mencari sisi ketiga dan salah satu dari sudut yang tersisa.
+
+Untuk mengilustrasikan metode ini kita akan mencari $AB$ dan $P\hat{A}B$ (Gbr. 9). Nyatakan AB dengan p, PB dengan a, PA dengan b dan $A\hat{P}B$ dengan P. Maka $a = 53^\circ 13'$, $b = 65^\circ 42'$ dan $P = 100^\circ 57'$.
+Melalui rumus-rumus **A**, **C** dan **B**, kita memperoleh:
+
+$$\cos p = \cos a \cos b + \sin a \sin b \cos P \dots\dots(24),$$
+$$\sin p \cos A = \cos a \sin b - \sin a \cos b \cos P \dots\dots(25),$$
+$$\sin p \sin A = \sin a \sin P \dots\dots(26).$$
+
+Definisikan d (suatu besaran positif) dan D dengan
+$$\cos a = d \cos D \dots\dots(27),$$
+$$\sin a \cos P = d \sin D \dots\dots(28).$$
+
+Karenanya kita dapat menulis (24)-(26) sebagai berikut:
+$$\cos p = d \cos (b - D) \dots\dots(29),$$
+$$\sin p \cos A = d \sin (b - D) \dots\dots(30),$$
+$$\sin p \sin A = \sin a \sin P \dots\dots(31).$$
+
+(i) Dari (27) dan (28), melalui pembagian,
+$$\tan D = \tan a \cos P \dots\dots(32),$$
+dari mana D dapat dihitung.
+
+(ii) Dari (30) dan (31),
+$$\tan A = \frac{\sin a \sin P}{d \sin (b - D)},$$
+yang mana, dengan memasukkan nilai d yang diberikan oleh (28), menjadi
+$$\tan A = \tan P \sin D \text{ cosec } (b - D) \dots\dots(33),$$
+dari mana A dapat dihitung.
+
+(iii) Dari (29) dan (30),
+$$\tan p = \tan (b - D) \sec A \dots\dots(34),$$
+dari mana p dapat dihitung.
+
+*Perhitungan-perhitungannya.*
+(i)
+$\log \tan a \equiv \log \tan 53^\circ 13' \equiv 0.12631$
+$\log \cos P \equiv \log \cos 100^\circ 57' \equiv \bar{1}.27864\ n$
+$\therefore \log \tan D = \bar{1}.40495\ n$
+
+$\cos P$ bernilai negatif dan kita menempelkan huruf *n* di sebelah logaritmanya untuk mengingatkan kita pada fakta ini. Karena itu mengikut bahwa $\tan D$ bernilai negatif. Kita telah mengasumsikan pada rumus-rumus (27) dan (28) bahwa d adalah besaran positif. Kemudian, dari nilai-nilai a dan P yang diberikan, mengikut bahwa...
+"""
+st.markdown(materi_bab_1_hal_19_20, unsafe_allow_html=True)
