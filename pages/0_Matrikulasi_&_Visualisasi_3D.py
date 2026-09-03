@@ -32,7 +32,7 @@ Buku-buku klasik astronomi bola sangat sering menggunakan fungsi kebalikan (*rec
   $$
   \cos(b - c) = \cos b \cos c + \sin b \sin c
   $$
-* **Hubungan Suduh Paruh:**
+* **Hubungan Sudut Paruh:**
   $$
   \cos A = 1 - 2 \sin^2 \left(\frac{A}{2}\right)
   $$
@@ -47,9 +47,9 @@ st.markdown(matrikulasi_mendalam, unsafe_allow_html=True)
 st.divider()
 
 st.subheader("🌐 Simulasi Interaktif 3D: Bola Langit & Lingkaran Besar")
-st.info("💡 **Petunjuk:** Putar bola 3D di bawah ini menggunakan tetikus (klik & geser) untuk mengamati struktur bola langit, sumbu kutub vertikal, serta bidang lingkaran besar yang memotong pusat bola.")
+st.info("💡 **Petunjuk:** Putar bola 3D di bawah ini menggunakan tetikus (klik & geser di laptop) atau usap layar (di HP) untuk mengamati struktur bola langit, sumbu kutub vertikal, serta bidang lingkaran besar yang memotong pusat bola.")
 
-# Membuat plot 3D menggunakan Plotly
+# Membuat plot 3D menggunakan Plotly (Responsif untuk HP & Laptop)
 fig = go.Figure()
 
 # 1. Permukaan Bola Transparan
@@ -93,8 +93,7 @@ fig.update_layout(
         yaxis_title='Sumbu Y',
         zaxis_title='Sumbu Z',
     ),
-    width=800,
-    height=550,
+    height=450,
     margin=dict(l=0, r=0, b=0, t=40)
 )
 
