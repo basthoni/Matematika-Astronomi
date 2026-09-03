@@ -645,12 +645,9 @@ st.image("Gambar_7.png", caption="Gambar 7", use_container_width=True)
 materi_bab_1_hal_15_16_lanjut = r"""
 (1) Segitiga siku-siku di mana $C = 90^\circ$. Susun di dalam sebuah lingkaran lima "bagian melingkar" (*circular parts*) $a, b, 90^\circ - A, 90^\circ - c, 90^\circ - B$, seperti pada Gbr. 7. Jika salah satu dari bagian melingkar dipilih sebagai "tengah" (*middle*), dua bagian yang mengapit disebut "yang berdekatan" (*adjacents*) dan dua bagian lainnya disebut "yang berhadapan" (*opposites*). Aturan-aturannya kemudian adalah:
 
-**$\sin(\text{tengah}) = \text{hasil kali tangen dari yang berdekatan};$**<br>
-**$\sin(\text{tengah}) = \text{hasil kali kosinus dari yang berhadapan}.$**
-
 $$
 \begin{aligned}
-\sin(\text{tengah}) &= \text{hasil kali tangen dari yang berdekatan}, \\
+\sin(\text{tengah}) &= \text{hasil kali tangen dari yang berdekatan}; \\
 \sin(\text{tengah}) &= \text{hasil kali kosinus dari yang berhadapan}.
 \end{aligned}
 $$
