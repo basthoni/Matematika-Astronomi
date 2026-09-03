@@ -12,7 +12,7 @@ div[data-testid="stMarkdownContainer"] p {
 """, unsafe_allow_html=True)
 
 st.title("BAB I")
-st.header("TRIGONOMETRI BOLA & PENGANTAR ASTRONOMI")
+st.header("TRIGONOMETRI BOLA")
 st.divider()
 
 # ==========================================
