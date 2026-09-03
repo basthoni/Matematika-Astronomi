@@ -16,6 +16,31 @@ st.header("TRIGONOMETRI BOLA")
 st.divider()
 
 # ==========================================
+# DAFTAR ISI (SIDEBAR NAVIGATION)
+# ==========================================
+with st.sidebar:
+    st.markdown("### 📑 Daftar Isi Bab 1")
+    st.markdown("""
+    - [1. Pendahuluan](#1-pendahuluan)
+    - [2. Segitiga bola](#2-segitiga-bola)
+    - [3. Panjang busur lingkaran kecil](#3-panjang-busur-lingkaran-kecil)
+    - [4. Lintang dan bujur terestrial](#4-lintang-dan-bujur-terestrial)
+    - [5. Rumus kosinus](#5-rumus-kosinus-the-cosine-formula)
+    - [6. Rumus sinus](#6-rumus-sinus-the-sine-formula)
+    - [7. Rumus Analogi](#7-rumus-analogi-the-analogue-formula)
+    - [8. Rumus empat bagian](#8-rumus-empat-bagian-the-four-parts-formula)
+    - [9. Pembuktian alternatif](#9-pembuktian-alternatif-dari-rumus-a-b-dan-c)
+    - [10. Segitiga siku-siku & kuadran](#10-segitiga-siku-siku-dan-kuadran-right-angled-and-quadrantal-triangles)
+    - [11. Rumus Polar](#11-rumus-polar)
+    - [12. Contoh numerik](#12-contoh-numerik)
+    - [13. Rumus haversine](#13-rumus-haversine)
+    - [14. Metode lain](#14-metode-lain-another-method)
+    - [15. Rasio sudut kecil](#15-rasio-rasio-trigonometri-untuk-sudut-sudut-kecil)
+    - [16. Analogi Delambre & Napier](#16-analogi-analogi-delambre-dan-napier)
+    - [Latihan Soal](#latihan-soal-exercises)
+    """)
+
+# ==========================================
 # HALAMAN 1 - 10 (Sesuai Koreksi Verbatim)
 # ==========================================
 materi_bab_1_hal_1_2 = r"""
