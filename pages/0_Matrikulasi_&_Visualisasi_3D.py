@@ -62,7 +62,7 @@ st.divider()
 # 3. LABORATORIUM SIMULASI 3D SUPER DETAIL
 # ==========================================
 st.subheader("3. Laboratorium Spasial 3D: Bedah Detail Tiga Sistem Koordinat Utama")
-st.info("💡 **Petunjuk:** Pilih sistem koordinat di bawah ini. Anda dapat mengatur parameter sudut menggunakan panel geser (*slider*) untuk melihat bagaimana posisi benda langit berubah secara dinamis di dalam ruang 3D.")
+st.info("💡 **Petunjuk:** Pilih sistem koordinat di bawah ini. Pusat bola kini dilengkapi dengan representasi Bumi geosentrik untuk memperjelas posisi pengamat.")
 
 pilihan_sistem = st.selectbox(
     "Pilih Sistem Koordinat Astronomi:",
@@ -73,7 +73,7 @@ pilihan_sistem = st.selectbox(
     ]
 )
 
-# Kerangka dasar bola transparan umum
+# Kerangka dasar bola langit transparan (Radius = 1)
 u = np.linspace(0, 2 * np.pi, 40)
 v = np.linspace(0, np.pi, 40)
 xs = np.outer(np.cos(u), np.sin(v))
@@ -82,16 +82,26 @@ zs = np.outer(np.ones(np.size(u)), np.cos(v))
 
 fig_coord = go.Figure()
 fig_coord.add_trace(go.Surface(
-    x=xs, y=ys, z=zs, colorscale='Blues', opacity=0.06, showscale=False, name='Bola Langit'
+    x=xs, y=ys, z=zs, colorscale='Blues', opacity=0.05, showscale=False, name='Bola Langit'
 ))
+
+# Fungsi pembantu untuk membuat bola Bumi kecil di pusat (0,0,0) dengan radius 0.07
+def add_mini_earth(fig):
+    ue = np.linspace(0, 2 * np.pi, 20)
+    ve = np.linspace(0, np.pi, 20)
+    r_earth = 0.07
+    xe = r_earth * np.outer(np.cos(ue), np.sin(ve))
+    ye = r_earth * np.outer(np.sin(ue), np.sin(ve))
+    ze = r_earth * np.outer(np.ones(np.size(ue)), np.cos(ve))
+    fig.add_trace(go.Surface(
+        x=xe, y=ye, z=ze, colorscale='Viridis', opacity=0.9, showscale=False, name='Bumi (Pusat / Pengamat)'
+    ))
 
 if pilihan_sistem == "A. Sistem Koordinat Horizon (Lokal)":
     st.markdown("""
     #### A. Sistem Koordinat Horizon (Lokal / Alt-Azimuth)
-    * **Bidang Referensi:** Bidang horizon pengamat (cakrawala). Titik Zenith ($Z$) berada tepat di atas kepala, Nadir ($N'$) di bawah kaki, dan **Pengamat ($O$)** berada di pusat bola $(0,0,0)$.
-    * **Parameter Koordinat:**
-      1. **Tinggi (*Altitude* / $h$):** Jangkauan sudut benda langit diukur vertikal dari horizon ke arah bintang ($0^\\circ$ s.d. $+90^\\circ$).
-      2. **Azimuth ($A$):** Sudut horizontal yang diukur dari titik Utara ($0^\\circ$) berputar ke arah Timur ($90^\\circ$), Selatan ($180^\\circ$), dan Barat ($270^\\circ$) sepanjang horizon.
+    * **Bidang Referensi:** Bidang horizon pengamat (cakrawala). Titik Zenith ($Z$) berada tepat di atas kepala, Nadir ($N'$) di bawah kaki.
+    * **Posisi Pengamat:** Berada di pusat bola $(0,0,0)$, berdiri di atas bidang horizon lokal.
     """)
     
     col1, col2 = st.columns(2)
@@ -110,29 +120,24 @@ if pilihan_sistem == "A. Sistem Koordinat Horizon (Lokal)":
     theta = np.linspace(0, 2 * np.pi, 100)
     fig_coord.add_trace(go.Scatter3d(x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta), mode='lines', line=dict(color='green', width=4), name='Bidang Horizon'))
     fig_coord.add_trace(go.Scatter3d(x=[x_star, x_star], y=[y_star, y_star], z=[0, z_star], mode='lines', line=dict(color='orange', width=3, dash='dash'), name='Garis Tinggi (Altitude)'))
-    fig_coord.add_trace(go.Scatter3d(x=[0, x_star], y=[0, y_star], z=[0, z_star], mode='lines', line=dict(color='red', width=5), name='Vektor Pengamatan Bintang'))
+    fig_coord.add_trace(go.Scatter3d(x=[0, x_star], y=[0, y_star], z=[0, z_star], mode='lines', line=dict(color='red', width=5), name='Vektor Pengamatan'))
     
-    hx = [0,  0,  0,  1,  0, -1,  0, x_star]
-    hy = [0,  0,  0,  0,  1,  0, -1, y_star]
-    hz = [1, -1,  0,  0,  0,  0,  0, z_star]
-    htext = [
-        'Zenith (Z)', 'Nadir (N\')', 'Pusat / Pengamat (O)', 
-        'Utara (N, 0°)', 'Timur (E, 90°)', 'Selatan (S, 180°)', 'Barat (W, 270°)', 
-        f'Bintang (h={alt_deg}°, A={azimuth_deg}°)'
-    ]
-    hcolor = ['green', 'gray', 'purple', 'blue', 'blue', 'blue', 'blue', 'red']
+    add_mini_earth(fig_coord)
     
-    fig_coord.add_trace(go.Scatter3d(x=hx, y=hy, z=hz, mode='text+markers', text=htext, marker=dict(size=[6, 6, 7, 6, 6, 6, 6, 8], color=hcolor), textfont=dict(size=11)))
-    fig_coord.update_layout(title=f"Simulasi 3D Interaktif: Koordinat Horizon (Alt: {alt_deg}°, Az: {azimuth_deg}°)")
+    hx = [0,  0,  1,  0, -1,  0, x_star]
+    hy = [0,  0,  0,  1,  0, -1, y_star]
+    hz = [1, -1,  0,  0,  0,  0, z_star]
+    htext = ['Zenith (Z)', 'Nadir (N\')', 'Utara (N, 0°)', 'Timur (E, 90°)', 'Selatan (S, 180°)', 'Barat (W, 270°)', f'Bintang (h={alt_deg}°, A={azimuth_deg}°)']
+    hcolor = ['green', 'gray', 'blue', 'blue', 'blue', 'blue', 'red']
+    
+    fig_coord.add_trace(go.Scatter3d(x=hx, y=hy, z=hz, mode='text+markers', text=htext, marker=dict(size=[6, 6, 6, 6, 6, 6, 8], color=hcolor), textfont=dict(size=11)))
+    fig_coord.update_layout(title=f"Simulasi 3D: Koordinat Horizon (Alt: {alt_deg}°, Az: {azimuth_deg}°)")
 
 elif pilihan_sistem == "B. Sistem Koordinat Ekuator (Global / Langit)":
     st.markdown("""
     #### B. Sistem Koordinat Ekuator (Celestial Equatorial Coordinates)
-    * **Bidang Referensi:** Ekuator langit (*celestial equator*).
-    * **Titik Acuan Utama (Titik Aries / $\\gamma$):** Didefinisikan secara presisi sebagai **titik potong (node) antara Ekuator Langit (Merah) dan Lingkaran Ekliptika (Oranye)** saat Matahari bergerak dari belahan selatan ke utara.
-    * **Parameter Koordinat:**
-      1. **Deklinasi ($\\delta$):** Jarak sudut utara/selatan dari ekuator langit ($-90^\\circ$ s.d. $+90^\\circ$).
-      2. **Asensio Rekta ($\\alpha$):** Sudut diukur ke arah timur **mulai dari Titik Aries ($\\gamma$)** sepanjang ekuator langit ($0^\\circ$ s.d. $360^\\circ$).
+    * **Bidang Referensi:** Ekuator langit (Merah) dan Lingkaran Ekliptika (Oranye).
+    * **Pusat Geosentrik:** Miniatur Bumi di tengah menunjukkan bahwa sistem koordinat ini diturunkan dari pusat bola bumi. Perpotongan kedua bidang di sumbu $X$ positif membentuk **Titik Aries ($\\gamma$)**.
     """)
     
     col1, col2 = st.columns(2)
@@ -143,27 +148,29 @@ elif pilihan_sistem == "B. Sistem Koordinat Ekuator (Global / Langit)":
         
     ra = np.radians(ra_deg)
     dec = np.radians(dec_deg)
-    eps = np.radians(23.5) # Kemiringan ekliptika
+    eps = np.radians(23.5)
     
     x_star = np.cos(dec) * np.cos(ra)
     y_star = np.cos(dec) * np.sin(ra)
     z_star = np.sin(dec)
     
     t = np.linspace(0, 2 * np.pi, 100)
-    # 1. Ekuator Langit (Merah)
+    # Ekuator Langit
     fig_coord.add_trace(go.Scatter3d(x=np.cos(t), y=np.sin(t), z=np.zeros_like(t), mode='lines', line=dict(color='crimson', width=4), name='Ekuator Langit'))
-    
-    # 2. Lingkaran Ekliptika (Oranye) - Miring 23.5 derajat untuk menunjukkan perpotongannya
+    # Lingkaran Ekliptika
     xe_circ = np.cos(t)
     ye_circ = np.sin(t) * np.cos(eps)
     ze_circ = np.sin(t) * np.sin(eps)
     fig_coord.add_trace(go.Scatter3d(x=xe_circ, y=ye_circ, z=ze_circ, mode='lines', line=dict(color='darkorange', width=3, dash='dash'), name='Lingkaran Ekliptika'))
     
-    # 3. Titik Aries (Gamma) tepat di perpotongan X=1, Y=0, Z=0
+    # Titik Aries (Perpotongan)
     fig_coord.add_trace(go.Scatter3d(x=[1], y=[0], z=[0], mode='text+markers', text=['Titik Aries (γ): Perpotongan Ekuator & Ekliptika'], marker=dict(size=8, color='purple'), textfont=dict(color='purple', size=12)))
     
-    # 4. Vektor Bintang & Kutub
+    # Vektor Bintang
     fig_coord.add_trace(go.Scatter3d(x=[0, x_star], y=[0, y_star], z=[0, z_star], mode='lines', line=dict(color='red', width=5), name='Vektor Bintang'))
+    
+    add_mini_earth(fig_coord)
+    
     fig_coord.add_trace(go.Scatter3d(
         x=[0, 0, x_star], y=[0, 0, y_star], z=[1, -1, z_star],
         mode='text+markers',
@@ -171,16 +178,13 @@ elif pilihan_sistem == "B. Sistem Koordinat Ekuator (Global / Langit)":
         marker=dict(size=[6, 6, 8], color=['crimson', 'crimson', 'red']),
         textfont=dict(size=11)
     ))
-    fig_coord.update_layout(title=f"Simulasi 3D: Koordinat Ekuator & Titik Potong Aries (RA: {ra_deg}°, Dec: {dec_deg}°)")
+    fig_coord.update_layout(title=f"Simulasi 3D: Koordinat Ekuator & Titik Aries (RA: {ra_deg}°, Dec: {dec_deg}°)")
 
 else:
     st.markdown("""
     #### C. Sistem Koordinat Ekliptika (Ecliptic Coordinates)
-    * **Bidang Referensi:** Bidang ekliptika (bidang orbit semu tahunan matahari).
-    * **Titik Acuan Utama:** Titik Aries ($\\gamma$) sebagai titik awal penghitungan bujur ekliptika.
-    * **Parameter Koordinat:**
-      1. **Lintang Ekliptika ($\\beta$):** Jarak sudut utara/selatan dari bidang ekliptika ($-90^\\circ$ s.d. $+90^\\circ$).
-      2. **Bujur Ekliptika ($\\lambda$):** Sudut diukur dari Titik Aries ke arah timur sepanjang jalur ekliptika ($0^\\circ$ s.d. $360^\\circ$).
+    * **Bidang Referensi:** Bidang ekliptika (jalur edar semu matahari).
+    * **Pusat Geosentrik:** Miniatur Bumi di pusat $(0,0,0)$ menegaskan posisi pengamat bumi melihat benda tata surya relatif terhadap bidang ekliptika.
     """)
     
     col1, col2 = st.columns(2)
@@ -206,6 +210,9 @@ else:
     fig_coord.add_trace(go.Scatter3d(x=x_ecl, y=y_ecl, z=z_ecl, mode='lines', line=dict(color='darkorange', width=5), name='Bidang Ekliptika'))
     
     fig_coord.add_trace(go.Scatter3d(x=[0, xe], y=[0, ye], z=[0, ze], mode='lines', line=dict(color='red', width=5), name='Vektor Objek'))
+    
+    add_mini_earth(fig_coord)
+    
     fig_coord.add_trace(go.Scatter3d(
         x=[1, xe], y=[0, ye], z=[0, ze],
         mode='text+markers',
