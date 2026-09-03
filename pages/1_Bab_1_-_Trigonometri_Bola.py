@@ -647,9 +647,9 @@ materi_bab_1_hal_15_16_lanjut = r"""
 
 $$
 \text{hav } \theta = \frac{1}{2}(1 - \cos \theta) = \sin^2 \frac{\theta}{2} \dots\dots(21).
-$$
-$$
-**$\sin(\text{tengah}) = \text{hasil kali tangen dari yang berdekatan};$**<br>
+
+
+**$\text\sin(\text{tengah}) = \text{hasil kali tangen dari yang berdekatan};$**<br>
 **$\sin(\text{tengah}) = \text{hasil kali kosinus dari yang berhadapan}.$**
 $$
 
