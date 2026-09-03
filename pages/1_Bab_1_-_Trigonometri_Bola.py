@@ -1,6 +1,4 @@
 import streamlit as st
-import numpy as np
-import plotly.graph_objects as go
 
 st.set_page_config(page_title="Bab 1 - Trigonometri Bola", page_icon="📖", layout="wide")
 
@@ -23,9 +21,8 @@ st.divider()
 with st.sidebar:
     st.markdown("### 📑 Daftar Isi Modul")
     st.markdown("""
-    - [0. Modul Matrikulasi & Prasyarat](#0-modul-matrikulasi-prasyarat-trigonometri--geometri-dasar)
     - [1. Pendahuluan](#1-pendahuluan)
-    - [2. Segitiga Bola & Visualisasi 3D](#2-segitiga-bola)
+    - [2. Segitiga Bola](#2-segitiga-bola)
     - [3. Panjang Busur Lingkaran Kecil](#3-panjang-busur-lingkaran-kecil)
     - [4. Lintang dan Bujur Terestrial](#4-lintang-dan-bujur-terestrial)
     - [5. Rumus Kosinus](#5-rumus-kosinus-the-cosine-formula)
@@ -44,35 +41,6 @@ with st.sidebar:
     """)
 
 # ==========================================
-# 0. MODUL MATRIKULASI & PRASYARAT
-# ==========================================
-matrikulasi = r"""
-### 0. Modul Matrikulasi: Prasyarat Trigonometri & Geometri Dasar
-Sebelum memasuki ruang lingkup Astronomi Bola, mahasiswa **wajib** menguasai kembali beberapa identitas dasar dari trigonometri bidang datar (*plane trigonometry*) dan aljabar geometri yang sering digunakan dalam penurunan rumus W.M. Smart:
-
-1. **Identitas Pythagoras Dasar:**
-   $$
-   \sin^2 \theta + \cos^2 \theta = 1 \implies \sec^2 \theta = 1 + \tan^2 \theta
-   $$
-
-2. **Aturan Kosinus pada Segitiga Datar (Bidang):**
-   Untuk sembarang segitiga datar dengan sisi $a, b, c$ dan sudut diapit $A$:
-   $$
-   a^2 = b^2 + c^2 - 2bc \cos A
-   $$
-
-3. **Relasi Sudut Berelasi & Identitas Selisih Kosinus:**
-   $$
-   \cos(b - c) = \cos b \cos c + \sin b \sin c
-   $$
-
-4. **Konsep Radian dan Ukuran Busur:**
-   Panjang busur lingkaran didefinisikan sebagai jari-jari dikali besar sudut dalam satuan radian ($s = r \theta$). Dalam astronomi bola, kita sering menganggap jari-jari bola bernilai satuan (*unity*, $R = 1$), sehingga panjang busur identik dengan besar sudutnya.
-"""
-st.markdown(matrikulasi, unsafe_allow_html=True)
-st.divider()
-
-# ==========================================
 # HALAMAN 1 - 10 (Verbatim W.M. Smart)
 # ==========================================
 materi_bab_1_hal_1_2 = r"""
@@ -87,63 +55,6 @@ Pada Gambar 1, EAB adalah sebuah lingkaran besar, karena bidangnya melewati O, y
 st.markdown(materi_bab_1_hal_1_2, unsafe_allow_html=True)
 
 st.image("Gambar_1.png", caption="Gambar 1", use_container_width=True)
-
-# ==========================================
-# VISUALISASI INTERAKTIF 3D (PLOTLY)
-# ==========================================
-st.markdown("#### 🌐 Simulasi Interaktif 3D: Bola Langit & Lingkaran Besar")
-st.info("💡 **Petunjuk untuk Mahasiswa:** Anda dapat memutar bola 3D di bawah ini menggunakan tetikus (klik & geser) untuk mengamati bagaimana bidang yang memotong pusat bola membentuk lingkaran besar (*Great Circle*).")
-
-# Membuat plot 3D menggunakan Plotly
-fig = go.Figure()
-
-# 1. Permukaan Bola Transparan
-u = np.linspace(0, 2 * np.pi, 50)
-v = np.linspace(0, np.pi, 50)
-x = np.outer(np.cos(u), np.sin(v))
-y = np.outer(np.sin(u), np.sin(v))
-z = np.outer(np.ones(np.size(u)), np.cos(v))
-
-fig.add_trace(go.Surface(
-    x=x, y=y, z=z, 
-    colorscale='Blues', 
-    opacity=0.15, 
-    showscale=False,
-    name='Bola Langit'
-))
-
-# 2. Lingkaran Besar (Great Circle di Ekuator z=0)
-theta = np.linspace(0, 2 * np.pi, 100)
-fig.add_trace(go.Scatter3d(
-    x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta),
-    mode='lines',
-    line=dict(color='red', width=5),
-    name='Lingkaran Besar (Great Circle)'
-))
-
-# 3. Titik Pusat O dan Kutub P, Q
-fig.add_trace(go.Scatter3d(
-    x=[0, 0, 0], y=[0, 0, 0], z=[0, 1, -1],
-    mode='text+markers',
-    text=['Pusat O', 'Kutub P', 'Kutub Q'],
-    marker=dict(size=6, color='black'),
-    textfont=dict(color='black', size=12),
-    name='Titik Istimewa'
-))
-
-fig.update_layout(
-    title="Model 3D Bola Langit & Lingkaran Besar",
-    scene=dict(
-        xaxis_title='Sumbu X',
-        yaxis_title='Sumbu Y',
-        zaxis_title='Sumbu Z',
-    ),
-    width=700,
-    height=500,
-    margin=dict(l=0, r=0, b=0, t=40)
-)
-
-st.plotly_chart(fig, use_container_width=True)
 
 # ==========================================
 # LANJUTAN MATERI HALAMAN 2-24
