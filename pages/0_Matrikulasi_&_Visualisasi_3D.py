@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Matrikulasi Super Detail & Simulasi 3D", page_icon="🌐", layout="wide")
+st.set_page_config(page_title="Pengantar Trigonometri & Simulasi 3D Koordinat Bola Langit", page_icon="🌐", layout="wide")
 
 st.markdown("""
 <style>
@@ -12,8 +12,8 @@ div[data-testid="stMarkdownContainer"] p {
 </style>
 """, unsafe_allow_html=True)
 
-st.title("MODUL MATRIKULASI KOMPREHENSIF & LABORATORIUM SPASIAL ASTRONOMI")
-st.header("Fondasi Matematika, Trigonometri Bola, dan Bedah Detail Tiga Sistem Koordinat Bola Langit")
+st.title("PENGANTAR SINGKAT TRIGONOMETRI & ASTRONOMI BOLA")
+st.header("Fondasi Matematika, Trigonometri Bola, dan Sistem Koordinat Bola Langit")
 st.divider()
 
 # ==========================================
