@@ -20,26 +20,117 @@ st.divider()
 # 1. DASAR TRIGONOMETRI SEGITIGA DATAR & RUANG
 # ==========================================
 st.markdown("""
-### 1. Landasan Matematika: Trigonometri Segitiga Datar & Identitas Lanjut
-Sebelum mahasiswa memasuki penurunan rumus analitis W.M. Smart, penguasaan terhadap manipulasi aljabar dan identitas trigonometri bidang datar (*Euclidean plane*) wajib dikuasai secara mendalam:
+### 1. Landasan Matematika: Trigonometri Dasar & Identitas Lanjut
+Sebelum mahasiswa memasuki penurunan rumus analitis W.M. Smart dalam geometri bola, penguasaan terhadap konsep dasar segitiga datar (*Euclidean plane*) wajib dikuasai secara mendalam. Mari kita mulai dari fondasi yang paling mendasar.
 
-#### A. Aturan Dasar Segitiga Datar
-1. **Aturan Sinus (Sine Rule):** Digunakan untuk relasi sudut dan sisi berhadapan.
-   $$
-   \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C}
-   $$
-2. **Aturan Kosinus (Cosine Rule):** Digunakan saat dua sisi dan satu sudut apit diketahui ($b, c, A$) untuk mencari sisi ketiga ($a$):
-   $$
-   a^2 = b^2 + c^2 - 2bc \\cos A
-   $$
+#### A. Segitiga Siku-Siku & Teorema Pythagoras
+Bayangkan sebuah segitiga siku-siku dengan salah satu sudutnya adalah $\\theta$. Segitiga ini memiliki tiga sisi yang kita namai berdasarkan posisinya terhadap sudut $\\theta$:
+""")
 
-#### B. Fungsi Kebalikannya (*Reciprocal Functions*)
-Astronomi bola sangat sering menggunakan fungsi kebalikan yang jarang muncul di kalkulus modern:
-* **Secan ($\\sec$):** $\\sec \\theta = \\frac{1}{\\cos \\theta}$
-* **Cosecan ($\\text{cosec}$):** $\\text{cosec } \\theta = \\frac{1}{\\sin \\theta}$
-* **Cotangen ($\\cot$):** $\\cot \\theta = \\frac{\\cos \\theta}{\\sin \\theta} = \\frac{1}{\\tan \\theta}$
+# --- Visualisasi Segitiga Siku-Siku dengan Plotly ---
+fig1 = go.Figure()
+# Gambar sisi segitiga (0,0) -> (4,0) -> (4,3) -> (0,0)
+fig1.add_trace(go.Scatter(x=[0, 4, 4, 0], y=[0, 0, 3, 0], mode='lines', line=dict(color='royalblue', width=3), showlegend=False))
+# Simbol Siku-siku
+fig1.add_trace(go.Scatter(x=[3.7, 3.7, 4], y=[0, 0.3, 0.3], mode='lines', line=dict(color='black', width=1.5), showlegend=False))
+# Simbol Sudut Theta
+theta_arc = np.linspace(0, np.arctan(3/4), 20)
+fig1.add_trace(go.Scatter(x=0.6*np.cos(theta_arc), y=0.6*np.sin(theta_arc), mode='lines', line=dict(color='crimson', width=2), showlegend=False))
 
-#### C. Identitas Sudut Paruh (*Half-Angle Identities*)
+# Label
+fig1.add_annotation(x=0.8, y=0.25, text="<b>θ</b>", showarrow=False, font=dict(size=18, color='crimson'))
+fig1.add_annotation(x=2, y=-0.25, text="<b>b</b> (Sisi Samping / Adjacent)", showarrow=False, font=dict(size=14))
+fig1.add_annotation(x=4.1, y=1.5, text="<b>a</b><br>(Sisi Depan / Opposite)", showarrow=False, font=dict(size=14), xanchor='left')
+fig1.add_annotation(x=1.7, y=1.8, text="<b>c</b> (Sisi Miring / Hipotenusa)", showarrow=False, font=dict(size=14), textangle=-37)
+
+fig1.update_layout(xaxis=dict(visible=False), yaxis=dict(visible=False), plot_bgcolor='rgba(0,0,0,0)', width=600, height=400, margin=dict(l=0,r=120,b=20,t=0))
+st.plotly_chart(fig1, use_container_width=False)
+# --------------------------------------------------
+
+st.markdown("""
+Hubungan fundamental dari ketiga sisi ini diikat oleh **Teorema Pythagoras**:
+$$ a^2 + b^2 = c^2 $$
+
+#### B. Definisi Fungsi Trigonometri Dasar
+Dari segitiga siku-siku di atas, nilai perbandingan antar sisinya melahirkan tiga fungsi dasar trigonometri. Untuk memudahkan ingatan, kita biasa menggunakan akronim (De-Mi, Sa-Mi, De-Sa):
+1. **Sinus ($\\sin$):** Perbandingan sisi **De**pan dengan sisi **Mi**ring. $\\implies \\sin \\theta = \\frac{a}{c}$
+2. **Kosinus ($\\cos$):** Perbandingan sisi **Sa**mping dengan sisi **Mi**ring. $\\implies \\cos \\theta = \\frac{b}{c}$
+3. **Tangen ($\\tan$):** Perbandingan sisi **De**pan dengan sisi **Sa**mping. $\\implies \\tan \\theta = \\frac{\\sin \\theta}{\\cos \\theta} = \\frac{a}{b}$
+
+#### C. Fungsi Kebalikan (*Reciprocal Functions*)
+Astronomi bola sangat sering menggunakan fungsi kebalikan dari fungsi dasar (jarang muncul di kalkulus modern namun krusial di falak):
+1. **Cosecan ($\\text{cosec}$):** Kebalikan Sinus. $\\implies \\text{cosec } \\theta = \\frac{1}{\\sin \\theta} = \\frac{c}{a}$
+2. **Secan ($\\sec$):** Kebalikan Kosinus. $\\implies \\sec \\theta = \\frac{1}{\\cos \\theta} = \\frac{c}{b}$
+3. **Cotangen ($\\cot$):** Kebalikan Tangen. $\\implies \\cot \\theta = \\frac{1}{\\tan \\theta} = \\frac{b}{a}$
+
+---
+
+#### D. Aturan Sinus dan Kosinus pada Segitiga Sembarang
+Bagaimana jika segitiganya tidak memiliki sudut $90^\\circ$ (segitiga sembarang)? Kita bisa menyelesaikannya dengan "meminjam" sifat segitiga siku-siku. 
+
+Bayangkan segitiga sembarang $ABC$ dengan panjang sisi $a, b, c$. Kita tarik sebuah **garis tinggi ($h$)** dari sudut $C$ yang memotong tegak lurus sisi $c$ di titik $D$.
+""")
+
+# --- Visualisasi Segitiga Sembarang dengan Garis Tinggi ---
+fig2 = go.Figure()
+# Segitiga utama (0,0) -> (5,0) -> (3,4) -> (0,0)
+fig2.add_trace(go.Scatter(x=[0, 7, 3, 0], y=[0, 0, 4, 0], mode='lines', line=dict(color='royalblue', width=3), showlegend=False))
+# Garis Tinggi (h)
+fig2.add_trace(go.Scatter(x=[3, 3], y=[0, 4], mode='lines', line=dict(color='crimson', width=2, dash='dash'), showlegend=False))
+# Simbol Siku-siku di D
+fig2.add_trace(go.Scatter(x=[2.8, 2.8, 3], y=[0, 0.2, 0.2], mode='lines', line=dict(color='black', width=1.5), showlegend=False))
+fig2.add_trace(go.Scatter(x=[3.2, 3.2, 3], y=[0, 0.2, 0.2], mode='lines', line=dict(color='black', width=1.5), showlegend=False))
+
+# Label Titik dan Sisi
+fig2.add_annotation(x=-0.2, y=-0.2, text="<b>A</b>", showarrow=False, font=dict(size=18))
+fig2.add_annotation(x=7.2, y=-0.2, text="<b>B</b>", showarrow=False, font=dict(size=18))
+fig2.add_annotation(x=3, y=4.3, text="<b>C</b>", showarrow=False, font=dict(size=18))
+fig2.add_annotation(x=3, y=-0.3, text="<b>D</b>", showarrow=False, font=dict(size=16))
+
+fig2.add_annotation(x=1.3, y=2.2, text="<b>b</b>", showarrow=False, font=dict(size=16))
+fig2.add_annotation(x=5.2, y=2.2, text="<b>a</b>", showarrow=False, font=dict(size=16))
+fig2.add_annotation(x=2.8, y=2, text="<b>h</b>", showarrow=False, font=dict(size=16, color='crimson'))
+
+fig2.add_annotation(x=1.5, y=-0.3, text="<b>x</b>", showarrow=False, font=dict(size=16))
+fig2.add_annotation(x=5, y=-0.3, text="<b>c - x</b>", showarrow=False, font=dict(size=16))
+fig2.add_annotation(x=3.5, y=-0.75, text="<───────────── <b>c</b> ─────────────>", showarrow=False, font=dict(size=14))
+
+fig2.update_layout(xaxis=dict(visible=False, range=[-1, 8]), yaxis=dict(visible=False, range=[-1, 5]), plot_bgcolor='rgba(0,0,0,0)', width=650, height=450, margin=dict(l=0,r=0,b=0,t=0))
+st.plotly_chart(fig2, use_container_width=False)
+# ----------------------------------------------------------
+
+st.markdown("""
+Garis $CD = h$ membelah segitiga $ABC$ menjadi **dua buah segitiga siku-siku**: $\\Delta ADC$ di sebelah kiri dan $\\Delta BDC$ di sebelah kanan. Jika panjang $AD = x$, maka panjang $DB = c - x$.
+
+##### 1. Pembuktian Aturan Sinus (*Sine Rule*)
+Mari kita tinjau nilai Sinus pada kedua segitiga siku-siku tersebut:
+*   Pada $\\Delta ADC$ (kiri): $\\sin A = \\frac{h}{b} \implies \\mathbf{h = b \\sin A}$
+*   Pada $\\Delta BDC$ (kanan): $\\sin B = \\frac{h}{a} \implies \\mathbf{h = a \\sin B}$
+
+Karena kedua persamaan sama-sama mendefinisikan tinggi $h$, kita dapat menyamakannya:
+$$ b \\sin A = a \\sin B $$
+Jika kedua ruas kita bagi dengan $(\\sin A \\cdot \\sin B)$, kita akan mendapatkan **Aturan Sinus**:
+$$ \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} $$
+
+##### 2. Pembuktian Aturan Kosinus (*Cosine Rule*)
+Sekarang kita gunakan **Teorema Pythagoras** pada kedua segitiga siku-siku tersebut:
+*   Pada $\\Delta ADC$ (kiri): Nilai $\\cos A = \\frac{x}{b}$, sehingga $\\mathbf{x = b \\cos A}$.
+    Melalui Pythagoras: $h^2 + x^2 = b^2 \implies \\mathbf{h^2 = b^2 - x^2}$
+*   Pada $\\Delta BDC$ (kanan), melalui Pythagoras juga:
+    $$ a^2 = h^2 + (c - x)^2 $$
+    $$ a^2 = h^2 + (c^2 - 2cx + x^2) $$
+
+Sekarang, substitusikan nilai $\\mathbf{h^2}$ dari segitiga kiri ke dalam persamaan segitiga kanan:
+$$ a^2 = (b^2 - x^2) + c^2 - 2cx + x^2 $$
+Karena nilai $-x^2$ dan $+x^2$ saling menghilangkan, persamaannya tersisa menjadi:
+$$ a^2 = b^2 + c^2 - 2cx $$
+
+Langkah terakhir, substitusikan nilai $\\mathbf{x = b \\cos A}$ (yang kita dapat dari segitiga kiri) ke dalam persamaan di atas:
+$$ a^2 = b^2 + c^2 - 2c(b \\cos A) $$
+$$ \\mathbf{a^2 = b^2 + c^2 - 2bc \\cos A} $$
+Inilah pondasi utama yang kelak akan dibuktikan ulang oleh W.M. Smart namun dalam bentuk ruang bidang lengkung (Trigonometri Bola).
+
+#### E. Identitas Sudut Paruh (*Half-Angle Identities*)
 Sangat krusial dalam penurunan rumus logaritma astronomi:
 $$
 \\sin^2 \\left(\\frac{A}{2}\\right) = \\frac{(s-b)(s-c)}{bc}, \\quad \\text{di mana } s = \\frac{a+b+c}{2}
