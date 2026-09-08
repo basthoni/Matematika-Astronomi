@@ -213,7 +213,7 @@ st.divider()
 # ==========================================
 # 3. LABORATORIUM SIMULASI 3D SUPER DETAIL
 # ==========================================
-st.subheader("3. Laboratorium Spasial 3D: Bedah Detail Tiga Sistem Koordinat Utama")
+st.subheader("3. Simulasi 3D Tiga Sistem Koordinat Astronomi")
 st.info("💡 **Petunjuk:** Pilih sistem koordinat di bawah ini. Pusat bola kini dilengkapi dengan representasi Bumi geosentrik untuk memperjelas posisi pengamat.")
 
 pilihan_sistem = st.selectbox(
