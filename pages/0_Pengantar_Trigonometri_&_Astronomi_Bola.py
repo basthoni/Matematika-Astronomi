@@ -105,8 +105,8 @@ Garis $CD = h$ membelah segitiga $ABC$ menjadi **dua buah segitiga siku-siku**: 
 
 ##### 1. Pembuktian Aturan Sinus (*Sine Rule*)
 Mari kita tinjau nilai Sinus pada kedua segitiga siku-siku tersebut:
-*   Pada $\\Delta ADC$ (kiri): $\\sin A = \\frac{h}{b} \implies \\mathbf{h = b \\sin A}$
-*   Pada $\\Delta BDC$ (kanan): $\\sin B = \\frac{h}{a} \implies \\mathbf{h = a \\sin B}$
+*   Pada $\\Delta ADC$ (kiri): $\\sin A = \\frac{h}{b} \\implies \\mathbf{h = b \\sin A}$
+*   Pada $\\Delta BDC$ (kanan): $\\sin B = \\frac{h}{a} \\implies \\mathbf{h = a \\sin B}$
 
 Karena kedua persamaan sama-sama mendefinisikan tinggi $h$, kita dapat menyamakannya:
 
@@ -118,11 +118,10 @@ $$ \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} $$
 
 ##### 2. Pembuktian Aturan Kosinus (*Cosine Rule*)
 Sekarang kita gunakan **Teorema Pythagoras** pada kedua segitiga siku-siku tersebut:
-
 *   Pada $\\Delta ADC$ (kiri): Nilai $\\cos A = \\frac{x}{b}$, sehingga $\\mathbf{x = b \\cos A}$.
     Melalui Pythagoras: 
     
-    $$ h^2 + x^2 = b^2 \implies \\mathbf{h^2 = b^2 - x^2} $$
+    $$ h^2 + x^2 = b^2 \\implies \\mathbf{h^2 = b^2 - x^2} $$
     
 *   Pada $\\Delta BDC$ (kanan), melalui Pythagoras juga:
     
@@ -153,6 +152,40 @@ $$
 \\sin^2 \\left(\\frac{A}{2}\\right) = \\frac{(s-b)(s-c)}{bc}, \\quad \\text{di mana } s = \\frac{a+b+c}{2}
 $$
 """)
+
+with st.expander("📚 Syarah: Mengapa Sudut Paruh Sangat Penting di Ilmu Falak?"):
+    st.markdown("""
+    Dalam astronomi modern (menggunakan Python/komputer), mesin bisa menghitung rumus apapun dalam hitungan milidetik. Namun, dalam literatur **Ilmu Falak klasik** dan sejarah astronomi bola, **Identitas Sudut Paruh (*Half-Angle Identities*) adalah "senjata rahasia" yang sangat berharga**.
+
+    Berikut adalah 4 alasan utama mengapa rumus sudut paruh sangat krusial dalam Ilmu Falak:
+
+    **1. Kunci Utama Perhitungan Logaritma (Zaman Pra-Kalkulator)**
+    Sebelum adanya kalkulator elektronik, para ulama falak dan astronom menghitung menggunakan **Tabel Logaritma**. Sifat dasar logaritma adalah: **Logaritma tidak bisa memproses operasi penjumlahan/pengurangan**, ia hanya bisa memecah perkalian/pembagian.
+    *   **Masalah pada Rumus Kosinus Fundamental:** 
+        $\\cos a = \\cos b \\cos c \\mathbf{+} \\sin b \\sin c \\cos A$
+        *(Terdapat tanda tambah (+), sehingga sangat sulit dan panjang jika dihitung menggunakan tabel logaritma manual).*
+    *   **Solusi dengan Sudut Paruh:**
+        $\\sin^2 \\left(\\frac{A}{2}\\right) = \\frac{\\sin(s-b)\\sin(s-c)}{\\sin b \\sin c}$
+        *(Semua operasi adalah perkalian dan pembagian!).*
+        Dengan ini, ahli falak masa lalu cukup menggunakan rumus:
+        $\\log \\sin \\left(\\frac{A}{2}\\right) = \\frac{1}{2} [ \\log \\sin(s-b) + \\log \\sin(s-c) - \\log \\sin b - \\log \\sin c ]$
+        Hitungan yang tadinya rumit berubah menjadi sekadar tambah-kurang angka logaritma dari tabel.
+
+    **2. Cikal Bakal Rumus Haversine (Menghitung Jarak & Arah Kiblat)**
+    Dalam navigasi dan falak, ada fungsi bernama **Haversine**. Haversine sebenarnya adalah bentuk lain dari sudut paruh:
+    $$ \\text{hav}(\\theta) = \\sin^2 \\left(\\frac{\\theta}{2}\\right) = \\frac{1 - \\cos \\theta}{2} $$
+    Fungsi Haversine sangat populer untuk menghitung **Jarak Lingkaran Besar (Great Circle Distance)** dan **Arah Kiblat**. Keunggulannya adalah nilainya selalu positif (karena dikuadratkan) sehingga ahli falak tidak perlu pusing memikirkan apakah suatu sudut berada di kuadran negatif atau positif.
+
+    **3. Akurasi Tinggi untuk Jarak/Sudut yang Sangat Kecil**
+    Ketika kita menghitung arah kiblat atau jarak antara dua kota yang berdekatan, sudut jarak di pusat bumi sangatlah kecil (mendekati $0^\\circ$).
+    *   Jika menggunakan fungsi **Kosinus**, nilai $\\cos(0^\\circ) = 1$. Untuk sudut yang sangat kecil (misal $0.001^\\circ$), nilainya adalah $0.999999...$ Pada kalkulator biasa atau tabel klasik, angka ini akan dibulatkan menjadi $1$, sehingga **terjadi error/hilang akurasi (*loss of significance*)**.
+    *   Jika menggunakan **Sudut Paruh (Sinus)**, nilai $\\sin(0^\\circ) = 0$. Perubahan kecil pada sudut dekat $0$ sangat sensitif pada fungsi sinus. Oleh karena itu, rumus sudut paruh memberikan akurasi yang jauh lebih presisi untuk jarak pandang yang berdekatan. Menariknya, sistem GPS modern di dalam *smartphone* kita pun masih beroperasi menggunakan landasan rumus ini!
+
+    **4. Menghilangkan Ambiguitas Kuadran (Kasus Waktu Salat)**
+    Dalam menghitung **Sudut Waktu Matahari (*Hour Angle*)** untuk jadwal salat (terutama waktu Ashar dan Isya/Subuh), kita sering mencari nilai sudut $H$ ketika ketinggian matahari ($h$) diketahui.
+    Jika kita memecahkannya dengan Aturan Sinus biasa, kita akan bertemu ambiguitas (karena $\\sin 30^\\circ = \\sin 150^\\circ$, kita bingung mana hasil yang benar). Dengan menggunakan rumus **Kosinus Sudut Paruh** atau **Tangen Sudut Paruh**, rentang jawabannya menjadi terukur secara absolut dan membuang jawaban ganda yang salah secara astronomis.
+    """)
+
 st.divider()
 
 # ==========================================
