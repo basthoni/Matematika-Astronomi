@@ -114,7 +114,7 @@ $$ \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} $$
 
 ##### 2. Pembuktian Aturan Kosinus (*Cosine Rule*)
 Sekarang kita gunakan **Teorema Pythagoras** pada kedua segitiga siku-siku tersebut:
-*   Pada $\\Delta ADC$ (kiri): Nilai $\\cos A = \\frac{x}{b}$, sehingga $\\mathbf{x = b \\cos A}$.
+*   Pada $\\Delta ADC$ (kiri): Nilai $\\cos A = \\frac{x}{b}$, sehingga $\\mathbf{x = b \\cos A}$.<br>
     Melalui Pythagoras: $h^2 + x^2 = b^2 \implies \\mathbf{h^2 = b^2 - x^2}$
 *   Pada $\\Delta BDC$ (kanan), melalui Pythagoras juga:
     $$ a^2 = h^2 + (c - x)^2 $$
