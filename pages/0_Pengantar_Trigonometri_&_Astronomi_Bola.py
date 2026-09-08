@@ -13,14 +13,14 @@ div[data-testid="stMarkdownContainer"] p {
 """, unsafe_allow_html=True)
 
 st.title("PENGANTAR SINGKAT TRIGONOMETRI & ASTRONOMI BOLA")
-st.header("Fondasi Matematika, Trigonometri Bola, dan Sistem Koordinat Bola Langit")
+st.header("Dasar Matematika, Trigonometri Bola, dan Sistem Koordinat Bola Langit")
 st.divider()
 
 # ==========================================
 # 1. DASAR TRIGONOMETRI SEGITIGA DATAR & RUANG
 # ==========================================
 st.markdown("""
-### 1. Landasan Matematika: Trigonometri Dasar & Identitas Lanjut
+### 1. Landasan Matematika: Trigonometri Dasar & Identitas Trigonometri
 Sebelum mahasiswa memasuki penurunan rumus analitis W.M. Smart dalam geometri bola, penguasaan terhadap konsep dasar segitiga datar (*Euclidean plane*) wajib dikuasai secara mendalam. Mari kita mulai dari fondasi yang paling mendasar.
 
 #### A. Segitiga Siku-Siku & Teorema Pythagoras
