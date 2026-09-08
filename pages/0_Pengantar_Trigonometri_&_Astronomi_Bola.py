@@ -49,6 +49,7 @@ st.plotly_chart(fig1, use_container_width=False)
 
 st.markdown("""
 Hubungan fundamental dari ketiga sisi ini diikat oleh **Teorema Pythagoras**:
+
 $$ a^2 + b^2 = c^2 $$
 
 #### B. Definisi Fungsi Trigonometri Dasar
@@ -108,30 +109,46 @@ Mari kita tinjau nilai Sinus pada kedua segitiga siku-siku tersebut:
 *   Pada $\\Delta BDC$ (kanan): $\\sin B = \\frac{h}{a} \implies \\mathbf{h = a \\sin B}$
 
 Karena kedua persamaan sama-sama mendefinisikan tinggi $h$, kita dapat menyamakannya:
+
 $$ b \\sin A = a \\sin B $$
+
 Jika kedua ruas kita bagi dengan $(\\sin A \\cdot \\sin B)$, kita akan mendapatkan **Aturan Sinus**:
+
 $$ \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} $$
 
 ##### 2. Pembuktian Aturan Kosinus (*Cosine Rule*)
 Sekarang kita gunakan **Teorema Pythagoras** pada kedua segitiga siku-siku tersebut:
+
 *   Pada $\\Delta ADC$ (kiri): Nilai $\\cos A = \\frac{x}{b}$, sehingga $\\mathbf{x = b \\cos A}$.
-    Melalui Pythagoras: $h^2 + x^2 = b^2 \implies \\mathbf{h^2 = b^2 - x^2}$
+    Melalui Pythagoras: 
+    
+    $$ h^2 + x^2 = b^2 \implies \\mathbf{h^2 = b^2 - x^2} $$
+    
 *   Pada $\\Delta BDC$ (kanan), melalui Pythagoras juga:
-    $$ a^2 = h^2 + (c - x)^2 $$</br>
+    
+    $$ a^2 = h^2 + (c - x)^2 $$
+    
     $$ a^2 = h^2 + (c^2 - 2cx + x^2) $$
 
 Sekarang, substitusikan nilai $\\mathbf{h^2}$ dari segitiga kiri ke dalam persamaan segitiga kanan:
+
 $$ a^2 = (b^2 - x^2) + c^2 - 2cx + x^2 $$
+
 Karena nilai $-x^2$ dan $+x^2$ saling menghilangkan, persamaannya tersisa menjadi:
+
 $$ a^2 = b^2 + c^2 - 2cx $$
 
 Langkah terakhir, substitusikan nilai $\\mathbf{x = b \\cos A}$ (yang kita dapat dari segitiga kiri) ke dalam persamaan di atas:
+
 $$ a^2 = b^2 + c^2 - 2c(b \\cos A) $$
+
 $$ \\mathbf{a^2 = b^2 + c^2 - 2bc \\cos A} $$
+
 Inilah pondasi utama yang kelak akan dibuktikan ulang oleh W.M. Smart namun dalam bentuk ruang bidang lengkung (Trigonometri Bola).
 
 #### E. Identitas Sudut Paruh (*Half-Angle Identities*)
 Sangat krusial dalam penurunan rumus logaritma astronomi:
+
 $$
 \\sin^2 \\left(\\frac{A}{2}\\right) = \\frac{(s-b)(s-c)}{bc}, \\quad \\text{di mana } s = \\frac{a+b+c}{2}
 $$
