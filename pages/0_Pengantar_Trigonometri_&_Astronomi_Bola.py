@@ -213,15 +213,46 @@ st.divider()
 # ==========================================
 # 3. LABORATORIUM SIMULASI 3D SUPER DETAIL
 # ==========================================
-st.subheader("3. Simulasi 3D Tiga Sistem Koordinat Astronomi")
-st.info("💡 **Petunjuk:** Pilih sistem koordinat di bawah ini. Pusat bola kini dilengkapi dengan representasi Bumi geosentrik untuk memperjelas posisi pengamat.")
+st.subheader("3. Laboratorium Spasial 3D: Bedah Detail Sistem Koordinat & Glosarium Istilah")
+st.info("💡 **Petunjuk:** Pahami penjelasan istilah di bawah, lalu pilih sistem koordinat untuk melihat simulasinya secara spasial.")
+
+# Penjelasan/Glosarium Istilah Koordinat
+with st.expander("📖 Glosarium & Penjelasan Istilah Penting dalam Sistem Koordinat"):
+    st.markdown("""
+    Sebelum mengoperasikan simulasi 3D, berikut adalah definisi dan **kegunaan praktis** dari istilah-istilah utama yang digunakan dalam berbagai sistem koordinat astronomi dan ilmu falak:
+    
+    1. **Zenith ($Z$) & Nadir ($N'$)**
+       * *Definisi:* Zenith adalah titik di bola langit yang tepat berada di atas kepala pengamat; sebaliknya, Nadir adalah titik yang tepat berada di bawah kaki pengamat.
+       * *Kegunaan:* Sebagai sumbu vertikal utama dalam pengamatan astronomi lokal.
+    
+    2. **Azimuth ($A$)**
+       * *Definisi:* Sudut arah horisontal yang diukur dari titik Utara (atau Selatan) ke arah timur sepanjang lingkaran horizon (0° hingga 360°).
+       * *Kegunaan:* Menentukan arah kompas suatu objek di langit dari posisi pengamat. Dalam **Ilmu Falak**, nilai Azimuth kiblat sangat krusial untuk menentukan arah hadap bangunan masjid/surau menghadap Ka'bah.
+    
+    3. **Altitude / Tinggi Bintang ($h$)**
+       * *Definisi:* Sudut vertikal ketinggian benda langit diukur dari bidang horizon ke arah atas (0° hingga 90°).
+       * *Kegunaan:* Mengetahui seberapa tinggi posisi matahari atau bintang di atas cakrawala (misalnya untuk menentukan waktu salat seperti tergelincirnya matahari untuk zuhur).
+    
+    4. **Deklinasi ($\\delta$)**
+       * *Definisi:* Lintang benda langit pada bola langit, diukur utara (+) atau selatan (-) dari ekuator langit (analog dengan garis lintang di bumi).
+       * *Kegunaan:* Mengetahui posisi lintang objek tata surya/bintang di bola langit secara global tanpa terikat lokasi pengamat di bumi.
+    
+    5. **Asensio Rekta / Right Ascension ($\\alpha$)**
+       * *Definisi:* Bujur langit yang diukur dari **Titik Aries ($\\gamma$)** ke arah timur sepanjang ekuator langit.
+       * *Kegunaan:* Menentukan koordinat horizontal-waktu bintang secara universal di bola langit.
+    
+    6. **Lintang ($\\phi$) & Bujur ($\\lambda$) Geografis**
+       * *Definisi:* Koordinat posisi absolut suatu kota atau titik di permukaan bumi relatif terhadap garis Ekuator (Lintang 0°) dan Meridian Utama Greenwich (Bujur 0°).
+       * *Kegunaan:* **Fondasi mutlak** dalam perhitungan ilmu falak (seperti penentuan arah kiblat dan waktu salat) karena menghubungkan posisi pengamat di permukaan bumi dengan posisi astronomis benda langit.
+    """)
 
 pilihan_sistem = st.selectbox(
-    "Pilih Sistem Koordinat Astronomi:",
+    "Pilih Sistem Koordinat Astronomi & Geografis:",
     [
         "A. Sistem Koordinat Horizon (Lokal)", 
         "B. Sistem Koordinat Ekuator (Global / Langit)", 
-        "C. Sistem Koordinat Ekliptika (Tata Surya)"
+        "C. Sistem Koordinat Ekliptika (Tata Surya)",
+        "D. Sistem Koordinat Geografis (Terestrial / Kota & Kiblat)"
     ]
 )
 
@@ -332,7 +363,7 @@ elif pilihan_sistem == "B. Sistem Koordinat Ekuator (Global / Langit)":
     ))
     fig_coord.update_layout(title=f"Simulasi 3D: Koordinat Ekuator & Titik Aries (RA: {ra_deg}°, Dec: {dec_deg}°)")
 
-else:
+elif pilihan_sistem == "C. Sistem Koordinat Ekliptika (Tata Surya)":
     st.markdown("""
     #### C. Sistem Koordinat Ekliptika (Ecliptic Coordinates)
     * **Bidang Referensi:** Bidang ekliptika (jalur edar semu matahari).
@@ -373,6 +404,54 @@ else:
         textfont=dict(size=11)
     ))
     fig_coord.update_layout(title=f"Simulasi 3D Interaktif: Koordinat Ekliptika (λ: {lam_deg}°, β: {bet_deg}°)")
+
+else:
+    st.markdown("""
+    #### D. Sistem Koordinat Geografis (Terestrial / Kota & Kiblat)
+    * **Bidang Referensi:** Ekuator Bumi (Lintang 0°) dan Meridian Utama Greenwich (Bujur 0°).
+    * **Kegunaan Falak:** Menentukan posisi absolut suatu kota di permukaan bumi. Ini adalah fondasi utama dalam menghitung **Arah Kiblat** dan jarak antar kota menggunakan segitiga bola (misal: segitiga antara Kota Pengamat, Ka'bah di Mekkah, dan Kutub Utara Bumi).
+    """)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        lat_kota = st.slider("Lintang Kota (Latitude, φ) [Derajat]", -90, 90, -7, step=1, help="Posisi utara (+) atau selatan (-) dari ekuator")
+    with col2:
+        lon_kota = st.slider("Bujur Kota (Longitude, λ) [Derajat]", -180, 180, 110, step=1, help="Posisi timur (+) atau barat (-) dari Greenwich")
+        
+    # Koordinat Mekkah (Ka'bah) sebagai referensi kiblat utama
+    lat_mecca = 21.4225
+    lon_mecca = 39.8262
+    
+    # Konversi ke radian untuk pemetaan vektor 3D
+    lat_r = np.radians(lat_kota)
+    lon_r = np.radians(lon_kota)
+    
+    x_kota = np.cos(lat_r) * np.cos(lon_r)
+    y_kota = np.cos(lat_r) * np.sin(lon_r)
+    z_kota = np.sin(lat_r)
+    
+    lat_m_r = np.radians(lat_mecca)
+    lon_m_r = np.radians(lon_mecca)
+    x_m = np.cos(lat_m_r) * np.cos(lon_m_r)
+    y_m = np.cos(lat_m_r) * np.sin(lon_m_r)
+    z_m = np.sin(lat_m_r)
+    
+    t = np.linspace(0, 2 * np.pi, 100)
+    fig_coord.add_trace(go.Scatter3d(x=np.cos(t), y=np.sin(t), z=np.zeros_like(t), mode='lines', line=dict(color='blue', width=3), name='Ekuator Bumi (0°)'))
+    
+    fig_coord.add_trace(go.Scatter3d(x=[0, x_kota], y=[0, y_kota], z=[0, z_kota], mode='lines', line=dict(color='orange', width=4), name='Vektor Lokasi Kota'))
+    fig_coord.add_trace(go.Scatter3d(x=[0, x_m], y=[0, y_m], z=[0, z_m], mode='lines', line=dict(color='purple', width=4, dash='dash'), name='Vektor Ka\'bah (Mekkah)'))
+    
+    add_mini_earth(fig_coord)
+    
+    fig_coord.add_trace(go.Scatter3d(
+        x=[x_kota, x_m], y=[y_kota, y_m], z=[z_kota, z_m],
+        mode='text+markers',
+        text=[f'Kota Anda (Lat: {lat_kota}°, Lon: {lon_kota}°)', 'Ka\'bah / Mekkah (21.4°N, 39.8°E)'],
+        marker=dict(size=[8, 8], color=['orange', 'purple']),
+        textfont=dict(size=11)
+    ))
+    fig_coord.update_layout(title=f"Simulasi 3D: Koordinat Geografis & Referensi Arah Kiblat")
 
 fig_coord.update_layout(
     scene=dict(xaxis_title='Sumbu X', yaxis_title='Sumbu Y', zaxis_title='Sumbu Z'),
