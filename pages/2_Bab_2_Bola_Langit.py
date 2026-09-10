@@ -38,7 +38,7 @@ with st.sidebar:
     - [30. Sudut Jam Benda Langit](#30-sudut-jam-dari-sebuah-benda-langit)
     - [31. Terbit dan Terbenam](#31-terbit-dan-terbenam)
     - [32. Laju Perubahan Jarak Zenit](#32-laju-perubahan-jarak-zenit-dan-azimut)
-    - [33. Temaram (Twilight)](#33-temaram-twilight)
+    - [33. Senja dan Fajar (Twilight)](#33-senja-dan-fajar-twilight)
     - [Latihan Soal (Exercises)](#latihan-soal-exercises)
     """)
 
@@ -508,18 +508,18 @@ $$ \frac{dA}{dH} = -15(\sin \phi - \cot z \cos A \cos \phi), $$
 
 yang mana adalah yang telah diturunkan sebelumnya.
 
-### 33. Temaram (*Twilight*).
-Setelah matahari terbenam, cahaya matahari tidak langsung, yang dipantulkan dan dihamburkan oleh atmosfer bagian atas, masih terus menyinari bumi, namun semakin meredup saat matahari tenggelam lebih jauh ke bawah horizon. Ketika matahari berada $18^\circ$ di bawah horizon (jarak zenitnya saat itu $108^\circ$) iluminasi tidak langsung ini telah menjadi cukup dapat diabaikan. Interval antara matahari terbenam dan waktu ketika jarak zenit matahari telah meningkat menjadi $108^\circ$ disebut durasi temaram senja (*evening twilight*). Dengan cara yang serupa, kita mendefinisikan durasi temaram pagi (*morning twilight*). Durasi temaram senja, sebagai contoh, dapat dihitung sebagai berikut. Pada Gbr. 26, $LFM$ adalah paralel deklinasi matahari (karena tidak ada akurasi besar yang diperlukan dalam perhitungan khusus ini, kita mengabaikan perubahan dalam deklinasi matahari selama hari khusus yang bersangkutan) dan $JGK$ adalah sebuah lingkaran kecil, sejajar dengan horizon, yang setiap titiknya adalah $108^\circ$ dari $Z$. Lingkaran kecil ini memotong paralel deklinasi di $G$. Maka interval waktu yang diperlukan bagi matahari untuk bergerak dari $F$ ke $G$, yakni $F\hat{P}G$, adalah durasi temaram senja. Sekarang $F\hat{P}G = Z\hat{P}G - Z\hat{P}F$; karena $Z\hat{P}F$ adalah sudut jam dari matahari terbenam ia dapat dihitung oleh rumus (24). Sekarang di dalam segitiga $ZPG$, kita memiliki: $ZG = 108^\circ$, $PZ = 90^\circ - \phi$ dan $PG = 90^\circ - \delta$; karenanya, berdasarkan A,
+### 33. Senja dan Fajar (*Twilight*).
+Setelah matahari terbenam, cahaya matahari tidak langsung, yang dipantulkan dan dihamburkan oleh atmosfer bagian atas, masih terus menyinari bumi, namun semakin meredup saat matahari tenggelam lebih jauh ke bawah horizon. Ketika matahari berada $18^\circ$ di bawah horizon (jarak zenitnya saat itu $108^\circ$) iluminasi tidak langsung ini telah menjadi cukup dapat diabaikan. Interval antara matahari terbenam dan waktu ketika jarak zenit matahari telah meningkat menjadi $108^\circ$ disebut durasi senja (*evening twilight*). Dengan cara yang serupa, kita mendefinisikan durasi fajar (*morning twilight*). Durasi senja, sebagai contoh, dapat dihitung sebagai berikut. Pada Gbr. 26, $LFM$ adalah paralel deklinasi matahari (karena tidak ada akurasi besar yang diperlukan dalam perhitungan khusus ini, kita mengabaikan perubahan dalam deklinasi matahari selama hari khusus yang bersangkutan) dan $JGK$ adalah sebuah lingkaran kecil, sejajar dengan horizon, yang setiap titiknya adalah $108^\circ$ dari $Z$. Lingkaran kecil ini memotong paralel deklinasi di $G$. Maka interval waktu yang diperlukan bagi matahari untuk bergerak dari $F$ ke $G$, yakni $F\hat{P}G$, adalah durasi senja. Sekarang $F\hat{P}G = Z\hat{P}G - Z\hat{P}F$; karena $Z\hat{P}F$ adalah sudut jam dari matahari terbenam ia dapat dihitung oleh rumus (24). Sekarang di dalam segitiga $ZPG$, kita memiliki: $ZG = 108^\circ$, $PZ = 90^\circ - \phi$ dan $PG = 90^\circ - \delta$; karenanya, berdasarkan A,
 
 $$ \cos 108^\circ = \sin \phi \sin \delta + \cos \phi \cos \delta \cos Z\hat{P}G, $$
 
-yang memungkinkan perhitungan dari $Z\hat{P}G$ untuk dilakukan. Nilai dari $\delta$, yang digunakan dalam rumus ini, tentu saja bergantung pada hari tertentu dari tahun yang bersangkutan. Dengan demikian durasi temaram senja ditemukan.
+yang memungkinkan perhitungan dari $Z\hat{P}G$ untuk dilakukan. Nilai dari $\delta$, yang digunakan dalam rumus ini, tentu saja bergantung pada hari tertentu dari tahun yang bersangkutan. Dengan demikian durasi senja ditemukan.
 """
 st.markdown(materi_bab_2_bagian_16, unsafe_allow_html=True)
-st.image("Gambar_26.jpg", caption="Gambar 26: Diagram Durasi Temaram Senja (Twilight)", use_container_width=True)
+st.image("Gambar_26.jpg", caption="Gambar 26: Diagram Durasi Senja (Evening Twilight)", use_container_width=True)
 
 materi_bab_2_bagian_17 = r"""
-Jelas dari Gbr. 26 bahwa temaram senja akan berakhir jika $NM$ lebih besar dari $NJ$, dengan kata lain, jika pada tengah malam semu matahari berada lebih dari $18^\circ$ di bawah horizon. Sekarang $NT = 90^\circ - \phi$ dan $MT = \delta$; $\therefore NM = 90^\circ - \phi - \delta$. Karenanya temaram senja berakhir jika $90^\circ - \phi - \delta > 18^\circ$, atau jika $\delta < 72^\circ - \phi$. Sebagai contoh, di lintang $60^\circ \text{ U}$, temaram akan berakhir jika $\delta < 12^\circ$. Ketika $\delta$ lebih besar dari $12^\circ$, jarak zenit matahari adalah kurang dari $108^\circ$ antara terbenam dan tengah malam semu, dan juga antara tengah malam semu dan matahari terbit; oleh karena itu, di $60^\circ \text{ U}$ tidak pernah benar-benar gelap pada hari-hari di tahun itu ketika deklinasi matahari melebihi $12^\circ \text{ U}$. Hari-hari ini adalah di antara 23 April dan 22 Agustus.
+Jelas dari Gbr. 26 bahwa senja akan berakhir jika $NM$ lebih besar dari $NJ$, dengan kata lain, jika pada tengah malam semu matahari berada lebih dari $18^\circ$ di bawah horizon. Sekarang $NT = 90^\circ - \phi$ dan $MT = \delta$; $\therefore NM = 90^\circ - \phi - \delta$. Karenanya senja berakhir jika $90^\circ - \phi - \delta > 18^\circ$, atau jika $\delta < 72^\circ - \phi$. Sebagai contoh, di lintang $60^\circ \text{ U}$, senja akan berakhir jika $\delta < 12^\circ$. Ketika $\delta$ lebih besar dari $12^\circ$, jarak zenit matahari adalah kurang dari $108^\circ$ antara terbenam dan tengah malam semu, dan juga antara tengah malam semu dan matahari terbit; oleh karena itu, di $60^\circ \text{ U}$ tidak pernah benar-benar gelap pada hari-hari di tahun itu ketika deklinasi matahari melebihi $12^\circ \text{ U}$. Hari-hari ini adalah di antara 23 April dan 22 Agustus.
 
 ---
 
@@ -614,3 +614,122 @@ dan bahwa pada tengah hari semu, kelebaran bayangan tersebut adalah $h \tan \phi
 **18.** Dua tempat berada di lintang yang sama dan jarak kutub lingkaran besar yang melalui keduanya sama dengan deklinasi matahari. Buktikan bahwa di tempat-tempat ini, panjang malam hari sama dengan selisih bujur mereka.
 """
 st.markdown(materi_bab_2_bagian_17, unsafe_allow_html=True)
+
+materi_bab_2_bagian_18 = r"""
+**19.** Misalkan $\alpha, \delta$ adalah koordinat sebuah bintang terhadap suatu lingkaran besar $S$, dan $\alpha', \delta'$ adalah koordinat bintang yang sama terhadap lingkaran besar lainnya $S'$. Jika $i$ adalah inklinasi $S'$ terhadap $S$ dan jika *ascending node* dari $S'$ pada $S$ memiliki koordinat $(\theta, 0)$ pada sistem pertama dan $(\theta', 0)$ pada sistem kedua, tunjukkan bahwa
+
+$$ \cos \delta' \cos (\alpha' - \theta') = \cos \delta \cos (\alpha - \theta), $$
+
+$$ \cos \delta' \sin (\alpha' - \theta') = \sin \delta \sin i + \cos \delta \cos i \sin (\alpha - \theta), $$
+
+$$ \sin \delta' = \sin \delta \cos i - \cos \delta \sin i \sin (\alpha - \theta). $$
+
+Jika $\alpha = 75^\circ, \delta = 15^\circ, \theta = 215^\circ, \theta' = 115^\circ, i = 23^\circ 30'$, tunjukkan bahwa dari persamaan-persamaan terakhir $\alpha' = 327^\circ 12', \delta' = 29^\circ 0'$.
+
+**20.** Tunjukkan bahwa jika $a$ adalah ketinggian bintang kutub, $H$ sudut jam dan $p$ (dalam detik busur) jarak kutubnya, lintangnya kira-kira diberikan oleh
+
+$$ \phi = a - p \cos H + \frac{1}{2} p^2 \sin^2 H \tan a \sin 1''. $$
+
+**21.** Sebuah benda langit (deklinasi $\delta$) berada pada sudut kecil $H$ dari meridian. Buktikan bahwa jarak zenit $z$ diberikan kira-kira oleh
+
+$$ z = \phi - \delta + a_1 - a_2, $$
+
+di mana $a_1$ (diekspresikan dalam menit busur) diberikan oleh
+
+$$ a_1 = \frac{2 \cos \phi \cos \delta}{\sin (\phi - \delta)} \sin^2 \frac{H}{2} \operatorname{cosec} 1', $$
+
+dan
+
+$$ a_2 = \frac{1}{2} a_1^2 \cot (\phi - \delta) \sin 1'. $$
+
+**22.** Jika $a$ adalah ketinggian matahari di vertikal utama pada suatu tempat di lintang $\phi$ dan $L$ adalah bujurnya, buktikan bahwa
+
+$$ \phi = \sin^{-1} (\sin L \sin \epsilon \operatorname{cosec} a). \quad [Ball.] $$
+
+**23.** Buktikan bahwa, di lintang $45^\circ$, interval antara momen ketika azimut sebuah bintang adalah $90^\circ$ timur dan momen terbenam adalah konstan.
+
+**24.** Jika $\delta$ adalah deklinasi sebuah bintang dan $A$ azimut maksimumnya, tunjukkan bahwa dalam $t$ sekon waktu dari momen ketika azimutnya adalah $A$, azimut tersebut telah berubah sebesar
+
+$$ \frac{1}{2} 15^2 t^2 \sin 1'' \sin^2 \delta \tan A \quad \text{detik busur.} $$
+
+**25.** Jika $\eta$ adalah sudut paralaktik dan $\phi$ serta $\delta$ adalah konstan, buktikan bahwa
+
+$$ \text{(i)} \quad \frac{d\eta}{dH} = - \cos \phi \cos A \operatorname{cosec} z; $$
+
+$$ \text{(ii)} \quad \frac{d^2z}{dH^2} = \frac{d\eta}{dH} \cos \delta \cos \eta; $$
+
+$$ \text{(iii)} \quad \frac{d^2A}{dH^2} = - \frac{\cos \delta}{\sin^2 z} \left( \cos z \cos \eta \frac{dz}{dH} + \sin z \sin \eta \frac{d\eta}{dH} \right). $$
+
+**26.** Jika $H$ adalah sudut jam sebuah bintang pada saat terbit, tunjukkan bahwa
+
+$$ \tan^2 \frac{H}{2} = \frac{\cos (\phi - \delta)}{\cos (\phi + \delta)}. $$
+
+**27.** Di sebuah tempat di lintang utara $\phi$, dua bintang $A$ dan $B$ (masing-masing dengan deklinasi $\delta$ dan $\delta_1$) terbit pada momen yang sama dan $A$ transit ketika $B$ sedang terbenam. Buktikan bahwa
+
+$$ \tan \phi \tan \delta = 1 - 2 \tan^2 \phi \tan^2 \delta_1. $$
+
+**28.** Jika dua bintang $(\alpha, \delta)$ dan $(\alpha_1, \delta_1)$ terbit pada momen yang sama di suatu tempat di lintang $\phi$, tunjukkan bahwa
+
+$$ \cot^2 \phi \sin^2 (\alpha_1 - \alpha) = \tan^2 \delta + \tan^2 \delta_1 - 2 \tan \delta \tan \delta_1 \cos (\alpha_1 - \alpha). \quad [Ball.] $$
+
+**29.** Di sebuah tempat di lintang $\phi$ matahari diamati terbit $h$ jam sebelum tengah hari semu, dan hari berikutnya ia terbit $m$ menit lebih lambat. Deklinasinya pada hari pertama adalah $\delta$. Tunjukkan bahwa jarak dalam menit busur antara dua titik terbit tersebut adalah
+
+$$ 15 m \cos^2 \delta \operatorname{cosec} \phi. \quad [Coll. Exam.] $$
+
+**30.** Jika senja berakhir ketika pusat matahari berada $18^\circ$ di bawah horizon, tunjukkan bahwa di ekuator durasi senja diberikan dalam jam oleh
+
+$$ \frac{12}{\pi} \sin^{-1} (\sin 18^\circ \sec \delta). $$
+
+Gunakan rumus ini untuk menghitung durasi senja pada solstis musim panas. *[Lond. 1930.]*
+
+**31.** Tunjukkan bahwa di suatu tempat di lintang $\phi$ durasi terpendek dari senja dan fajar, diekspresikan dalam jam, adalah
+
+$$ \frac{12}{\pi} \sin^{-1} (\sin 9^\circ \sec \phi), $$
+
+di mana $\sin^{-1} (\sin 9^\circ \sec \phi)$ diekspresikan dalam derajat. *[Ball.]*
+
+**32.** Jika senja atau fajar dimulai atau berakhir ketika matahari berada $18^\circ$ di bawah horizon, tunjukkan bahwa semua tempat memiliki hari yang lebih dari dua belas jam, termasuk senja dan fajar, selama deklinasi matahari secara numerik kurang dari $18^\circ$.
+
+**33.** Jika hari dianggap dimulai dan berakhir ketika matahari berada pada sudut $\theta$ di bawah horizon, tunjukkan bahwa hari terpendek tidak akan terjadi pada solstis musim dingin jika lintangnya kurang dari $\phi$, di mana
+
+$$ \sin \phi = \sin \epsilon \sin \theta, $$
+
+dan $\epsilon$ adalah kemiringan ekliptika. *[M.T. 1917.]*
+
+**34.** Dengan mengasumsikan bahwa matahari bergerak secara seragam di ekliptika, menyelesaikan satu putaran dalam 365 hari, tunjukkan bahwa jumlah malam di mana terdapat senja dan fajar bahkan pada tengah malam di sebuah tempat di lintang $\phi$ adalah bilangan bulat terdekat yang lebih besar dari
+
+$$ \frac{365}{\pi} \cos^{-1} \{ \cos (\phi + 18^\circ) / \sin \epsilon \}, $$
+
+senja dan fajar dimulai atau berakhir ketika matahari berada $18^\circ$ di bawah horizon. *[Coll. Exam.]*
+
+**35.** Jika $\theta$ melambangkan depresi matahari di bawah horizon pada akhir senja, dan $\eta, \eta'$ adalah sudut paralaktik pada akhir senja dan pada saat terbenam secara berturut-turut, buktikan bahwa durasi ($T$) dari senja diberikan oleh
+
+$$ 2 \sin^2 \frac{T}{2} \cos^2 \phi = 1 - \cos \theta \cos (\eta' - \eta). $$
+
+**36.** Asensio rekta sebuah bintang adalah $5^h 49^m$ dan deklinasinya adalah $+ 7^\circ 23'$, dan kemiringan ekliptika adalah $23^\circ 27'$. Tunjukkan bahwa bujur dan lintang bintang tersebut berturut-turut adalah $87^\circ 10'$, $- 16^\circ 2'$.
+
+**37.** Dua bintang $(\alpha_1, \delta_1)$ dan $(\alpha_2, \delta_2)$ memiliki bujur yang sama; buktikan bahwa
+
+$$ \sin (\alpha_1 - \alpha_2) = \tan \epsilon (\cos \alpha_1 \tan \delta_2 - \cos \alpha_2 \tan \delta_1). $$
+
+**38.** Sebuah bintang dengan asensio rekta $\alpha$ dan deklinasi $\delta$ memiliki lintang kecil $\beta$. Buktikan bahwa bujur matahari, ketika R.A.-nya adalah $\alpha$, berbeda dari bujur bintang tersebut kira-kira sebesar $\beta \sin \delta \cot \alpha$.
+
+**39.** Tunjukkan bahwa kemiringan ekliptika dapat ditentukan dengan melakukan pengamatan terhadap deklinasi matahari $\delta$ pada suatu tengah hari menjelang solstis musim panas dengan menggunakan rumus $\epsilon = \delta + q^2 \sin 2\delta$, di mana $q$ adalah setengah dari defisit dari sudut siku-siku dari asensio rekta matahari. *[M.T. 1924.]*
+
+**40.** Kutub Bima Sakti berada pada R.A. $12^h 48^m$, Dekl. $+ 27^\circ$. Sekitar tanggal berapa matahari melewati Bima Sakti? (Kemiringan ekliptika $= 23^\circ 27'$.) *[M.T. 1925.]*
+
+**41.** Sebuah bintang dipindahkan dalam jumlah kecil $dr$ menuju sebuah titik $O$ di bola langit dengan koordinat ekuatorial $(\alpha_0, \delta_0)$. Tunjukkan bahwa perubahan yang dihasilkan pada koordinat ekuatorial bintang $(\alpha, \delta)$ diberikan oleh
+
+$$ \cos \delta \, d\alpha = \cos \delta_0 \sin (\alpha - \alpha_0) \operatorname{cosec} r \, dr, $$
+
+$$ d\delta = (\cos \delta_0 \sin \delta \cos (\alpha - \alpha_0) - \sin \delta_0 \cos \delta) \operatorname{cosec} r \, dr, $$
+
+di mana $r$ adalah panjang busur pada bola langit dari bintang ke titik $O$. *[Glas. 1974.]*
+
+**42.** Buktikan bahwa jarak zenit $z$ dari kutub utara ekliptika diberikan oleh
+
+$$ z = \cos^{-1} (\cos \epsilon \sin \phi - \sin \epsilon \cos \phi \sin T). $$
+
+Di sini $\epsilon$ adalah kemiringan ekliptika, $\phi$ adalah lintang pengamat, dan $T$ adalah waktu sideris lokal.
+"""
+st.markdown(materi_bab_2_bagian_18, unsafe_allow_html=True)
