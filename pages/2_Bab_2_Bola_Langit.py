@@ -34,6 +34,12 @@ with st.sidebar:
     - [26. Lintang dan Bujur Langit](#26-lintang-dan-bujur-langit)
     - [27. Waktu Sideris](#27-waktu-sideris)
     - [28. Waktu Matahari Rata-rata](#28-waktu-matahari-rata-rata)
+    - [29. Contoh Penyelasaian](#29-contoh-example)
+    - [30. Sudut Jam Benda Langit](#30-sudut-jam-dari-sebuah-benda-langit)
+    - [31. Terbit dan Terbenam](#31-terbit-dan-terbenam)
+    - [32. Laju Perubahan Jarak Zenit](#32-laju-perubahan-jarak-zenit-dan-azimut)
+    - [33. Temaram (Twilight)](#33-temaram-twilight)
+    - [Latihan Soal (Exercises)](#latihan-soal-exercises)
     """)
 
 # ==========================================
@@ -132,7 +138,7 @@ st.image("Gambar_17.png", caption="Gambar 17: Bola Langit Standar atau Geosentri
 materi_bab_2_bagian_9 = r"""
 dari $O$. $P_1\hat{C}M$ didefinisikan sebagai jarak kutub utara $M$ yang dengan demikian merupakan sudut antara sumbu bumi dan garis lurus yang menghubungkan pusat bumi ke benda langit. Definisi ini sepenuhnya bersifat umum dan berlaku untuk setiap benda langit. Oleh karena itu, pusat bola langit standar (atau bola langit geosentrik, sebagaimana dapat disebut) diambil berada di $C$, pusat bumi (Gbr. 17). $CZ$ adalah arah zenit pengamat, diameter $QCP$ berimpit dengan sumbu bumi, $NWSE$ adalah horizon langit (lingkaran besar yang bidangnya tegak lurus terhadap $CZ$), dan $RWTE$ adalah ekuator langit (bidang yang berimpit dengan bidang ekuator bumi). busur $PX$ adalah jarak kutub utara dari benda langit sesuai dengan definisi yang baru saja diberikan dan $DX$ adalah deklinasi $\delta$ (N.P.D. $= 90^\circ - \delta$). Meridian pengamat adalah $PZRSQ$, jarak zenit dari benda langit adalah $ZX$ (dilambangkan dengan $z$) dan azimut $A$ (sudut $P\hat{Z}X$) serta sudut jam $H$ (sudut $Z\hat{P}X$) adalah seperti yang telah dideskripsikan sebelumnya. Deklinasi benda-benda langit utama (bulan, matahari, planet-planet dan bintang-bintang paling terang) ditabulasikan di dalam *Astronomical Ephemeris* (publikasi Amerika dan Inggris) dan di dalam efemeris nasional lainnya.
 
-Hereafter, bola langit akan diasumsikan seperti pada Gbr. 17, yaitu, berpusat di $C$, pusat bumi.
+Mulai dari sini, bola langit akan diasumsikan seperti pada Gbr. 17, yaitu, berpusat di $C$, pusat bumi.
 
 ### 23. Penyelesaian dari segitiga bola PZX.
 Kita akan mempertimbangkan dua masalah umum yang terkait dengan segitiga $PZX$.
@@ -288,5 +294,323 @@ Kebingungan niscaya tidak akan terelakkan jika setiap tempat menjaga *local mean
 $$ \text{U.T.} \equiv \text{G.M.T.} = \text{Z.T.} \pm \text{bujur dari meridian standar} \dots(22) $$
 
 *(Catatan kaki: * Sebelum 1925, G.M.T. digunakan di dalam almanak untuk menandakan *Greenwich mean astronomical time* (G.M.A.T.). Mulai 1925, waktu yang digunakan adalah G.M.T. ($\equiv$ G.C.T.) lalu digantikan, seperti halnya disinggung di atas, oleh U.T. Baru-baru ini, untuk berbagai alasan yang dicantumkan dalam Apendiks E (hlm. 424), U.T. telah diganti di dalam almanak oleh Ephemeris Time (E.T.). Perbedaan di antara U.T. dan E.T. sangatlah sedikit hingga kita akan menggunakan yang terdahulu secara umumnya, terkecuali kalau dinyatakan sebaliknya).*
+
+### 29. Contoh (*Example*).
+Kita akan menggunakan sebagai ilustrasi masalah berikut dari tipe yang umum dan penting. Di sebuah tempat pada bujur $163^\circ 14' \text{ T}$, diharuskan untuk menghitung sudut jam matahari ($\text{H.A. } \odot$) yang sesuai dengan pengamatan yang dilakukan pada waktu zona $8^h 46^m 22^s$ pada 10 Maret 1975; waktu zona tersebut adalah waktu meridian standar dari $165^\circ \text{ T} (11^h \text{ T})$.
+
+Langkah pertama adalah menurunkan U.T. pada saat pengamatan dilakukan. Kita peroleh:
+
+Waktu zona: $8^h 46^m 22^s$ 10 Maret
+Bujur meridian standar: $- 11^h$
+U.T. = $21^h 46^m 22^s$ 9 Maret
+
+Kita mengurangkan $11^h$ dari waktu zona sesuai dengan rumus (22). (Jelasnya, kita dapat menulis waktu zona sebagai $32^h 46^m 22^s$ 9 Maret.)
+
+Kita selanjutnya mencari waktu rata-rata lokal (*local mean time*—yaitu, waktu rata-rata yang bersesuaian dengan bujur tempat tersebut) dengan menggunakan (21).
+
+U.T.: $21^h 46^m 22^s$ 9 Maret
+Bujur tempat (T): $+ 10^h 52^m 56^s$
+Local M.T. = $32^h 39^m 18^s$ 9 Maret
+Local M.T. = $8^h 39^m 18^s$ 10 Maret
+
+Rumus (20) memampukan kita untuk menuliskan H.A.M.S. (sudut jam dari matahari rata-rata di tempat tersebut); yaitu:
+
+$$ \text{H.A.M.S.} = 20^h 39^m 18^s. $$
+
+Langkah berikutnya adalah menerapkan perataan waktu terhadap H.A.M.S. Dari *Astronomical Ephemeris* ditemukan, melalui interpolasi, bahwa pada U.T. $21^h 46^m 22^s$, 9 Maret, $E = -10^m 36^s$.
+
+Maka, berdasarkan (17),
+
+$$ \text{H.A. } \odot = 20^h 39^m 18^s - 10^m 36^s, $$
+
+atau
+
+$$ \text{H.A. } \odot = 20^h 28^m 42^s. $$
+
+### 30. Sudut jam dari sebuah benda langit.
+Untuk menghitung sudut jam dari benda langit apa pun ($X$) selain matahari, kita melangkah sebagai berikut. Oleh (8) dan (14) kita peroleh:
+
+$$ \text{L.S.T.} = \text{H.A. } X + \text{R.A. } X $$
+
+dan
+
+$$ \text{G.S.T.} = \text{L.S.T.} \pm l, $$
+
+sehingga
+
+$$ \text{H.A. } X + \text{R.A. } X = \text{G.S.T.} \pm l \dots\dots(23). $$
+
+Di dalam *Astronomical Ephemeris*, waktu sideris Greenwich ditabulasikan pada $0^h$ U.T. untuk setiap hari sepanjang tahun. Karena, berdasarkan (15),
+
+$$ \text{Sid. time} = \text{H.A.M.S.} + \text{R.A.M.S.}, $$
+
+kita peroleh:
+
+$$ \text{R.A.M.S. pada U.T. } 0^h \text{ untuk hari apa pun} = \text{waktu sideris Greenwich yang ditabulasikan pada U.T. } 0^h \text{ untuk hari tersebut } - 12^h. $$
+
+*R.A.M.S. meningkat secara seragam pada laju $3^m 56^s.56$ per hari matahari rata-rata atau pada laju $9^s.856$ per jam matahari rata-rata*; melalui ini kita dapat menghitung R.A.M.S. untuk U.T. mana pun yang diberikan. Tabel-tabel diberikan di dalam almanak untuk memfasilitasi perhitungan ini.
+
+Penggunaan rumus (23) diilustrasikan dengan paling baik menggunakan sebuah contoh. Diharuskan untuk menghitung sudut jam dari Betelgeuse ($\alpha$ Orionis) pada waktu zona $18^h 35^m 46^s$ pada 26 Januari 1975, di sebuah tempat yang bujurnya adalah $64^\circ 28' 49'' \text{ B}$. (Zona $+ 4^h$: ini berarti bahwa meridian standar dari zona tersebut adalah $4^h \text{ B}$ atau $60^\circ \text{ B}$.)
+
+Waktu zona: $18^h 35^m 46^s$ Januari 26
+Zona: $+ 4^h$
+U.T.: $22^h 35^m 46^s$ Januari 26
+Koreksi waktu sideris: $3^m 43^s$ ($3^m 56^s.56$ per hari)
+Total: $22^h 39^m 29^s$
+G.S.T. pada $0^h$ U.T.: $8^h 18^m 39^s$ (Dari A.E.)
+G.S.T.: $30^h 58^m 08^s$
+Bujur tempat (B): $- 4^h 17^m 55^s$
+L.S.T.: $26^h 40^m 13^s$
+Kurangi R.A. dari Betelgeuse: $5^h 53^m 49^s$ (Dari A.E.)
+**H.A. dari Betelgeuse: $20^h 46^m 24^s$**
+
+### 31. Terbit dan terbenam.
+Pertimbangkan Gbr. 24. Benda langit $X$ dikatakan terbenam pada $F$, titik di mana ia mencapai horizon. Maka jarak zenit adalah $90^\circ$, yakni, $ZF = 90^\circ$. Misalkan $H$ menjadi sudut jam dari $X$ pada saat terbenam, sehingga $Z\hat{P}F = H$. Juga $PF = 90^\circ - \delta$. Misalkan $A$ menjadi azimut saat terbenam ($P\hat{Z}F$) dan $\phi$ lintangnya.
+
+Dari rumus A,
+
+$$ \cos ZF = \cos PZ \cos PF + \sin PZ \sin PF \cos ZPF, $$
+
+atau
+
+$$ \cos 90^\circ = \sin \phi \sin \delta + \cos \phi \cos \delta \cos H, $$
+
+sehingga, karena $\cos 90^\circ = 0$,
+
+$$ \cos H = - \tan \phi \tan \delta \dots\dots(24), $$
+
+dari mana sudut jam pada saat terbenam dapat dihitung.
+Juga dari A,
+
+$$ \cos PF = \cos PZ \cos ZF + \sin PZ \sin ZF \cos PZF, $$
+
+atau
+
+$$ \sin \delta = 0 + \cos \phi \cos A, $$
+
+sehingga
+
+$$ \cos A = \sin \delta \sec \phi \dots\dots(25), $$
+
+dari mana azimut pada saat terbenam dapat dihitung.
 """
 st.markdown(materi_bab_2_bagian_14, unsafe_allow_html=True)
+st.image("Gambar_24.jpg", caption="Gambar 24: Posisi Benda Langit Saat Terbenam di Horizon", use_container_width=True)
+
+materi_bab_2_bagian_15 = r"""
+Di lintang utara, terlihat baik dari persamaan-persamaan (24) dan (25), atau dari Gbr. 24, bahwa jika deklinasinya adalah utara maka sudut jam pada saat terbenam adalah di antara $6^h$ dan $12^h$ dan bahwa azimutnya adalah kurang dari $90^\circ$ (yakni, benda tersebut terbenam di antara barat dan utara); dan bahwa jika deklinasinya adalah selatan, sudut jam pada saat terbenam adalah di antara $0^h$ dan $6^h$ dan benda tersebut terbenam di antara selatan dan barat. Masalah ini karena menyangkut terbitnya suatu benda langit dapat diperlakukan dengan cara yang serupa. Ketika lintang pengamat adalah selatan, prosedurnya serupa.
+
+Jika benda langit yang bersangkutan adalah sebuah bintang, sudut jam pada saat terbenam memberikan interval antara transit meridian dan terbenam yang diekspresikan dalam waktu sideris. Jika benda langit tersebut adalah matahari, interval antara transit meridian dan terbenam diekspresikan dalam waktu matahari semu. Tetapi selama interval ini posisi relatif dari matahari dan matahari rata-rata hanya akan berubah sedikit (dengan kata lain, perubahan dalam perataan waktu biasanya dapat diabaikan kecuali jika akurasi ekstrem diinginkan), dan dengan demikian interval tersebut dapat dideskripsikan, untuk semua tujuan praktis, dalam bentuk waktu rata-rata. Dengan demikian, jika dari rumus (24) sudut jam $H$ pada saat terbenam ditemukan menjadi $7^h 30^m$, maka interval antara transit meridian matahari dan terbenam adalah $7^h 30^m$ waktu matahari rata-rata. Dengan mengabaikan pertimbangan akan perubahan apa pun dalam deklinasi matahari, kita menyimpulkan bahwa ini juga merupakan interval antara matahari terbit dan persinggahan meridian. Dengan demikian matahari berada di atas horizon selama $15^h$ dan di bawah horizon selama $9^h$. Sebenarnya, tentu saja, deklinasi matahari umumnya sedikit berbeda pada saat matahari terbit dari pada saat matahari terbenam dikarenakan gerakannya di sepanjang ekliptika dan efeknya dapat dihitung.
+
+Rumus (24) menunjukkan bahwa jika $\phi > 90^\circ - \delta$, $\cos H$, secara numerik, lebih besar dari kesatuan, sehingga persamaan tersebut gagal untuk memberikan sebuah nilai untuk $H$. Dalam contoh ini, matahari tidak terbenam di lintang dan pada hari-hari sedemikian sehingga $\phi > 90^\circ - \delta$, seperti yang juga dapat diverifikasi dari sebuah diagram. Pada hari pertengahan musim panas (*midsummer day*), deklinasi utara matahari adalah yang terbesar; saat itu sekitar $23\frac{1}{2}^\circ \text{ U}$, sehingga di lintang utara dari $66\frac{1}{2}^\circ \text{ U}$, matahari berada di atas horizon pada hari itu tanpa terbenam.* Di kutub utara, karena $\phi > 90^\circ - \delta$, asalkan $\delta$ adalah utara, matahari berada di atas horizon secara terus-menerus antara 21 Maret dan 21 September; selama sisa enam bulan, matahari berada di bawah horizon. Paralel $66\frac{1}{2}^\circ \text{ U}$ disebut *Lingkaran Arktik* (*Arctic Circle*) dan paralel yang bersesuaian di belahan bumi selatan ($66\frac{1}{2}^\circ \text{ S}$) adalah *Lingkaran Antarktika* (*Antarctic Circle*).
+
+*(Catatan kaki: * Karenanya ungkapan tersebut, matahari tengah malam (the midnight sun).)*
+
+### 32. Laju perubahan jarak zenit dan azimut.
+Misalkan $X$ pada Gbr. 25 menjadi posisi suatu benda langit pada bola langit pada momen tertentu dan $Y$ posisinya sedikit lebih lambat. Asumsikan deklinasi menjadi konstan sehingga $X$ dan $Y$ terletak pada lingkaran kecil $LM$ (paralel deklinasi), darinya $P$ adalah kutubnya. Gambarlah busur-busur lingkaran besar $PX, PY, ZX, ZY$. Misalkan $UX$ menjadi busur dari lingkaran kecil darinya $Z$ adalah kutubnya; maka $ZX = ZU$. Misalkan $Z\hat{P}X = H$ dan $Z\hat{P}Y = H + \Delta H$, sehingga $X\hat{P}Y = \Delta H$. Misalkan $P\hat{Z}X = A$ dan $X\hat{Z}Y = \Delta A$; $ZX = z$ dan $ZY = z + \Delta z$. Maka $UY = \Delta z$. Karena $XY$ diandaikan sebagai busur yang kecil, kita dapat mengasumsikan bahwa $UXY$ adalah segitiga bidang, bersudut siku-siku di $U$.
+"""
+st.markdown(materi_bab_2_bagian_15, unsafe_allow_html=True)
+st.image("Gambar_25.jpg", caption="Gambar 25: Perubahan Kecil Posisi Benda Langit dalam Jarak Zenit dan Azimut", use_container_width=True)
+
+materi_bab_2_bagian_16 = r"""
+Saat benda langit bergerak, dikarenakan gerak harian, dari $X$ ke $Y$ jarak zenitnya meningkat sebesar $\Delta z$, sudut jamnya sebesar $\Delta H$ dan azimutnya menurun sebesar $\Delta A$.
+
+Berdasarkan rumus (1) dari bagian 3 (hlm. 4),
+
+$$ XY = X\hat{P}Y \sin PX = \Delta H \cos \delta, $$
+
+dan
+
+$$ UX = X\hat{Z}Y \sin ZX = \Delta A \sin z. $$
+
+Misalkan $\eta$ menandakan sudut $PXZ$; $\eta$ disebut sudut paralaktik (*parallactic angle*). Kemudian, karena $Y$ sangat dekat dengan $X$, kita dapat menganggap $P\hat{Y}Z$ sebagai $\eta$. Maka
+
+$$ UY = XY \cos U\hat{Y}X, $$
+
+dan
+
+$$ UX = XY \sin U\hat{Y}X. $$
+
+Sekarang $P\hat{Y}Z = \eta$ dan $P\hat{Y}X = 90^\circ$; karenanya
+
+$$ UY = \Delta z = \Delta H \cos \delta \sin \eta, $$
+
+dan
+
+$$ UX = \Delta A \sin z = \Delta H \cos \delta \cos \eta. $$
+
+Sekarang di dalam segitiga bola $PXZ$, berdasarkan rumus B,
+
+$$ \cos \delta \sin \eta = \sin A \cos \phi, $$
+
+dan, berdasarkan rumus C,
+
+$$ \cos \delta \cos \eta = \sin \phi \sin z - \cos \phi \cos z \cos A. $$
+
+Karenanya
+
+$$ \Delta z = \Delta H \sin A \cos \phi \dots\dots(26), $$
+
+dan
+
+$$ \Delta A = \Delta H (\sin \phi - \cos \phi \cot z \cos A) \dots\dots(27). $$
+
+Di dalam rumus-rumus ini, $\Delta H, \Delta z$ dan $\Delta A$ diandaikan diekspresikan dalam ukuran sirkular. Misalkan $\Delta H^s$ melambangkan jumlah sekon waktu dalam $\Delta H$ radian; misalkan $\Delta z'', \Delta A''$ melambangkan jumlah detik busur dalam radian $\Delta z, \Delta A$ secara berturut-turut. Maka, berdasarkan prinsip-prinsip bagian 15, hlm. 22,
+
+$$ \Delta z = \Delta z'' \sin 1''; \quad \Delta A = \Delta A'' \sin 1''; \quad \Delta H = \Delta H^s \sin 1^s, $$
+
+dan, karena $\sin 1^s = 15 \sin 1''$, kita memiliki
+
+$$ \Delta z'' = 15 \Delta H^s \sin A \cos \phi, $$
+
+$$ \Delta A'' = 15 \Delta H^s (\sin \phi - \cos \phi \cot z \cos A). $$
+
+Jika $\Delta H^s = 1$ sekon, persamaan-persamaan ini masing-masing menyatakan bahwa jarak zenit meningkat pada laju $15 \sin A \cos \phi$ detik busur per sekon waktu dan bahwa azimut menurun pada laju $15 [\sin \phi - \cos \phi \cot z \cos A]$ detik busur per sekon waktu.
+
+Jika benda langit tersebut adalah sebuah bintang, laju-laju perubahan jarak zenit dan azimut diekspresikan dalam bentuk detik busur per sekon waktu sideris; dalam kasus matahari, laju-laju tersebut adalah dalam bentuk detik busur per sekon waktu matahari semu atau dengan presisi yang cukup, waktu matahari rata-rata.
+
+Hasil-hasil yang baru saja diperoleh dapat diturunkan dengan mudah melalui metode kalkulus, sebagai berikut. Dari segitiga $PZX$, berdasarkan rumus A,
+
+$$ \cos z = \sin \delta \sin \phi + \cos \delta \cos \phi \cos H, $$
+
+di mana $\delta$ dan $\phi$ diandaikan konstan. Melalui diferensiasi
+
+$$ \sin z \frac{dz}{dH} = \cos \delta \cos \phi \sin H. $$
+
+Berdasarkan B,
+
+$$ \sin z \sin A = \sin H \cos \delta \dots\dots(28); $$
+
+$$ \therefore \frac{dz}{dH} = \sin A \cos \phi \dots\dots(29), $$
+
+yang mana pada intinya sama dengan (26). Jika $z$ dan $H$ diekspresikan secara berturut-turut dalam bentuk detik busur dan sekon waktu,
+
+$$ \frac{dz}{dH} = 15 \sin A \cos \phi. $$
+
+Diferensiasikan (28)—di mana $z, A$ dan $H$ adalah variabel-variabel—terhadap $H$. Maka
+
+$$ \sin z \cos A \frac{dA}{dH} = \cos H \cos \delta - \sin A \cos z \frac{dz}{dH} $$
+
+$$ = \cos H \cos \delta - \sin^2 A \cos z \cos \phi, $$
+
+dengan menggunakan (29).
+Juga, oleh C,
+
+$$ \cos \delta \cos H = \cos z \cos \phi - \sin z \sin \phi \cos A; $$
+
+$$ \therefore \sin z \cos A \frac{dA}{dH} = \cos^2 A \cos z \cos \phi - \sin z \sin \phi \cos A; $$
+
+$$ \therefore \frac{dA}{dH} = -(\sin \phi - \cot z \cos A \cos \phi), $$
+
+atau, jika $A$ dan $H$ diekspresikan secara berturut-turut dalam detik busur dan sekon waktu, rumus terakhir ini menjadi
+
+$$ \frac{dA}{dH} = -15(\sin \phi - \cot z \cos A \cos \phi), $$
+
+yang mana adalah yang telah diturunkan sebelumnya.
+
+### 33. Temaram (*Twilight*).
+Setelah matahari terbenam, cahaya matahari tidak langsung, yang dipantulkan dan dihamburkan oleh atmosfer bagian atas, masih terus menyinari bumi, namun semakin meredup saat matahari tenggelam lebih jauh ke bawah horizon. Ketika matahari berada $18^\circ$ di bawah horizon (jarak zenitnya saat itu $108^\circ$) iluminasi tidak langsung ini telah menjadi cukup dapat diabaikan. Interval antara matahari terbenam dan waktu ketika jarak zenit matahari telah meningkat menjadi $108^\circ$ disebut durasi temaram senja (*evening twilight*). Dengan cara yang serupa, kita mendefinisikan durasi temaram pagi (*morning twilight*). Durasi temaram senja, sebagai contoh, dapat dihitung sebagai berikut. Pada Gbr. 26, $LFM$ adalah paralel deklinasi matahari (karena tidak ada akurasi besar yang diperlukan dalam perhitungan khusus ini, kita mengabaikan perubahan dalam deklinasi matahari selama hari khusus yang bersangkutan) dan $JGK$ adalah sebuah lingkaran kecil, sejajar dengan horizon, yang setiap titiknya adalah $108^\circ$ dari $Z$. Lingkaran kecil ini memotong paralel deklinasi di $G$. Maka interval waktu yang diperlukan bagi matahari untuk bergerak dari $F$ ke $G$, yakni $F\hat{P}G$, adalah durasi temaram senja. Sekarang $F\hat{P}G = Z\hat{P}G - Z\hat{P}F$; karena $Z\hat{P}F$ adalah sudut jam dari matahari terbenam ia dapat dihitung oleh rumus (24). Sekarang di dalam segitiga $ZPG$, kita memiliki: $ZG = 108^\circ$, $PZ = 90^\circ - \phi$ dan $PG = 90^\circ - \delta$; karenanya, berdasarkan A,
+
+$$ \cos 108^\circ = \sin \phi \sin \delta + \cos \phi \cos \delta \cos Z\hat{P}G, $$
+
+yang memungkinkan perhitungan dari $Z\hat{P}G$ untuk dilakukan. Nilai dari $\delta$, yang digunakan dalam rumus ini, tentu saja bergantung pada hari tertentu dari tahun yang bersangkutan. Dengan demikian durasi temaram senja ditemukan.
+"""
+st.markdown(materi_bab_2_bagian_16, unsafe_allow_html=True)
+st.image("Gambar_26.jpg", caption="Gambar 26: Diagram Durasi Temaram Senja (Twilight)", use_container_width=True)
+
+materi_bab_2_bagian_17 = r"""
+Jelas dari Gbr. 26 bahwa temaram senja akan berakhir jika $NM$ lebih besar dari $NJ$, dengan kata lain, jika pada tengah malam semu matahari berada lebih dari $18^\circ$ di bawah horizon. Sekarang $NT = 90^\circ - \phi$ dan $MT = \delta$; $\therefore NM = 90^\circ - \phi - \delta$. Karenanya temaram senja berakhir jika $90^\circ - \phi - \delta > 18^\circ$, atau jika $\delta < 72^\circ - \phi$. Sebagai contoh, di lintang $60^\circ \text{ U}$, temaram akan berakhir jika $\delta < 12^\circ$. Ketika $\delta$ lebih besar dari $12^\circ$, jarak zenit matahari adalah kurang dari $108^\circ$ antara terbenam dan tengah malam semu, dan juga antara tengah malam semu dan matahari terbit; oleh karena itu, di $60^\circ \text{ U}$ tidak pernah benar-benar gelap pada hari-hari di tahun itu ketika deklinasi matahari melebihi $12^\circ \text{ U}$. Hari-hari ini adalah di antara 23 April dan 22 Agustus.
+
+---
+
+### LATIHAN SOAL (*EXERCISES*)
+
+[Simbol-simbol yang digunakan:
+$\phi = \text{lintang pengamat (latitude of observer)},$
+$A = \text{azimut benda langit (azimuth of heavenly body)},$
+$H = \text{sudut jam (hour angle)},$
+$z = \text{jarak zenit (zenith distance)},$
+$\epsilon = \text{kemiringan ekliptika (obliquity of the ecliptic)}.$]
+
+**1.** Jika $z_1$ dan $z_2$ adalah jarak zenit sebuah bintang pada meridian dan pada vertikal utama secara berturut-turut, buktikan bahwa
+
+$$ \text{(i)} \quad \cot \delta = \operatorname{cosec} z_1 \sec z_2 - \cot z_1, $$
+
+$$ \text{(ii)} \quad \cot \phi = \cot z_1 - \operatorname{cosec} z_1 \cos z_2, $$
+
+di mana $\delta$ adalah deklinasi bintang tersebut.  *[Lond. 1929.]*
+
+**2.** Jika $\psi$ adalah sudut yang dibentuk oleh lintasan sebuah bintang pada saat terbit dengan horizon, buktikan bahwa
+
+$$ \cos \psi = \sin \phi \sec \delta. $$
+
+**3.** Jika $h, H$ adalah sudut jam sebuah bintang, berdeklinasi $+ \delta$, pada vertikal utama (barat) dan pada saat terbenam secara berturut-turut, untuk sebuah tempat di lintang utara, tunjukkan bahwa
+
+$$ \cos h \cos H + \tan^2 \delta = 0. $$
+
+Hitunglah interval (benar hingga $0.1$ menit dari waktu matahari rata-rata) untuk sebuah tempat di lintang $36^\circ \text{ U}$ antara persinggahan Aldebaran (deklinasi $+ 16^\circ 22'$) melintasi vertikal utama (barat) dan saat terbenamnya. *[Lond. 1926.]*
+
+**4.** Sebuah perahu yang melaju pada kecepatan 5 knot dikemudikan terus-menerus ke arah sebuah bintang. Buktikan bahwa jarak tempuh menuju ke arah barat adalah kira-kira $\frac{1}{3} (z_2^\circ - z_1^\circ) \sec \phi$ mil, di mana $z_1^\circ$ dan $z_2^\circ$ adalah jarak zenit awal dan akhir, dalam derajat, dari bintang tersebut dan $\phi$ lintang rata-ratanya. *[M.T. 1917.]*
+
+**5.** Jika kolintangnya adalah $C$, buktikan bahwa
+
+$$ C = x + \cos^{-1} (\cos z \sec y), $$
+
+di mana
+
+$$ \tan x = \cot \delta \cos H, $$
+
+$$ \sin y = \cos \delta \sin H, $$
+
+dengan $H$ menjadi sudut jamnya.
+
+**6.** Temukan sampai ke sekon waktu matahari rata-rata terdekat interval antara persinggahan melintasi meridian dari dua bintang yang deklinasinya adalah $60^\circ \text{ U}$ dan $60^\circ \text{ S}$, dan yang jarak antaranya adalah $\cos^{-1} (- \frac{8}{9})$. (Asumsikan bahwa 1 tahun adalah $365\frac{1}{4}$ hari.) *[M.T. 1923.]*
+
+**7.** Jika deklinasi $\delta$ dari sebuah bintang lebih besar dari lintang $\phi$, buktikan bahwa azimut terlebar dari bintang tersebut di timur atau di barat adalah
+
+$$ \sin^{-1} (\cos \delta \sec \phi). $$
+
+**8.** Pada U.T. $21^h 56^m$ pada 1927 Maret 28 sebuah bintang yang terang diamati melalui celah awan sebagai berikut: ketinggian (perkiraan) $37^\circ 10'$; azimut $136^\circ$ barat. Posisi pengamat adalah: lintang $50^\circ \text{ U}$, bujur $7^\circ 15' \text{ B}$. Identifikasilah bintang tersebut.
+(R.A.M.S. adalah $0^h 21^m$ kira-kira.) *[Lond. 1927.]*
+
+**9.** R.A. dan deklinasi Capella pada transit atas di Greenwich pada 1930 Mei 30 adalah $5^h 11^m$ dan $+ 45^\circ 55'$. Tentukan ketinggian dan azimut bintang tersebut pada momen yang sama di New York, Observatorium Universitas Columbia, Lintang $40^\circ 49' \text{ U}$, Bujur $4^h 56^m \text{ B}$.
+
+**10.** Di lintang utara $45^\circ$ azimut terlebar dari bintang sirkumpolar adalah $45^\circ$ (timur atau barat). Buktikan bahwa deklinasi bintang tersebut adalah $+ 60^\circ$.
+
+**11.** Jika lintang $\phi$ dan deklinasi sebuah bintang diketahui, tunjukkan bahwa kesalahan dalam nilai sudut jam yang dideduksi yang disebabkan oleh sebuah kesalahan berukuran $\Delta z$ di dalam jarak zenit adalah $\Delta z \operatorname{cosec} A \sec \phi$, di mana $A$ adalah azimut bintang tersebut.
+
+**12.** Jika pengamat meningkatkan lintangnya sebesar nilai $\Delta \phi$ sementara sudut jam sebuah bintang meningkat sebesar $\Delta H$, tunjukkan bahwa perubahan di dalam ketinggian adalah
+
+$$ \Delta \phi \cos A - \Delta H \sin A \cos \phi. $$
+
+**13.** $a$ dan $a + \Delta a$ adalah ketinggian matahari yang diamati secara serentak pada dua tempat yang bertetangga di meridian yang sama. Jika $\phi$ adalah lintang dari salah satu tempat dan $\delta$ adalah deklinasi matahari, buktikan bahwa selisih dari lintang antara tempat-tempat tersebut adalah kira-kira
+
+$$ \Delta a \cos a \cos \phi / (\sin \delta - \sin a \sin \phi). \quad [Ball.] $$
+
+**14.** Dua buah bintang $(\alpha, \delta)$ dan $(\alpha', \delta')$ diamati pada momen yang sama di atas lingkaran vertikal yang sama. Jika $H$ adalah sudut jam dari bintang pertama, buktikan bahwa
+
+$$ \cos (\chi + H) = \tan \phi \cos \chi \cot \delta, $$
+
+di mana $\chi$ diberikan oleh
+
+$$ \tan \frac{1}{2} (\alpha - \alpha' - 2\chi) = \frac{\sin (\delta' - \delta)}{\sin (\delta' + \delta)} \cot \frac{1}{2} (\alpha' - \alpha). $$
+
+**15.** Jika $x$ adalah panjang bayangan yang dilemparkan pada permukaan tanah mendatar oleh sebuah tiang vertikal saat tengah hari semu pada suatu ekuinoks, dan jika $y$ adalah panjang bayangan yang dilemparkan oleh tiang yang sama saat solstis musim panas ketika matahari berada pada vertikal utama, tunjukkan bahwa
+
+$$ x = y \tan \psi \tan \phi, $$
+
+di mana
+
+$$ \sin \psi = \sin \epsilon \operatorname{cosec} \phi. \quad [Lond. 1928.] $$
+
+**16.** Sebuah dinding lurus dengan ketinggian $h$ membentang ke arah $\theta$ derajat barat dari selatan. Buktikan bahwa pada suatu ekuinoks, dinding tersebut tidak melemparkan bayangan ketika sudut jam matahari $H$ diberikan oleh
+
+$$ \tan H = \sin \phi \tan \theta, $$
+
+dan bahwa pada tengah hari semu, kelebaran bayangan tersebut adalah $h \tan \phi \sin \theta$.
+
+**17.** Seorang pengamat di lintang $50^\circ$ melihat sebuah bintang terbenam tepat di barat di belakang punggung bukit (*ridge*) rendah berjarak satu mil, yang melandai turun ke utara pada inklinasi $30^\circ$ terhadap horizontal. Buktikan bahwa dengan melangkah satu *yard* ke kanan, ia akan melihat bintang tersebut sekitar $22$ detik lebih lama. *[M.T. 1913.]*
+
+**18.** Dua tempat berada di lintang yang sama dan jarak kutub lingkaran besar yang melalui keduanya sama dengan deklinasi matahari. Buktikan bahwa di tempat-tempat ini, panjang malam hari sama dengan selisih bujur mereka.
+"""
+st.markdown(materi_bab_2_bagian_17, unsafe_allow_html=True)
