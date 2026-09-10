@@ -1159,58 +1159,170 @@ with st.expander("Syarah: Penurunan Analogi Napier"):
     - Persamaan (52) didapat dari membagi persamaan (45) dengan (46).
     """)
 
-materi_bab_1_latihan = r"""
----
-### LATIHAN SOAL (EXERCISES)
+# ==========================================
+# LATIHAN SOAL (INTERAKTIF)
+# ==========================================
+st.divider()
+st.markdown("### LATIHAN SOAL (EXERCISES)")
 
-1. Di dalam segitiga bola $ABC$, $C = 90^\circ$, $a = 119^\circ 46' 36''$ dan $B = 52^\circ 25' 38''$. Hitunglah nilai-nilai dari $b, c$ dan $A$.
-*[Ans. $48^\circ 26' 49'', 109^\circ 14' 0'' \text{ dan } 113^\circ 10' 46''$.]*
+# Latihan 1
+st.markdown("1. Di dalam segitiga bola $ABC$, $C = 90^\circ$, $a = 119^\circ 46' 36''$ dan $B = 52^\circ 25' 38''$. Hitunglah nilai-nilai dari $b, c$ dan $A$. \n\n*[Ans. $48^\circ 26' 49'', 109^\circ 14' 0''$ dan $113^\circ 10' 46''$.]*")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 1"):
+    st.markdown(r"""
+    Karena $C = 90^\circ$, ini adalah segitiga siku-siku. Kita dapat menggunakan Aturan Napier (lihat Gambar 7 di modul).
+    Bagian melingkarnya (mengabaikan C) adalah: $a, b, 90^\circ-A, 90^\circ-c, 90^\circ-B$.
+    
+    *   **Mencari $b$:** Pilih $a$ sebagai *tengah*. Bagian yang berdekatan adalah $b$ dan $90^\circ-B$. 
+        Aturan Napier 1: $\sin(\text{tengah}) = \tan(\text{berdekatan}) \cdot \tan(\text{berdekatan})$
+        $\sin a = \tan b \cdot \tan(90^\circ - B) \implies \sin a = \tan b \cdot \cot B$.
+        Maka: $\tan b = \sin a \cdot \tan B$.
+    *   **Mencari $A$:** Pilih $90^\circ-B$ sebagai *tengah*. Bagian yang berhadapan adalah $a$ dan $90^\circ-A$.
+        Aturan Napier 2: $\sin(\text{tengah}) = \cos(\text{berhadapan}) \cdot \cos(\text{berhadapan})$
+        $\sin(90^\circ - B) = \cos a \cdot \cos(90^\circ - A) \implies \cos B = \cos a \cdot \sin A$.
+        Maka: $\sin A = \frac{\cos B}{\cos a}$.
+    *   **Mencari $c$:** Pilih $90^\circ-c$ sebagai *tengah*. Bagian yang berdekatan adalah $90^\circ-A$ dan $90^\circ-B$.
+        Aturan Napier 1: $\sin(90^\circ-c) = \tan(90^\circ-A) \cdot \tan(90^\circ-B) \implies \cos c = \cot A \cdot \cot B$. 
+        Atau lebih praktis menggunakan Aturan Kosinus untuk Segitiga Siku-Siku: $\cos c = \cos a \cdot \cos b$.
+    """)
 
-2. Di dalam segitiga $ABC$, $a = 57^\circ 22' 11'', b = 72^\circ 12' 19'' \text{ dan } C = 94^\circ 1' 49''$. Hitunglah nilai-nilai dari $c, A$ dan $B$.
-*[Ans. $83^\circ 46' 32'', 57^\circ 40' 45'' \text{ dan } 72^\circ 49' 50''$.]*
+# Latihan 2
+st.markdown("2. Di dalam segitiga $ABC$, $a = 57^\circ 22' 11'', b = 72^\circ 12' 19''$ dan $C = 94^\circ 1' 49''$. Hitunglah nilai-nilai dari $c, A$ dan $B$. \n\n*[Ans. $83^\circ 46' 32'', 57^\circ 40' 45''$ dan $72^\circ 49' 50''$.]*")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 2"):
+    st.markdown(r"""
+    Segitiga bola sembarang (bukan siku-siku).
+    *   **Mencari $c$:** Gunakan **Rumus Kosinus (Rumus A)**.
+        $\cos c = \cos a \cos b + \sin a \sin b \cos C$. 
+        (Karena $C > 90^\circ$, nilai $\cos C$ akan negatif, perhatikan tanda saat substitusi).
+    *   **Mencari $A$ dan $B$:** Karena sisi $c$ sudah diketahui, gunakan **Rumus Sinus (Rumus B)**.
+        $\sin A = \frac{\sin a \sin C}{\sin c}$
+        $\sin B = \frac{\sin b \sin C}{\sin c}$
+    *   *Alternatif mencari sudut tanpa $c$:* Bisa menggunakan **Rumus Empat Bagian (Rumus D)** atau Analogi Napier.
+    """)
 
-3. Di dalam segitiga $ABC$, $c = 90^\circ, B = 62^\circ 20' 42'' \text{ dan } a = 136^\circ 19' 0''$. Hitunglah nilai-nilai dari $A, C$ dan $b$.
-*[Ans. $139^\circ 46' 13'', 69^\circ 14' 45'' \text{ dan } 71^\circ 18' 9''$.]*
+# Latihan 3
+st.markdown("3. Di dalam segitiga $ABC$, $c = 90^\circ, B = 62^\circ 20' 42''$ dan $a = 136^\circ 19' 0''$. Hitunglah nilai-nilai dari $A, C$ dan $b$. \n\n*[Ans. $139^\circ 46' 13'', 69^\circ 14' 45''$ dan $71^\circ 18' 9''$.]*")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 3"):
+    st.markdown(r"""
+    Karena $c = 90^\circ$, ini adalah segitiga **Kuadran** (*Quadrantal*).
+    Gunakan Aturan Napier khusus segitiga kuadran (Gambar 7 sisi luar), di mana bagian melingkarnya (mengabaikan c) adalah: $A, B, 90^\circ-a, C-90^\circ, 90^\circ-b$.
+    Atau lebih mudah, gunakan Rumus Kosinus Fundamental lalu masukkan $\cos(90^\circ) = 0$ dan $\sin(90^\circ) = 1$.
+    *   **Mencari $C$:**
+        $\cos c = \cos a \cos b + \sin a \sin b \cos C \implies 0 = \cos a \cos b + \sin a \sin b \cos C \implies \cos C = -\cot a \cot b$.
+    *   **Mencari $A$ (melalui Rumus Sudut Kosinus / Polar):**
+        $\cos C = -\cos A \cos B + \sin A \sin B \cos c \implies \cos C = -\cos A \cos B$.
+    *   **Mencari $b$ (melalui Rumus Sinus):**
+        $\frac{\sin C}{\sin c} = \frac{\sin B}{\sin b} \implies \sin C = \frac{\sin B}{\sin b} \implies \sin b = \frac{\sin B}{\sin C}$.
+    """)
 
-4. Dua buah kapal layar $X$ dan $Y$ berlayar di sepanjang paralel-paralel lintang $48^\circ \text{N}$ dan $15^\circ \text{S}$ secara berurutan, dalam cara sedemikian rupa sehingga pada setiap momen yang diberikan kedua kapal tersebut berada pada meridian bujur yang sama. Jika kecepatan $X$ adalah 15 knot, carilah kecepatan dari $Y$.
-*(Catatan: Knot adalah satuan kecepatan yang digunakan di laut; besarnya adalah 1 mil laut per jam).*
+# Latihan 4
+st.markdown("4. Dua buah kapal layar $X$ dan $Y$ berlayar di sepanjang paralel-paralel lintang $48^\circ \text{N}$ dan $15^\circ \text{S}$ secara berurutan, dalam cara sedemikian rupa sehingga pada setiap momen yang diberikan kedua kapal tersebut berada pada meridian bujur yang sama. Jika kecepatan $X$ adalah 15 knot, carilah kecepatan dari $Y$. \n\n*(Catatan: Knot adalah satuan kecepatan yang digunakan di laut; besarnya adalah 1 mil laut per jam).*")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 4"):
+    st.markdown(r"""
+    Jarak pada sebuah paralel lintang (lingkaran kecil) berbanding lurus dengan nilai kosinus lintangnya, sesuai rumus: $\text{Jarak Paralel} = \text{Beda Bujur} \times \cos(\text{Lintang})$.
+    Karena kapal berada pada meridian yang sama setiap waktu, kecepatan sudut mereka berdua mengelilingi sumbu bumi adalah konstan. Oleh karena itu, kecepatan linier kapal berbanding lurus dengan jari-jari paralel lintang (yaitu $\cos \phi$).
+    $\frac{v_Y}{v_X} = \frac{\cos \phi_Y}{\cos \phi_X}$
+    $\frac{v_Y}{15} = \frac{\cos 15^\circ}{\cos 48^\circ}$
+    $v_Y = 15 \times \frac{\cos 15^\circ}{\cos 48^\circ} \approx 21.65$ knot.
+    """)
 
-5. $A$ dan $B$ adalah dua buah tempat pada permukaan bumi dengan lintang yang sama $\phi$; selisih bujur di antara $A$ dan $B$ adalah $2l$. Buktikan bahwa (i) lintang tertinggi yang dicapai oleh lingkaran besar $AB$ adalah $\tan^{-1}(\tan \phi \sec l)$, dan (ii) jarak yang diukur di sepanjang paralel lintang di antara $A$ dan $B$ melebihi jarak lingkaran besar $AB$ sebesar
+# Latihan 5
+st.markdown("5. $A$ dan $B$ adalah dua buah tempat pada permukaan bumi dengan lintang yang sama $\phi$; selisih bujur di antara $A$ dan $B$ adalah $2l$. Buktikan bahwa (i) lintang tertinggi yang dicapai oleh lingkaran besar $AB$ adalah $\tan^{-1}(\tan \phi \sec l)$, dan (ii) jarak yang diukur di sepanjang paralel lintang di antara $A$ dan $B$ melebihi jarak lingkaran besar $AB$ sebesar $2 \text{cosec } 1' [l \cos \phi - \sin^{-1}(\sin l \cos \phi)] \text{ mil laut}.$")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 5"):
+    st.markdown(r"""
+    **Pembuktian (i):** 
+    Misalkan $P$ adalah Kutub Utara, $A$ dan $B$ titik di lintang $\phi$. Titik tengah busur lingkaran besar $AB$ adalah Vertex ($V$), yaitu titik dengan lintang tertinggi. Pada segitiga bola siku-siku $APV$ (di mana $V = 90^\circ$):
+    - Jarak polar $PA = 90^\circ - \phi$.
+    - Beda bujur (sudut $P$) untuk separuh jalan adalah $l$.
+    - Jarak $PV$ adalah kolintang vertex $= 90^\circ - \phi_1$ (dengan $\phi_1$ adalah lintang tertinggi).
+    Gunakan Aturan Napier pada $APV$ ($\text{tengah} = P$, $\text{berdekatan} = 90^\circ-PA, 90^\circ-PV$):
+    $\cos P = \cot PA \cdot \tan PV \implies \cos l = \cot(90^\circ-\phi) \cdot \tan(90^\circ-\phi_1) \implies \cos l = \tan \phi \cdot \cot \phi_1$.
+    $\cot \phi_1 = \frac{\cos l}{\tan \phi} \implies \tan \phi_1 = \frac{\tan \phi}{\cos l} = \tan \phi \sec l$.
+    Maka $\phi_1 = \tan^{-1}(\tan \phi \sec l)$.
+    
+    **Pembuktian (ii):**
+    - Jarak paralel $AB = (\text{Beda Bujur} \times \cos \phi) = 2l \cos \phi$.
+    - Jarak lingkaran besar $AB = 2 \times AV$. Dari segitiga $APV$, gunakan Napier: $\sin AV = \sin PA \sin P = \cos \phi \sin l$. Maka $AV = \sin^{-1}(\sin l \cos \phi)$. Jarak total $AB = 2 \sin^{-1}(\sin l \cos \phi)$.
+    - Selisih jarak = $2l \cos \phi - 2 \sin^{-1}(\sin l \cos \phi)$. 
+    Faktor $2 \text{cosec } 1'$ muncul karena kita mengubah ukuran radian/derajat murni ke dalam satuan menit busur ($1' = 1 \text{ mil laut}$).
+    """)
 
-$$
-2 \text{cosec } 1' [l \cos \phi - \sin^{-1}(\sin l \cos \phi)] \text{ mil laut}.
-$$
+# Latihan 6
+st.markdown("6. Lintang paling selatan yang dicapai oleh lingkaran besar yang menghubungkan sebuah tempat $A$ di ekuator ke sebuah tempat $B$ di lintang selatan $\phi$ adalah $\phi_1$. Buktikan bahwa selisih bujur di antara $A$ dan $B$ adalah $90^\circ + \cos^{-1}(\tan \phi \cot \phi_1)$.")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 6"):
+    st.markdown(r"""
+    Misalkan $P$ adalah Kutub Selatan (karena kita bermain di belahan selatan). Titik paling selatan adalah Vertex ($V$). Pada lingkaran besar yang berpotongan dengan ekuator di $A$, jarak $A$ ke Vertex selalu membentuk perbedaan bujur $90^\circ$ (karena $V$ adalah puncaknya).
+    Jadi, beda bujur $A$ ke $V$ adalah $90^\circ$.
+    Tugas kita tinggal mencari beda bujur dari Vertex $V$ ke titik $B$ (misalkan nilainya $\Delta \lambda$).
+    Dalam segitiga bola siku-siku $PVB$:
+    - Kolintang $PB = 90^\circ - \phi$
+    - Kolintang Vertex $PV = 90^\circ - \phi_1$
+    - Sudut di $V = 90^\circ$
+    - Sudut di $P = \Delta \lambda$
+    
+    Terapkan Aturan Napier: 
+    $\cos P = \tan PV \cdot \cot PB \implies \cos(\Delta \lambda) = \tan(90^\circ-\phi_1) \cdot \cot(90^\circ-\phi) = \cot \phi_1 \cdot \tan \phi$.
+    $\Delta \lambda = \cos^{-1}(\tan \phi \cot \phi_1)$.
+    Maka total selisih bujur dari $A$ (di ekuator) ke $B$ adalah: $90^\circ + \Delta \lambda = 90^\circ + \cos^{-1}(\tan \phi \cot \phi_1)$.
+    """)
 
-6. Lintang paling selatan yang dicapai oleh lingkaran besar yang menghubungkan sebuah tempat $A$ di ekuator ke sebuah tempat $B$ di lintang selatan $\phi$ adalah $\phi_1$. Buktikan bahwa selisih bujur di antara $A$ dan $B$ adalah $90^\circ + \cos^{-1}(\tan \phi \cot \phi_1)$.
+# Latihan 7
+st.markdown("7. Posisi dari $A$ dan $B$ secara berurutan adalah: Lat. $39^\circ 20'\text{ S}$, Long. $110^\circ 10'\text{ E}$ dan Lat. $44^\circ 30'\text{ S}$, Long. $46^\circ 20'\text{ W}$. Tunjukkan bahwa, jika sebuah kapal berlayar dari $A$ ke $B$ melewati rute sependek mungkin tanpa memotong paralel $62^\circ \text{ S}$, jarak yang dilayari adalah $5847.6$ mil laut.")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 7"):
+    st.markdown(r"""
+    Permasalahan ini dikenal dengan **Pelayaran Komposit (*Composite Great Circle Sailing*)**.
+    Rute terpendek murni (lingkaran besar) antara A dan B kemungkinan memiliki Vertex (titik paling selatan) yang melampaui Lintang $62^\circ$ S (area berbahaya karena es). Oleh karena itu, rute dipotong menjadi 3 bagian:
+    1. Berlayar di jalur lingkaran besar dari titik A menyinggung paralel $62^\circ$ S di titik $V_1$.
+    2. Berlayar lurus mengikuti paralel lintang $62^\circ$ S (sepanjang lingkaran kecil) dari $V_1$ ke titik $V_2$.
+    3. Berlayar di jalur lingkaran besar dari titik $V_2$ menyinggung ke titik tujuan B.
+    
+    Total Jarak = (Jarak $A \rightarrow V_1$) + (Jarak sejajar $V_1 \rightarrow V_2$) + (Jarak $V_2 \rightarrow B$).
+    Perhitungan ini dihitung dengan memecah segitiga bola $APV_1$ dan $BPV_2$ menggunakan Napier, kemudian menghitung sisa beda bujur di bagian tengah untuk dikalikan dengan $\cos(62^\circ)$. Hasil akhirnya akan berakumulasi menjadi $5847.6$ mil laut (menit busur).
+    """)
 
-7. Posisi dari $A$ dan $B$ secara berurutan adalah: Lat. $39^\circ 20'\text{ S}$, Long. $110^\circ 10'\text{ E}$ dan Lat. $44^\circ 30'\text{ S}$, Long. $46^\circ 20'\text{ W}$. Tunjukkan bahwa, jika sebuah kapal berlayar dari $A$ ke $B$ melewati rute sependek mungkin tanpa memotong paralel $62^\circ \text{ S}$, jarak yang dilayari adalah $5847.6$ mil laut.
+# Latihan 8
+st.markdown("8. Jika elemen-elemen $a, b, c, A, B, C$ dari suatu segitiga bola menerima inkremen (kenaikan nilai) $da, \dots dC$, tunjukkan bahwa, jika \n\n $$ K = \\frac{\\sin A}{\\sin a} = \\frac{\\sin B}{\\sin b} = \\frac{\\sin C}{\\sin c} $$ \n\n maka: \n $da = \\cos C \\cdot db + \\cos B \\cdot dc + K \\sin b \\sin c \\cdot dA$ \n (dan seterusnya untuk persamaan lainnya).")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 8"):
+    st.markdown(r"""
+    Pembuktian menggunakan **Diferensiasi Implisit** pada Rumus Kosinus Fundamental.
+    Rumus Asli: $\cos a = \cos b \cos c + \sin b \sin c \cos A$
+    Turunkan terhadap seluruh variabel (*total derivative*):
+    $-\sin a \cdot da = (-\sin b \cos c \cdot db - \cos b \sin c \cdot dc) + (\cos b \sin c \cos A \cdot db + \sin b \cos c \cos A \cdot dc - \sin b \sin c \sin A \cdot dA)$
+    
+    Kelompokkan suku $db$ dan $dc$:
+    $-\sin a \cdot da = -db(\sin b \cos c - \cos b \sin c \cos A) - dc(\cos b \sin c - \sin b \cos c \cos A) - (\sin b \sin c \sin A) dA$
+    
+    Ganti bagian di dalam kurung menggunakan **Rumus Analogi (Rumus C)**:
+    $\sin a \cos C = \sin b \cos c - \cos b \sin c \cos A$
+    $\sin a \cos B = \cos b \sin c - \sin b \cos c \cos A$
+    
+    Substitusikan:
+    $-\sin a \cdot da = -db(\sin a \cos C) - dc(\sin a \cos B) - (\sin b \sin c \sin A) dA$
+    
+    Bagi seluruh ruas dengan $-\sin a$:
+    $da = \cos C \cdot db + \cos B \cdot dc + \left(\frac{\sin A}{\sin a}\right) \sin b \sin c \cdot dA$
+    
+    Karena $K = \frac{\sin A}{\sin a}$, maka terbukti:
+    $da = \cos C \cdot db + \cos B \cdot dc + K \sin b \sin c \cdot dA$
+    """)
 
-8. Jika elemen-elemen $a, b, c, A, B, C$ dari suatu segitiga bola menerima inkremen (kenaikan nilai) $da, \dots dC$, tunjukkan bahwa, jika
-
-$$
-K = \frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c},
-$$
-
-maka:
-
-$$
-\begin{aligned}
-da &= \cos C \cdot db + \cos B \cdot dc + K \sin b \sin c \cdot dA, \\
-db &= \cos A \cdot dc + \cos C \cdot da + K \sin c \sin a \cdot dB, \\
-dc &= \cos B \cdot da + \cos A \cdot db + K \sin a \sin b \cdot dC, \\
-dA &= -\cos c \cdot dB - \cos b \cdot dC + \frac{1}{K} \sin B \sin C \cdot da, \\
-dB &= -\cos a \cdot dC - \cos c \cdot dA + \frac{1}{K} \sin C \sin A \cdot db, \\
-dC &= -\cos b \cdot dA - \cos a \cdot dB + \frac{1}{K} \sin A \sin B \cdot dc.
-\end{aligned}
-$$
-
-9. Buktikan bahwa dua sisi dari sebuah segitiga bola bernilai sama jika dan hanya jika sudut-sudut yang berhadapan dengannya bernilai sama.
-$ABC$ adalah sebuah segitiga bola sama sisi di mana pergeseran (displacement) kecil dilakukan, pada sisi-sisi dan sudut-sudutnya, sedemikian rupa sehingga segitiga tersebut tetap sama sisi. Buktikan bahwa
-
-$$
-\frac{da}{dA} = \cos \frac{A}{2} \cot \frac{a}{2}.
-$$
-*[Glas. 1967.]*
-
-"""
-st.markdown(materi_bab_1_latihan, unsafe_allow_html=True)
+# Latihan 9
+st.markdown("9. Buktikan bahwa dua sisi dari sebuah segitiga bola bernilai sama jika dan hanya jika sudut-sudut yang berhadapan dengannya bernilai sama. $ABC$ adalah sebuah segitiga bola sama sisi di mana pergeseran (displacement) kecil dilakukan, pada sisi-sisi dan sudut-sudutnya, sedemikian rupa sehingga segitiga tersebut tetap sama sisi. Buktikan bahwa \n\n $$ \\frac{da}{dA} = \\cos \\frac{A}{2} \\cot \\frac{a}{2} $$ \n\n *[Glas. 1967.]*")
+with st.expander("Buka Kunci Jawaban & Pembahasan No. 9"):
+    st.markdown(r"""
+    **Bagian 1:** Bukti sama sisi sejajar sama sudut dapat dibuktikan langsung dari Rumus Sinus: 
+    $\frac{\sin A}{\sin a} = \frac{\sin B}{\sin b}$. Jika $a = b$, maka $\sin a = \sin b$, sehingga $\sin A = \sin B \implies A = B$.
+    
+    **Bagian 2:** Diferensiasi Segitiga Sama Sisi.
+    Karena segitiga tetap dipertahankan sama sisi walau ukurannya berubah, maka $a=b=c$ dan $A=B=C$ berlaku setiap saat.
+    Rumus Kosinus: $\cos a = \cos a \cos a + \sin a \sin a \cos A \implies \cos a = \cos^2 a + \sin^2 a \cos A$.
+    Turunkan (*differentiate*) kedua ruas:
+    $-\sin a \cdot da = 2\cos a(-\sin a) \cdot da + (2\sin a \cos a \cos A \cdot da - \sin^2 a \sin A \cdot dA)$
+    
+    Bagi seluruh ruas dengan $(-\sin a)$ (asumsi $a \neq 0$):
+    $da = 2\cos a \cdot da - 2\cos a \cos A \cdot da + \sin a \sin A \cdot dA$
+    $da (1 - 2\cos a + 2\cos a \cos A) = \sin a \sin A \cdot dA$
+    $\frac{da}{dA} = \frac{\sin a \sin A}{1 - 2\cos a (1 - \cos A)}$
+    
+    Dengan menggunakan identitas sudut paruh ($\sin \theta = 2\sin \frac{\theta}{2}\cos \frac{\theta}{2}$ dan $1-\cos \theta = 2\sin^2 \frac{\theta}{2}$), persamaan rumit di atas akan tereduksi menjadi:
+    $\frac{da}{dA} = \cos \frac{A}{2} \cot \frac{a}{2}$.
+    """)
