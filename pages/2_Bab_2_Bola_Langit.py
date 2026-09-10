@@ -52,6 +52,7 @@ st.image("Gambar_10.png", caption="Gambar 10: Sistem Horizon, Zenith, Nadir, dan
 
 materi_bab_2_bagian_2 = r"""
 *(zenith)* menjadi titik pada bola langit yang berada tepat di atas kepala—arahnya dapat didefinisikan dengan menggunakan unting-unting (*plumb-line*). Oleh karena itu, $OZ$ adalah kelanjutan dari garis lurus yang menghubungkan pusat bumi ke $O$. Bidang yang melalui $O$ yang tegak lurus terhadap $OZ$ adalah bidang horizon, yang memotong bola langit pada lingkaran besar $NAS$, yang disebut horizon astronomis atau sekadar horizon. Dengan demikian, pada Gbr. 10, horizon membagi bola langit menjadi dua belahan bola (*hemisphere*), di mana bagian atas adalah belahan bola yang terlihat (*visible hemisphere*), dan bagian bawah tersembunyi dari pengamat oleh bumi. Misalkan $X$ menjadi posisi sebuah bintang di bola langit pada saat tertentu. Setiap lingkaran besar yang ditarik melalui $Z$ disebut lingkaran vertikal (*vertical circle*); khususnya, lingkaran vertikal pada Gbr. 10 yang melalui $X$ adalah $ZXA$. Pada bidang $ZXA$, sudut $AOX$ atau busur lingkaran besar $AX$ disebut ketinggian (*altitude*), yang akan dilambangkan dengan $a$. Karena $OZ$ tegak lurus terhadap bidang horizon, lingkaran besar busur $ZA$ adalah $90^\circ$; oleh karena itu $ZX = 90^\circ - a$. $ZX$ disebut jarak zenit (*zenith distance*, disingkat z.d.) dari bintang $X$ dan akan dilambangkan dengan $z$. Dengan demikian:
+
 $$ z = 90^\circ - a \dots\dots(1) $$
 
 Misalkan $LXM$ menjadi lingkaran kecil melalui $X$ yang sejajar dengan horizon; lingkaran ini disebut paralel ketinggian (*parallel of altitude*) dan sedemikian rupa sehingga semua benda langit, yang posisinya pada suatu saat tertentu terletak pada lingkaran kecil ini, memiliki ketinggian yang sama dan juga, berdasarkan (1), memiliki jarak zenit yang sama dengan $X$. Dengan demikian, jika ketinggian atau jarak zenit sebuah bintang diberikan, paralel ketinggian tempat bintang itu harus berada dapat ditentukan secara pasti. Untuk mendefinisikan posisinya secara lengkap pada bola langit, lingkaran vertikal khusus tempat bintang itu berada juga harus ditentukan. Hal ini dilakukan sebagai berikut.
@@ -69,7 +70,9 @@ materi_bab_2_bagian_3 = r"""
 atau busur $NB$ adalah azimut ($E$). Dengan demikian pada saat apa pun posisi benda langit pada bola langit dapat dideskripsikan sepenuhnya dengan merujuk pada horizon dan titik utara horizon dalam hal ketinggian dan azimut ($E$ atau $W$) atau, sebagai alternatif, dalam hal jarak zenit dan azimut. Ketika azimut adalah $90^\circ$ $E$ atau $90^\circ$ $W$, bintang tersebut dikatakan berada pada vertikal utama (*prime vertical*), yang dengan demikian merupakan lingkaran vertikal melalui titik timur $E$ atau titik barat $W$.
 
 Karena pada Gbr. 10 dan 11 sudut $POZ$ (atau lingkaran besar busur $PZ$) ekivalen dengan sudut antara jari-jari bumi yang melewati posisi pengamat dan sumbu bumi, maka $P\hat{O}Z$ (atau $PZ$) sama dengan kolintang pengamat atau:
+
 $$ PZ = 90^\circ - \phi \dots\dots(2) $$
+
 di mana $\phi$ adalah lintang pengamat. Selain itu $PN = 90^\circ - PZ = \phi$; maka ketinggian kutub sama dengan lintang pengamat.
 
 *(Catatan kaki: * Posisi $W$ dan $E$ relatif terhadap $N$ dan $S$ diperoleh dari pertimbangan bahwa, jika pengamat menghadap ke utara, titik barat berada di sebelah kiri dan titik timur berada di sebelah kanannya).*
@@ -134,20 +137,33 @@ Hereafter, bola langit akan diasumsikan seperti pada Gbr. 17, yaitu, berpusat di
 ### 23. Penyelesaian dari segitiga bola PZX.
 Kita akan mempertimbangkan dua masalah umum yang terkait dengan segitiga $PZX$.
 (i) Diberikan lintang pengamat $\phi$, deklinasi $\delta$ dan sudut jam $H$ dari benda langit, untuk menghitung jarak zenit dan azimutnya. Berdasarkan rumus **A** (rumus kosinus), karena dua sisi $PZ$ dan $PX$ serta sudut yang diapitnya $ZPX$ diberikan (Gbr. 17), kita memiliki:
+
 $$ \cos ZX = \cos PZ \cos PX + \sin PZ \sin PX \cos ZPX $$
+
 atau
+
 $$ \cos z = \sin \phi \sin \delta + \cos \phi \cos \delta \cos H \dots\dots(3) $$
+
 Dengan demikian $z$ dapat dihitung secara langsung dari (3) atau dengan cara rumus haversine (bagian 13), yang pada kasus ini dapat ditulis:
+
 $$ \text{hav } z = \text{hav } (\phi - \delta) + \cos \phi \cos \delta \text{ hav } H \dots\dots(4) $$
+
 Sekali lagi, dengan **A**:
+
 $$ \cos PX = \cos PZ \cos ZX + \sin PZ \sin ZX \cos PZX $$
+
 atau
+
 $$ \sin \delta = \sin \phi \cos z + \cos \phi \sin z \cos A \dots\dots(5) $$
+
 dari mana azimut $A$ dapat dihitung. Dalam bentuk haversine (5) dapat ditulis:
+
 $$ \cos \phi \cos a \text{ hav } A = \text{hav } (90^\circ - \delta) - \text{hav } (\phi - a) \dots(6) $$
+
 di mana $a$ adalah ketinggian (*altitude*).
 
 (ii) Diberikan lintang pengamat $\phi$, jarak zenit bintang $z$ dan azimut $A$, untuk menghitung deklinasi bintang dan sudut jamnya. Kita diberikan $\phi, z$ dan $A$; maka, melalui (5), kita dapat menghitung deklinasi. Baik persamaan (3) maupun (4) tersedia untuk menghitung sudut jam $H$. Maka dari (3):
+
 $$ \cos H = \cos z \sec \phi \sec \delta - \tan \phi \tan \delta \dots\dots(7) $$
 
 Pertimbangkan sekarang segitiga bola $PZX$ pada Gbr. 13. Sudut $PZX$ adalah azimut (timur). Mengingat bahwa sudut jam diukur di kutub dari meridian pengamat ke arah barat, kita melihat bahwa $Z\hat{P}X = 24^h - H$. Penyelesaian dari segitiga tersebut berlanjut seperti sebelumnya.
@@ -160,9 +176,13 @@ st.image("Gambar_18.png", caption="Gambar 18: Asensio Rekta dan Deklinasi pada B
 
 materi_bab_2_bagian_10 = r"""
 posisi bintang-bintang di bola langit dapat diibaratkan seperti posisi titik-titik tetap di permukaan bumi dan karenanya dapat dispesifikasikan dengan merujuk pada ekuator langit dan bintang tertentu mana pun di ekuator. Sebagai contoh, pada Gbr. 18, misalkan $\Upsilon$ adalah sebuah bintang ekuatorial dan $X$ adalah bintang lain mana pun; misalkan meridian melalui $X$ memotong ekuator langit di $D$. Karena bintang-bintang melintasi langit kita tahu secara khusus bahwa deklinasi $X$, yaitu, $DX$, tetap konstan dan bahwa konfigurasi relatif dari bintang-bintang juga tetap konstan. Ini berarti bahwa $\Upsilon D$ adalah konstan; dengan kata lain, bahwa sudut antara meridian-meridian dari $\Upsilon$ dan $D$ tetap konstan. Kita dapat menganggap $\Upsilon$ sebagai titik referensi pada ekuator langit; sehubungan dengan $\Upsilon$ dan ekuator langit, kita dapat dengan jelas menentukan posisi bintang $X$ dengan menggunakan busur lingkaran besar $\Upsilon D$ dan deklinasi $DX$. Titik referensi yang dipilih dalam praktik disebut ekuinoks musim semi (*vernal equinox*) atau titik pertama Aries, dan adalah mudah untuk menganggap posisi $\Upsilon$ sebagaimana dispesifikasikan oleh sebuah bintang tertentu di langit. Nanti kita akan mendefinisikan $\Upsilon$ lebih tepat lagi. Busur $\Upsilon D$ atau $\Upsilon\hat{P}X$ disebut asensio rekta (*right ascension*, R.A.) dari bintang $X$ (dilambangkan dengan $\alpha$) dan diukur ke arah timur dari $\Upsilon$ dari $0^h$ hingga $24^h$ (dalam arah panah dekat $\Upsilon$). Arah ini berlawanan dengan arah di mana sudut jam diukur. Dari Gbr. 18, kita melihat bahwa $R\Upsilon = RD + \Upsilon D$. Sekarang $RD$ (atau $R\hat{P}X$) adalah sudut jam $H$ dari $X$ dan $R\Upsilon$ adalah sudut jam dari $\Upsilon$. Sudut jam dari $\Upsilon$ disebut waktu sideris (*sidereal time*, S.T.). Kita memiliki, sebagaimana mestinya:
+
 $$ \text{Sid. time} = \text{H.A. } X + \text{R.A. } X \dots\dots(8) $$
+
 atau
+
 $$ \text{S.T.} = H + \alpha \dots\dots(9) $$
+
 Ketika $\Upsilon$ berada pada meridian pengamat, sudut jam dari $\Upsilon$ adalah $0^h$, yang berarti, waktu sideris adalah $0^h$. Ketika $\Upsilon$ selanjutnya berada pada meridian pengamat, sebuah interval sebesar $24^h$ waktu sideris telah berlalu. Interval ini adalah, tentu saja, sama dengan yang dibutuhkan untuk rotasi penuh bumi pada porosnya dan itu disebut hari sideris (*sidereal day*). Bumi yang berputar, pada kenyataannya, adalah pencatat waktu standar.
 
 ### 25. Orbit bumi.
@@ -184,17 +204,27 @@ kemiringannya terhadap ekuator langit adalah $M\hat{\Upsilon}R$, yang dikenal se
 
 ### 26. Lintang dan bujur langit.
 Posisi sebuah benda langit dapat dirujuk ke ekliptika sebagai lingkaran besar fundamental dan ekuinoks musim semi $\Upsilon$ sebagai titik rujukan utama. Pada Gbr. 21 $K$ adalah kutub utara dari ekliptika dan $KXA$ adalah lingkaran besar yang melewati $X$ dan bertemu ekliptika di $A$. Busur $\Upsilon A$, diukur dari $\Upsilon$ ke $A$ sepanjang ekliptika dalam arah pergerakan tahunan matahari, mis. ke timur, disebut bujur (*longitude*) dari benda langit $X$ dan diukur dari $0^\circ$ hingga $360^\circ$ memutari ekliptika. Busur $AX$ adalah lintang (*latitude*) dan lintang utara dianggap positif dan selatan negatif. Jika kita mengetahui asensio rekta dan deklinasi dari bintang kita dapat memperoleh lintangnya ($\beta$) dan bujurnya ($\lambda$) dari segitiga $KPX$; dan sebaliknya. Sekarang $\Upsilon$ adalah kutub dari lingkaran besar $KPMR$; karenanya $K\hat{P}\Upsilon = 90^\circ$, dan karena $\Upsilon D = \Upsilon\hat{P}X = \alpha$, maka $K\hat{P}X = 90^\circ + \alpha$. Juga $P\hat{K}\Upsilon = 90^\circ$, dan karena $\Upsilon A = \Upsilon\hat{K}X = \lambda$, maka $P\hat{K}X = 90^\circ - \lambda$. Juga $PX = 90^\circ - \delta$ dan $KX = 90^\circ - \beta$. Misalkan $\epsilon$ menyatakan kemiringan ekliptika; ia adalah sudut di antara jari-jari $CM$ dan $CR$; jadi busur $RM = \epsilon$. Tetapi $KM = 90^\circ$ dan $PR = 90^\circ$; karenanya $KP = \epsilon$. Menerapkan rumus-rumus **A**, **B** dan **C**, kita miliki:
+
 $$ \cos KX = \cos PX \cos KP + \sin PX \sin KP \cos KPX $$
+
 $$ \sin KX \sin PKX = \sin PX \sin KPX $$
+
 $$ \sin KX \cos PKX = \cos PX \sin KP - \sin PX \cos KP \cos KPX $$
+
 atau:
+
 $$ \sin \beta = \sin \delta \cos \epsilon - \cos \delta \sin \epsilon \sin \alpha \dots\dots(10) $$
+
 $$ \cos \beta \cos \lambda = \cos \delta \cos \alpha \dots\dots(11) $$
+
 $$ \cos \beta \sin \lambda = \sin \delta \sin \epsilon + \cos \delta \cos \epsilon \sin \alpha \dots\dots(12) $$
 
 Oleh proses yang serupa, asensio rekta $\alpha$ dan deklinasi $\delta$ dapat diekspresikan dalam bentuk $\beta, \lambda$ dan $\epsilon$. Rumus-rumusnya adalah:
+
 $$ \sin \delta = \sin \beta \cos \epsilon + \cos \beta \sin \epsilon \sin \lambda $$
+
 $$ \cos \delta \cos \alpha = \cos \beta \cos \lambda $$
+
 $$ \cos \delta \sin \alpha = - \sin \beta \sin \epsilon + \cos \beta \cos \epsilon \sin \lambda $$
 
 ### 27. Waktu Sideris.
@@ -205,17 +235,24 @@ st.image("Gambar_22.jpg", caption="Gambar 22: Hubungan Waktu Sideris Lokal dan B
 
 materi_bab_2_bagian_13 = r"""
 $$ \text{H.A. dari } X \text{ di Greenwich} = \text{H.A. dari } X \text{ di } l + \text{bujur (B) dari } l \dots\dots(13) $$
+
 Di dalam rumus ini kita andaikan bahwa bujur dari $l$ diekspresikan dalam ukuran-waktu ($15^\circ = 1^h; 15' = 1^m; 15'' = 1^s$). Rumus (13) adalah yang bersifat umum dan itu jelas berlaku untuk ekuinoks musim semi $\Upsilon$. Kita lalu memperoleh—karena waktu sideris adalah sudut jam dari $\Upsilon$—:
+
 $$ \text{Sid. time di Greenwich} = \text{Sid. time di } l \pm \text{bujur dari } l \dots(14) $$
+
 tanda $+$ diambil ketika $l$ berada di barat dari Greenwich dan tanda $-$ ketika $l$ berada di timur dari Greenwich. Waktu sideris di $l$ disebut *local sidereal time* (L.S.T.).
 
 ### 28. Waktu matahari rata-rata.
 Hari sideris adalah sebuah satuan waktu observatorium dan terbukti secara jelas tidak sesuai pada pengaturan urusan sehari-hari yang mana sebagian besar dikuasai menurut posisi dari matahari di langit. Ketika matahari berada di meridian dari sebuah tempat, itu adalah tengah hari semu (*apparent noon*) di sana; ketika matahari berada selanjutnya di meridian, sebuah hari matahari semu (*apparent solar day*) dikatakan telah berlalu. Interval ini dapat diukur, sebagai contoh, dengan sarana dari sebuah jam yang menjaga waktu sideris yang akurat dan itu ditemukan bahwa suatu hari matahari semu tidaklah konstan. Kita telah melihat bahwa, relatif terhadap bumi, matahari tampak untuk mendeskripsikan sebuah orbit elips di sekeliling bumi dan kecepatan pada mana arahnya di orbit berubah bukanlah konstan. Itu mengikuti bahwa matahari tampak untuk mendeskripsikan ekliptika pada suatu laju yang tidak seragam; dengan kata lain, matahari tampak untuk bergerak dengan agak tidak beraturan berlawanan dengan latar belakang bintang-bintang. Dikarenakan hal ini dan juga karena fakta bahwa ia bergerak di dalam ekliptika dan tidak di sepanjang ekuator langit (lingkaran besar fundamental dengan mana pengukuran dari sudut jam atau waktu dihubungkan) asensio rektanya tidak meningkat secara seragam. Rata-rata hari matahari semu di sepanjang tahun disebut sebuah hari matahari rata-rata (*mean solar day*) dan adalah nyaman untuk mendefinisikan hari matahari rata-rata sebagai interval di antara dua persinggahan berturut-turut melintasi meridian pengamat dari sebuah benda fiktif yang disebut matahari rata-rata (*mean sun*). Matahari rata-rata diasumsikan untuk bergerak di ekuator langit dengan laju yang seragam mengelilingi bumi. Laju ini adalah sedemikian sehingga matahari rata-rata menyelesaikan sebuah revolusi di dalam waktu yang sama seperti halnya itu yang disyaratkan oleh matahari untuk sirkuit lengkap ekliptika. Menurut definisi ini, asensio rekta dari matahari rata-rata (dilambangkan oleh R.A.M.S.) meningkat pada laju yang seragam.
 
 Sekarang jika kita memandang matahari rata-rata sebagai sebuah benda langit biasa, maka pada momen yang diberikan mana pun, kita dapat menganggap bahwa ia memiliki sudut jam tertentu (H.A.M.S.) pada suatu tempat yang diberikan di permukaan bumi. Pada momen ini kita akan mengasumsikan bahwa asensio rektanya diketahui; karenanya dari (8) atau (9):
+
 $$ \text{Sid. time} = \text{H.A.M.S.} + \text{R.A.M.S.} \dots\dots(15) $$
+
 Waktu yang ditunjukkan oleh jam waktu rata-rata, misal, di Greenwich pada momen mana pun hanyalah terhubung ke nilai dari H.A.M.S. di sana, dan jika R.A.M.S. diketahui, (15) membentuk basis dari perbandingan antara waktu sideris dan jam waktu rata-rata. Matahari rata-rata berhubungan dengan matahari sejati menurut prinsip-prinsip tertentu yang mana akan didiskusikan dalam bab yang selanjutnya. Sementara itu akan cukup untuk menyatakan bahwa perbedaan pada momen mana pun di antara asensio rekta dari matahari rata-rata dan dari matahari sejati dapat dihitung; perbedaan ini disebut perataan waktu (*equation of time*)* (dilambangkan dengan $E$). Kita dengan demikian memiliki:
+
 $$ E = \text{R.A.M.S.} - \text{R.A. } \odot \dots\dots(16) $$
+
 *(Catatan kaki: * Dalam buku-buku teks yang lebih tua perataan waktu didefinisikan oleh $E = \text{R.A. } \odot - \text{R.A.M.S.}$, tetapi konvensi (16) yang secara umum diadopsi).*
 
 di mana R.A. $\odot$ menunjukkan asensio rekta dari matahari sejati. $E$ dapat menjadi positif atau negatif dan bervariasi dengan cara yang rumit. Komputasi secara detail dari $E$ didiskusikan di dalam bagian 91. Pada Gbr. 23, mari kita misalkan bahwa pada keadaan yang diberikan asensio rekta dan deklinasi dari matahari ($\odot$) diketahui. Misalkan $\Upsilon$ menjadi ekuinoks musim semi pada saat ini sehingga bahwa $R\hat{P}\Upsilon$ atau $R\Upsilon$ adalah sudut jam dari $\Upsilon$, yakni, waktu sideris lokal. Jika ini diketahui, posisi dari $\Upsilon$ pada bola langit dapat secara pasti ditentukan. Posisi matahari lalu dapat diindikasikan pada bola langit. $\Upsilon K = \text{R.A. } \odot$ dan $K\odot$ adalah deklinasi matahari dan kedua hal ini:
@@ -225,20 +262,29 @@ st.image("Gambar_23.jpg", caption="Gambar 23: Perataan Waktu dan Sudut Jam Matah
 
 materi_bab_2_bagian_14 = r"""
 diasumsikan diketahui. Misalkan nilai dari $E$ adalah positif; maka oleh (16), R.A.M.S. adalah lebih besar dari R.A. $\odot$, dan jika $E$ diketahui posisi matahari rata-rata $M$ pada saat ini dapat diindikasikan di dalam diagram. $R\hat{P}M$ atau $RM$ adalah sudut jam dari $M$ (H.A.M.S.). Jelas dari Gbr. 23 bahwa, karena $RK = RM + MK$, maka:
+
 $$ \text{H.A. } \odot = \text{H.A.M.S.} + E \dots\dots(17) $$
+
 yang mana merupakan relasi penting yang menghubungkan H.A.M.S. dan H.A. $\odot$, memampukan kita untuk menghitung sudut jam matahari (H.A. $\odot$) ketika kuantitas-kuantitas lainnya diketahui. Ketika matahari rata-rata berada pada meridian pengamat, maka itu adalah *local mean noon* di sana. Ketika matahari rata-rata berada pada meridian Greenwich, itu adalah *Greenwich mean noon*. Sudut jam dari matahari rata-rata di Greenwich akan dinotasikan di buku ini oleh G.M.A.T. (*Greenwich mean astronomical time*). Ketika
 
 matahari rata-rata ada pada $T$—H.A.M.S. berada saat itu bernilai $12^h$—ia dikatakan menjadi tengah malam rata-rata (*mean midnight*). Ketika G.M.A.T. $= 12^h$, itu adalah tengah malam rata-rata pada Greenwich dan ini adalah momen saat sebuah hari sipil baru di Greenwich dimulai. Waktu rata-rata yang diperhitungkan dari tengah malam pada Greenwich disebut *Greenwich Mean Time* (G.M.T.)*, sekarang ditunjuk sebagai *Universal Time* (U.T.). Adalah jelas bahwa:
+
 $$ \text{U.T.} \equiv \text{G.M.T.} = \text{G.M.A.T.} + 12^h \dots\dots(18) $$
+
 Secara serupa, untuk tempat apa pun yang mempertahankan waktu rata-rata yang sesuai dengan meridiannya, kita akan memiliki:
+
 $$ \text{Local M.T.} = \text{Local M.A.T.} + 12^h \dots\dots(19) $$
+
 $$ = \text{H.A.M.S.} \pm 12^h \dots\dots(20) $$
 
 Rumus (14) memberikan hubungan di antara waktu sideris pada Greenwich dan waktu sideris di tempat $l$, dan ini jelas dari Gbr. 22 dan dari (18) dan (19) bahwa kita akan mempunyai suatu relasi yang mirip antara waktu rata-rata pada Greenwich dan waktu rata-rata pada tempat tersebut; hal itu adalah:
+
 $$ \text{U.T.} \equiv \text{G.M.T.} = \text{Local M.T.} \pm \text{bujur dari } l \dots\dots(21) $$
+
 tanda $+$ yang diambil ketika bujur dari $l$ berada di barat dan tanda $-$ ketika bujur tersebut berada di timur.
 
 Kebingungan niscaya tidak akan terelakkan jika setiap tempat menjaga *local mean time* yang tepat dengan meridiannya, dan oleh karenanya di dalam negara-negara yang kecil suatu waktu rata-rata standar dipilih, bertepatan pada suatu meridian bujur yang khusus (meridian standar), yang mana ada dalam penggunaan secara seragam di seantero negeri. Di Inggris Raya, waktu rata-rata standar tersebut adalah G.M.T. Di negara-negara yang ekstensif seperti Rusia dan Amerika Serikat, dua atau lebih waktu-waktu standar ada dalam penggunaan di dalam zona-zona bujur; di dalam setiap zona, suatu waktu standar yang sesuai untuk meridian pasti di dalam zona tersebut yang dipertahankan. Waktu standar, berdasar sebuah meridian tertentu, kita akan melambangkannya dengan waktu zona (*zone time*, Z.T.). Sistem ini, di dalam efeknya, dipertahankan oleh kapal-kapal di perairan yang mana secara general kurang terganggu oleh komplikasi-komplikasi geografis. Kita memiliki, seperti dalam (21):
+
 $$ \text{U.T.} \equiv \text{G.M.T.} = \text{Z.T.} \pm \text{bujur dari meridian standar} \dots(22) $$
 
 *(Catatan kaki: * Sebelum 1925, G.M.T. digunakan di dalam almanak untuk menandakan *Greenwich mean astronomical time* (G.M.A.T.). Mulai 1925, waktu yang digunakan adalah G.M.T. ($\equiv$ G.C.T.) lalu digantikan, seperti halnya disinggung di atas, oleh U.T. Baru-baru ini, untuk berbagai alasan yang dicantumkan dalam Apendiks E (hlm. 424), U.T. telah diganti di dalam almanak oleh Ephemeris Time (E.T.). Perbedaan di antara U.T. dan E.T. sangatlah sedikit hingga kita akan menggunakan yang terdahulu secara umumnya, terkecuali kalau dinyatakan sebaliknya).*
