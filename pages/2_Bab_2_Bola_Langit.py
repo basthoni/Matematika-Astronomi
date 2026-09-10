@@ -34,7 +34,7 @@ with st.sidebar:
 # KONTEN UTAMA BAB II (VERBATIM W.M. SMART)
 # ==========================================
 
-materi_bab_2_ bagian_1 = r"""
+materi_bab_2_bagian_1 = r"""
 ### 17. Pendahuluan.
 Dalam Bab I kita telah melihat bahwa posisi di permukaan bumi ditentukan sepenuhnya dengan merujuk pada dua lingkaran besar utama, yaitu meridian Greenwich dan ekuator. Prinsip penentuan posisi pada bola langit pada dasarnya serupa, dan terdapat beberapa metode tergantung pada lingkaran besar khusus yang dipilih sebagai lingkaran utama. Metode-metode ini sekarang akan diuraikan.
 
