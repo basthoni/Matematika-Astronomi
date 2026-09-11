@@ -516,7 +516,7 @@ $$ \cos 108^\circ = \sin \phi \sin \delta + \cos \phi \cos \delta \cos Z\hat{P}G
 yang memungkinkan perhitungan nilai $Z\hat{P}G$ untuk dilakukan. Nilai $\delta$ yang digunakan dalam rumus ini tentu saja bergantung pada hari tertentu dalam tahun yang bersangkutan. Dengan demikian, durasi senja pun dapat diketahui.
 """
 st.markdown(materi_bab_2_bagian_16, unsafe_allow_html=True)
-st.image("1001183516.jpg", caption="Gambar 26: Diagram Durasi Senja (Evening Twilight)", use_container_width=True)
+st.image("Gambar_26.jpg", caption="Gambar 26: Diagram Durasi Senja (Evening Twilight)", use_container_width=True)
 
 materi_bab_2_bagian_17 = r"""
 Jelas dari Gbr. 26 bahwa senja akan berakhir jika $NM$ lebih besar dari $NJ$, dengan kata lain, jika pada tengah malam semu matahari berada lebih dari $18^\circ$ di bawah horizon. Sekarang $NT = 90^\circ - \phi$ dan $MT = \delta$; oleh karena itu $NM = 90^\circ - \phi - \delta$. Karenanya, senja akan berakhir jika $90^\circ - \phi - \delta > 18^\circ$, atau jika $\delta < 72^\circ - \phi$. Sebagai contoh, di lintang $60^\circ \text{ U}$, senja akan berakhir jika $\delta < 12^\circ$. Ketika $\delta$ lebih besar dari $12^\circ$, jarak zenit matahari kurang dari $108^\circ$ di antara waktu terbenam dan tengah malam semu, begitu pula di antara tengah malam semu dan matahari terbit; oleh karena itu, pada lintang $60^\circ \text{ U}$, langit tidak pernah benar-benar gelap pada hari-hari ketika deklinasi matahari melebihi $12^\circ \text{ U}$. Hari-hari tersebut berada di antara 23 April dan 22 Agustus.
