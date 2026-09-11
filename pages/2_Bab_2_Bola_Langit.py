@@ -537,7 +537,7 @@ st.markdown(materi_bab_2_bagian_17, unsafe_allow_html=True)
 latihan_soal = [
     {
         "soal": r"**1.** Jika $z_1$ dan $z_2$ adalah jarak zenit sebuah bintang pada meridian dan pada vertikal utama secara berturut-turut, buktikan bahwa (i) $\cot \delta = \operatorname{cosec} z_1 \sec z_2 - \cot z_1$ dan (ii) $\cot \phi = \cot z_1 - \operatorname{cosec} z_1 \cos z_2$.",
-        "jawaban": r"""**Langkah Penyelesaian:**
+        "jawaban": r"""**Langkah Penyelesaian Lengkap:**
 1. Pada saat kulminasi atas di meridian, azimut bintang $A=0^\circ$ (atau $180^\circ$) dan sudut jam $H=0$. Jarak zenitnya adalah $z_1 = \phi - \delta$ (asumsi transit arah selatan). Dari sini $\delta = \phi - z_1$ dan $\phi = z_1 + \delta$.
 2. Pada vertikal utama, azimut bintang adalah $A=90^\circ$ (barat) atau $270^\circ$ (timur). Gunakan Aturan Kosinus pada segitiga bola PZX:
    $\cos z_2 = \sin \phi \sin \delta + \cos \phi \cos \delta \cos 90^\circ \implies \cos z_2 = \sin \phi \sin \delta$.
@@ -548,7 +548,7 @@ latihan_soal = [
     },
     {
         "soal": r"**2.** Jika $\psi$ adalah sudut yang dibentuk oleh lintasan sebuah bintang pada saat terbit dengan horizon, buktikan bahwa $\cos \psi = \sin \phi \sec \delta$.",
-        "jawaban": r"""**Langkah Penyelesaian:**
+        "jawaban": r"""**Langkah Penyelesaian Lengkap:**
 1. Sudut lintas harian bintang dengan bidang horizon disebut sudut di titik terbit. Lintasan bintang sejajar dengan ekuator, sehingga sudut antara rute bintang dan horizon merupakan komponen tak langsung dari sudut paralaktik $\eta$. 
 2. Sewaktu bintang terbit, ia menjejak di batas horizon, sehingga $z = 90^\circ$.
 3. Karena $\psi$ berkomplemen dengan $\eta$ dalam proyeksi datar paralaktik saat terbit, maka $\cos \psi = \sin \eta$.
@@ -558,7 +558,7 @@ latihan_soal = [
     },
     {
         "soal": r"**3.** Jika $h, H$ adalah sudut jam sebuah bintang, berdeklinasi $+ \delta$, pada vertikal utama (barat) dan pada saat terbenam secara berturut-turut, untuk sebuah tempat di lintang utara, tunjukkan bahwa $\cos h \cos H + \tan^2 \delta = 0$. Hitunglah interval Aldebaran.",
-        "jawaban": r"""**Langkah Penyelesaian:**
+        "jawaban": r"""**Langkah Penyelesaian Lengkap:**
 1. Di posisi vertikal utama, azimut bintang $A=90^\circ$. Menggunakan rumus kotangen / segitiga Napier, sudut jam saat itu $h$ memenuhi persamaan: $\cos h = \cot \phi \tan \delta$.
 2. Saat terbenam, bintang berada persis di horizon, maka jarak zenitnya $z=90^\circ$. Merujuk Rumus (24) di Bab ini, sudut jam terbenam $H$ diturunkan dari $\cos H = - \tan \phi \tan \delta$.
 3. Kalikan kedua persamaan di atas: 
@@ -955,4 +955,3 @@ for idx, item in enumerate(latihan_soal):
     st.markdown(item["soal"])
     with st.expander("Kunci Jawaban & Pembahasan"):
         st.markdown(item["jawaban"])
-
