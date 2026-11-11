@@ -6,11 +6,11 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Pembahasan UTS", page_icon="📝", layout="wide")
 
 st.title("📝 Pembahasan UTS Matematika Astronomi")
-st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D gabungan Sistem Horizon & Ekuator, langkah penyelesaian, dan kunci jawaban spesifik.")
+st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D bola langit, bola bumi di pusat, langkah penyelesaian, dan kunci jawaban spesifik.")
 st.divider()
 
 # ==========================================
-# FUNGSI HELPER UNTUK GRAFIK 3D BOLA LANGIT
+# FUNGSI HELPER UNTUK GRAFIK 3D BOLA LANGIT & BUMI
 # ==========================================
 def slerp(p0, p1, num=50):
     """Fungsi interpolasi slerp agar garis menempel melengkung di permukaan bola"""
@@ -32,13 +32,20 @@ def slerp(p0, p1, num=50):
 def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     fig = go.Figure()
     
-    # 1. Base Sphere (Bola Transparan)
+    # 1. Base Sphere (Bola Langit Transparan R = 1.0)
     u = np.linspace(0, 2 * np.pi, 40)
     v = np.linspace(0, np.pi, 40)
     x_sph = np.outer(np.cos(u), np.sin(v))
     y_sph = np.outer(np.sin(u), np.sin(v))
     z_sph = np.outer(np.ones(np.size(u)), np.cos(v))
-    fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.1, showscale=False, colorscale='Blues')
+    fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.08, showscale=False, colorscale='Blues', name='Bola Langit')
+    
+    # TAMBAHAN: Bola Bumi Kecil di Pusat (R = 0.25)
+    r_earth = 0.25
+    x_earth = r_earth * x_sph
+    y_earth = r_earth * y_sph
+    z_earth = r_earth * z_sph
+    fig.add_surface(x=x_earth, y=y_earth, z=z_earth, opacity=0.7, showscale=False, colorscale='YlGnBu', name='Bumi (Pusat)')
     
     # 2. Horizon (Hz / Ufuk)
     theta = np.linspace(0, 2*np.pi, 100)
@@ -84,7 +91,7 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
     fig.add_trace(go.Scatter3d(x=s_zm[:,0], y=s_zm[:,1], z=s_zm[:,2], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
     
-    # Mengatur sudut pandang kamera 3D agar persis seperti sketsa manual di buku
+    # Mengatur sudut pandang kamera 3D agar proporsional seperti buku teks
     fig.update_layout(
         scene=dict(
             xaxis_visible=False, yaxis_visible=False, zaxis_visible=False,
@@ -145,7 +152,7 @@ with tab1:
     
     with col1b:
         st.plotly_chart(plot_horizon_sphere(L_deg, 0.0, A_deg, "Bintang"), use_container_width=True)
-        st.caption("Visualisasi 3D: Sesuai sketsa diagram buku teks, menampilkan bidang Horizon (Hz) hijau & Ekuator Langit (Eq) biru berpotongan membentuk Segitiga P-Z-M.")
+        st.caption("Visualisasi 3D: Bola langit transparan dengan replika Bumi kecil di pusatnya, menampilkan bidang Horizon (Hz) & Ekuator Langit (Eq).")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
@@ -265,7 +272,7 @@ with tab3:
 
     with col3b:
         st.plotly_chart(plot_horizon_sphere(L_deg, -1.0, A_deg, "Matahari"), use_container_width=True)
-        st.caption("Visualisasi 3D: Sesuai sketsa diagram buku teks, menampilkan bidang Horizon (Hz) hijau & Ekuator Langit (Eq) biru dengan posisi Matahari (oranye).")
+        st.caption("Visualisasi 3D: Bola langit dengan bola bumi kecil di pusatnya, menampilkan Horizon (Hz), Ekuator Langit (Eq), dan posisi Matahari (oranye).")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
