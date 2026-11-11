@@ -154,9 +154,8 @@ with tab1:
         st.plotly_chart(plot_horizon_sphere(L_deg, 0.0, A_deg, "Bintang"), use_container_width=True)
         st.caption("Visualisasi 3D: Bola langit dengan replika Bumi kecil di pusatnya, menampilkan Horizon (Hz), Ekuator (Eq), dan Segitiga P-Z-M.")
 
-    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
     with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 1)"):
-        st.markdown("""
+        st.markdown(r"""
         **1. Konsep Dasar Segitiga Bola ($P-Z-M$):**
         * $P$ = Kutub Langit, $Z$ = Zenith pengamat, $M$ = Posisi Bintang.
         * Sisi $PZ = 90^\circ - L$ (Ko-lintang)
@@ -239,9 +238,8 @@ with tab2:
         st.plotly_chart(fig_globe, use_container_width=True)
         st.caption("Proyeksi Globe 3D: Garis merah menunjukkan Jarak Terpendek (Great Circle) Arah Kiblat.")
 
-    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
     with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 2)"):
-        st.markdown("""
+        st.markdown(r"""
         **1. Konsep Segitiga Bola Terestrial ($P-Z-K$):**
         * $P$ = Kutub Utara Bumi, $Z$ = Posisi Masjid, $K$ = Kota Makkah (Ka'bah).
         * Sisi $PZ = 90^\circ - L_Z$ (Co-lintang Masjid)
@@ -317,9 +315,8 @@ with tab3:
         st.plotly_chart(plot_horizon_sphere(L_deg, -1.0, A_deg, "Matahari"), use_container_width=True)
         st.caption("Visualisasi 3D: Bola langit dengan bola bumi kecil di pusat, menampilkan Horizon (Hz), Ekuator (Eq), dan posisi Matahari (oranye).")
 
-    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
     with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 3)"):
-        st.markdown("""
+        st.markdown(r"""
         **1. Konsep Segitiga Bola Astronomis ($P-Z-M$):**
         * $P$ = Kutub Langit, $Z$ = Zenith, $M$ = Matahari.
         * Sisi $PZ = 90^\circ - L$ (Co-lintang pengamat)
