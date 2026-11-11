@@ -40,35 +40,34 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     z_sph = np.outer(np.ones(np.size(u)), np.cos(v))
     fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.1, showscale=False, colorscale='Blues')
     
-    # 2. Horizon (Ufuk)
+    # 2. Horizon (Hz / Ufuk)
     theta = np.linspace(0, 2*np.pi, 100)
     fig.add_trace(go.Scatter3d(x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta),
-                               mode='lines', line=dict(color='lime', width=4), name='Horizon (Ufuk)'))
+                               mode='lines', line=dict(color='lime', width=4), name='Horizon (Hz)'))
                                
-    # 3. Ekuator Langit
+    # 3. Ekuator Langit (Eq)
     L_rad = np.radians(L_deg)
     alpha = np.linspace(0, 2*np.pi, 100)
     x_eq = -np.sin(L_rad) * np.sin(alpha)
     y_eq = np.cos(alpha)
     z_eq = np.cos(L_rad) * np.sin(alpha)
     fig.add_trace(go.Scatter3d(x=x_eq, y=y_eq, z=z_eq,
-                               mode='lines', line=dict(color='blue', width=4, dash='dash'), name='Ekuator Langit'))
+                               mode='lines', line=dict(color='blue', width=4, dash='dash'), name='Ekuator Langit (Eq)'))
 
     # 4. Zenith & Arah Mata Angin
     Z = np.array([0, 0, 1])
-    fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
+    fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith (Z)'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
     
-    # 5. Penyesuaian Kutub (Utara vs Selatan berdasarkan Lintang)
+    # 5. Penyesuaian Kutub (P) berdasarkan Lintang
     if L_deg >= 0:
         P = np.array([np.cos(L_rad), 0, np.sin(L_rad)])
-        pole_name = "NCP (Kutub Utara)"
+        pole_name = "NCP (P)"
     else:
-        # Lintang Selatan: SCP berada di arah Selatan (-x)
         P = np.array([-np.cos(L_rad), 0, -np.sin(L_rad)])
-        pole_name = "SCP (Kutub Selatan)"
+        pole_name = "SCP (P)"
         
-    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=[pole_name], textposition='top left', name=pole_name))
+    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=[pole_name], textposition='top left', name='Kutub (P)'))
     
     # 6. Posisi Objek (Bintang/Matahari)
     alt_rad = np.radians(alt_deg)
@@ -81,8 +80,8 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     s_pm = slerp(P, M)
     s_zm = slerp(Z, M)
     
-    fig.add_trace(go.Scatter3d(x=s_pz[:,0], y=s_pz[:,1], z=s_pz[:,2], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (Co-Lintang)'))
-    fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (Co-Deklinasi)'))
+    fig.add_trace(go.Scatter3d(x=s_pz[:,0], y=s_pz[:,1], z=s_pz[:,2], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (90-L)'))
+    fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
     fig.add_trace(go.Scatter3d(x=s_zm[:,0], y=s_zm[:,1], z=s_zm[:,2], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
     
     fig.update_layout(scene=dict(xaxis_visible=False, yaxis_visible=False, zaxis_visible=False), margin=dict(l=0, r=0, b=0, t=0), height=450)
@@ -95,7 +94,7 @@ col_input, _ = st.columns([1, 2])
 with col_input:
     x = st.number_input("Masukkan Nomor Presensi [ X ]", min_value=1, max_value=100, value=5, step=1)
 
-st.info(f"Semua perhitungan, rumus, dan simulasi 3D gabungan sistem Horizon & Ekuator dikalkulasi otomatis menggunakan variabel **[ X ] = {x}**.")
+st.info(f"Semua perhitungan, rumus, dan simulasi 3D dikalkulasi otomatis menggunakan variabel **[ X ] = {x}**.")
 
 # ==========================================
 # TABS SOAL
@@ -136,7 +135,7 @@ with tab1:
     
     with col1b:
         st.plotly_chart(plot_horizon_sphere(L_deg, 0.0, A_deg, "Bintang"), use_container_width=True)
-        st.caption("Visualisasi 3D Gabungan: Garis hijau (Horizon) & Garis biru putus-putus (Ekuator Langit) serta Segitiga P-Z-M yang melengkung.")
+        st.caption("Visualisasi 3D: Sesuai sketsa diagram buku teks, menampilkan bidang Horizon (Hz) hijau & Ekuator Langit (Eq) biru berpotongan membentuk Segitiga P-Z-M.")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
@@ -256,7 +255,7 @@ with tab3:
 
     with col3b:
         st.plotly_chart(plot_horizon_sphere(L_deg, -1.0, A_deg, "Matahari"), use_container_width=True)
-        st.caption("Visualisasi 3D Gabungan: Garis hijau (Horizon) dan Garis biru putus-putus (Ekuator Langit) serta posisi Matahari (oranye).")
+        st.caption("Visualisasi 3D: Sesuai sketsa diagram buku teks, menampilkan bidang Horizon (Hz) hijau & Ekuator Langit (Eq) biru dengan posisi Matahari (oranye).")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
