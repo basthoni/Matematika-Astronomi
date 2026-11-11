@@ -12,6 +12,23 @@ st.divider()
 # ==========================================
 # FUNGSI HELPER UNTUK GRAFIK 3D BOLA LANGIT
 # ==========================================
+def slerp(p0, p1, num=50):
+    """Fungsi interpolasi slerp agar garis menempel melengkung di permukaan bola"""
+    p0 = np.array(p0)
+    p1 = np.array(p1)
+    norm_p0 = np.linalg.norm(p0)
+    norm_p1 = np.linalg.norm(p1)
+    if norm_p0 == 0 or norm_p1 == 0:
+        return np.linspace(p0, p1, num)
+    dot = np.dot(p0, p1) / (norm_p0 * norm_p1)
+    dot = np.clip(dot, -1.0, 1.0)
+    omega = np.arccos(dot)
+    if abs(omega) < 1e-3:
+        return np.linspace(p0, p1, num)
+    t = np.linspace(0, 1, num)
+    p = np.sin((1 - t) * omega) / np.sin(omega) * p0[:, None] + np.sin(t * omega) / np.sin(omega) * p1[:, None]
+    return p.T
+
 def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     fig = go.Figure()
     
@@ -29,27 +46,30 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
                                mode='lines', line=dict(color='lime', width=5), name='Horizon'))
                                
     # 3. Zenith & Arah Mata Angin
-    fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[1], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
+    Z = np.array([0, 0, 1])
+    fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
     
     # 4. Kutub Utara Langit (NCP)
     L_rad = np.radians(L_deg)
-    x_ncp, y_ncp, z_ncp = np.cos(L_rad), 0, np.sin(L_rad)
-    fig.add_trace(go.Scatter3d(x=[x_ncp], y=[y_ncp], z=[z_ncp], mode='markers+text', marker=dict(color='red', size=6), text=['Kutub (P)'], textposition='top right', name='NCP'))
+    P = np.array([np.cos(L_rad), 0, np.sin(L_rad)])
+    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=['Kutub (P)'], textposition='top right', name='NCP'))
     
     # 5. Posisi Objek (Bintang/Matahari)
     alt_rad = np.radians(alt_deg)
     A_rad = np.radians(A_deg)
     # Mapping: x = Utara, y = Timur
-    x_obj = np.cos(alt_rad) * np.cos(A_rad)
-    y_obj = np.cos(alt_rad) * np.sin(A_rad)
-    z_obj = np.sin(alt_rad)
-    fig.add_trace(go.Scatter3d(x=[x_obj], y=[y_obj], z=[z_obj], mode='markers+text', marker=dict(color='orange', size=8), text=[obj_name], textposition='middle left', name=obj_name))
+    M = np.array([np.cos(alt_rad) * np.cos(A_rad), np.cos(alt_rad) * np.sin(A_rad), np.sin(alt_rad)])
+    fig.add_trace(go.Scatter3d(x=[M[0]], y=[M[1]], z=[M[2]], mode='markers+text', marker=dict(color='orange', size=8), text=[obj_name], textposition='middle left', name=obj_name))
     
-    # 6. Menggambar Sisi Segitiga Bola P-Z-M
-    fig.add_trace(go.Scatter3d(x=[x_ncp, 0], y=[y_ncp, 0], z=[z_ncp, 1], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (90-L)'))
-    fig.add_trace(go.Scatter3d(x=[x_ncp, x_obj], y=[y_ncp, y_obj], z=[z_ncp, z_obj], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
-    fig.add_trace(go.Scatter3d(x=[0, x_obj], y=[0, y_obj], z=[1, z_obj], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
+    # 6. Menggambar Sisi Segitiga Bola Melengkung (Slerp)
+    s_pz = slerp(P, Z)
+    s_pm = slerp(P, M)
+    s_zm = slerp(Z, M)
+    
+    fig.add_trace(go.Scatter3d(x=s_pz[:,0], y=s_pz[:,1], z=s_pz[:,2], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (90-L)'))
+    fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
+    fig.add_trace(go.Scatter3d(x=s_zm[:,0], y=s_zm[:,1], z=s_zm[:,2], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
     
     fig.update_layout(scene=dict(xaxis_visible=False, yaxis_visible=False, zaxis_visible=False), margin=dict(l=0, r=0, b=0, t=0), height=450)
     return fig
