@@ -40,12 +40,12 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     z_sph = np.outer(np.ones(np.size(u)), np.cos(v))
     fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.1, showscale=False, colorscale='Blues')
     
-    # 2. Horizon (Ufuk) - BAGIAN SISTEM HORIZON
+    # 2. Horizon (Ufuk)
     theta = np.linspace(0, 2*np.pi, 100)
     fig.add_trace(go.Scatter3d(x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta),
                                mode='lines', line=dict(color='lime', width=4), name='Horizon (Ufuk)'))
                                
-    # 3. Ekuator Langit - BAGIAN SISTEM EKUTOR (Gabungan)
+    # 3. Ekuator Langit
     L_rad = np.radians(L_deg)
     alpha = np.linspace(0, 2*np.pi, 100)
     x_eq = -np.sin(L_rad) * np.sin(alpha)
@@ -59,9 +59,16 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
     
-    # 5. Kutub Utara Langit (NCP)
-    P = np.array([np.cos(L_rad), 0, np.sin(L_rad)])
-    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=['Kutub (P)'], textposition='top right', name='NCP (Kutub)'))
+    # 5. Penyesuaian Kutub (Utara vs Selatan berdasarkan Lintang)
+    if L_deg >= 0:
+        P = np.array([np.cos(L_rad), 0, np.sin(L_rad)])
+        pole_name = "NCP (Kutub Utara)"
+    else:
+        # Lintang Selatan: SCP berada di arah Selatan (-x)
+        P = np.array([-np.cos(L_rad), 0, -np.sin(L_rad)])
+        pole_name = "SCP (Kutub Selatan)"
+        
+    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=[pole_name], textposition='top left', name=pole_name))
     
     # 6. Posisi Objek (Bintang/Matahari)
     alt_rad = np.radians(alt_deg)
@@ -69,13 +76,13 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     M = np.array([np.cos(alt_rad) * np.cos(A_rad), np.cos(alt_rad) * np.sin(A_rad), np.sin(alt_rad)])
     fig.add_trace(go.Scatter3d(x=[M[0]], y=[M[1]], z=[M[2]], mode='markers+text', marker=dict(color='orange', size=8), text=[obj_name], textposition='middle left', name=obj_name))
     
-    # 7. Menggambar Sisi Segitiga Bola Melengkung (Slerp) P-Z-M
+    # 7. Sisi Segitiga Bola Melengkung (Slerp) P-Z-M
     s_pz = slerp(P, Z)
     s_pm = slerp(P, M)
     s_zm = slerp(Z, M)
     
-    fig.add_trace(go.Scatter3d(x=s_pz[:,0], y=s_pz[:,1], z=s_pz[:,2], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (90-L)'))
-    fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
+    fig.add_trace(go.Scatter3d(x=s_pz[:,0], y=s_pz[:,1], z=s_pz[:,2], mode='lines', line=dict(color='yellow', width=4), name='Sisi P-Z (Co-Lintang)'))
+    fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (Co-Deklinasi)'))
     fig.add_trace(go.Scatter3d(x=s_zm[:,0], y=s_zm[:,1], z=s_zm[:,2], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
     
     fig.update_layout(scene=dict(xaxis_visible=False, yaxis_visible=False, zaxis_visible=False), margin=dict(l=0, r=0, b=0, t=0), height=450)
