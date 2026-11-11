@@ -84,7 +84,17 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     fig.add_trace(go.Scatter3d(x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2], mode='lines', line=dict(color='magenta', width=4), name='Sisi P-M (90-d)'))
     fig.add_trace(go.Scatter3d(x=s_zm[:,0], y=s_zm[:,1], z=s_zm[:,2], mode='lines', line=dict(color='cyan', width=4), name='Sisi Z-M (Jarak Zenith)'))
     
-    fig.update_layout(scene=dict(xaxis_visible=False, yaxis_visible=False, zaxis_visible=False), margin=dict(l=0, r=0, b=0, t=0), height=450)
+    # Mengatur sudut pandang kamera 3D agar persis seperti sketsa manual di buku
+    fig.update_layout(
+        scene=dict(
+            xaxis_visible=False, yaxis_visible=False, zaxis_visible=False,
+            camera=dict(
+                eye=dict(x=1.5, y=-1.5, z=1.2)
+            )
+        ), 
+        margin=dict(l=0, r=0, b=0, t=0), 
+        height=450
+    )
     return fig
 
 # ==========================================
