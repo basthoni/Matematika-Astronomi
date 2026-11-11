@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Pembahasan UTS", page_icon="📝", layout="wide")
 
 st.title("📝 Pembahasan UTS Matematika Astronomi")
-st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D, langkah penyelesaian, dan kunci jawaban spesifik sesuai variabel soal Anda.")
+st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D gabungan Sistem Horizon & Ekuator, langkah penyelesaian, dan kunci jawaban spesifik.")
 st.divider()
 
 # ==========================================
@@ -40,29 +40,36 @@ def plot_horizon_sphere(L_deg, alt_deg, A_deg, obj_name):
     z_sph = np.outer(np.ones(np.size(u)), np.cos(v))
     fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.1, showscale=False, colorscale='Blues')
     
-    # 2. Horizon (z = 0)
+    # 2. Horizon (Ufuk) - BAGIAN SISTEM HORIZON
     theta = np.linspace(0, 2*np.pi, 100)
     fig.add_trace(go.Scatter3d(x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta),
-                               mode='lines', line=dict(color='lime', width=5), name='Horizon'))
+                               mode='lines', line=dict(color='lime', width=4), name='Horizon (Ufuk)'))
                                
-    # 3. Zenith & Arah Mata Angin
+    # 3. Ekuator Langit - BAGIAN SISTEM EKUTOR (Gabungan)
+    L_rad = np.radians(L_deg)
+    alpha = np.linspace(0, 2*np.pi, 100)
+    x_eq = -np.sin(L_rad) * np.sin(alpha)
+    y_eq = np.cos(alpha)
+    z_eq = np.cos(L_rad) * np.sin(alpha)
+    fig.add_trace(go.Scatter3d(x=x_eq, y=y_eq, z=z_eq,
+                               mode='lines', line=dict(color='blue', width=4, dash='dash'), name='Ekuator Langit'))
+
+    # 4. Zenith & Arah Mata Angin
     Z = np.array([0, 0, 1])
     fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
     
-    # 4. Kutub Utara Langit (NCP)
-    L_rad = np.radians(L_deg)
+    # 5. Kutub Utara Langit (NCP)
     P = np.array([np.cos(L_rad), 0, np.sin(L_rad)])
-    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=['Kutub (P)'], textposition='top right', name='NCP'))
+    fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=['Kutub (P)'], textposition='top right', name='NCP (Kutub)'))
     
-    # 5. Posisi Objek (Bintang/Matahari)
+    # 6. Posisi Objek (Bintang/Matahari)
     alt_rad = np.radians(alt_deg)
     A_rad = np.radians(A_deg)
-    # Mapping: x = Utara, y = Timur
     M = np.array([np.cos(alt_rad) * np.cos(A_rad), np.cos(alt_rad) * np.sin(A_rad), np.sin(alt_rad)])
     fig.add_trace(go.Scatter3d(x=[M[0]], y=[M[1]], z=[M[2]], mode='markers+text', marker=dict(color='orange', size=8), text=[obj_name], textposition='middle left', name=obj_name))
     
-    # 6. Menggambar Sisi Segitiga Bola Melengkung (Slerp)
+    # 7. Menggambar Sisi Segitiga Bola Melengkung (Slerp) P-Z-M
     s_pz = slerp(P, Z)
     s_pm = slerp(P, M)
     s_zm = slerp(Z, M)
@@ -81,7 +88,7 @@ col_input, _ = st.columns([1, 2])
 with col_input:
     x = st.number_input("Masukkan Nomor Presensi [ X ]", min_value=1, max_value=100, value=5, step=1)
 
-st.info(f"Semua perhitungan, rumus, dan simulasi 3D di bawah ini dikalkulasi otomatis menggunakan variabel **[ X ] = {x}**.")
+st.info(f"Semua perhitungan, rumus, dan simulasi 3D gabungan sistem Horizon & Ekuator dikalkulasi otomatis menggunakan variabel **[ X ] = {x}**.")
 
 # ==========================================
 # TABS SOAL
@@ -102,9 +109,8 @@ with tab1:
     t_deg = math.degrees(math.acos(cos_t)) if abs(cos_t) <= 1 else 0
     t_jam = t_deg / 15.0
     
-    # Hitung Azimuth untuk Plot 3D
     cos_A = math.sin(d_rad) / math.cos(L_rad)
-    A_deg = 360 - math.degrees(math.acos(cos_A)) # Terbenam di Barat
+    A_deg = 360 - math.degrees(math.acos(cos_A))
     
     col1a, col1b = st.columns([1, 1])
     with col1a:
@@ -123,7 +129,7 @@ with tab1:
     
     with col1b:
         st.plotly_chart(plot_horizon_sphere(L_deg, 0.0, A_deg, "Bintang"), use_container_width=True)
-        st.caption("Visualisasi 3D Segitiga P-Z-M. Bintang menempel tepat di garis Horizon (hijau) karena z = 90°.")
+        st.caption("Visualisasi 3D Gabungan: Garis hijau (Horizon) & Garis biru putus-putus (Ekuator Langit) serta Segitiga P-Z-M yang melengkung.")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
@@ -223,7 +229,6 @@ with tab3:
     m_menit = (total_detik_maghrib % 3600) // 60
     m_detik = total_detik_maghrib % 60
     
-    # Hitung Azimuth Matahari Terbenam untuk Plot
     cos_A = (sin_d - (sin_L * sin_h)) / (cos_L * math.cos(h_rad))
     A_deg = 360 - math.degrees(math.acos(cos_A))
 
@@ -244,7 +249,7 @@ with tab3:
 
     with col3b:
         st.plotly_chart(plot_horizon_sphere(L_deg, -1.0, A_deg, "Matahari"), use_container_width=True)
-        st.caption("Visualisasi 3D: Perhatikan posisi Matahari (oranye) sedikit menembus *di bawah* garis Horizon hijau karena nilai h = -1°.")
+        st.caption("Visualisasi 3D Gabungan: Garis hijau (Horizon) dan Garis biru putus-putus (Ekuator Langit) serta posisi Matahari (oranye).")
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
