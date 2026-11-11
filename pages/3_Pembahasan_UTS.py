@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Pembahasan UTS", page_icon="📝", layout="wide")
 
 st.title("📝 Pembahasan UTS Matematika Astronomi")
-st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D bola langit dengan bola bumi di pusatnya, langkah penyelesaian, dan kunci jawaban spesifik.")
+st.markdown("Masukkan Nomor Presensi Anda untuk melihat simulasi 3D bola langit, bola bumi di pusat, langkah penyelesaian, dan proses penurunan rumus lengkap.")
 st.divider()
 
 # ==========================================
@@ -152,7 +152,29 @@ with tab1:
     
     with col1b:
         st.plotly_chart(plot_horizon_sphere(L_deg, 0.0, A_deg, "Bintang"), use_container_width=True)
-        st.caption("Visualisasi 3D: Bola langit transparan dengan bola bumi kecil di pusat, menampilkan Horizon (Hz), Ekuator (Eq), dan Segitiga P-Z-M.")
+        st.caption("Visualisasi 3D: Bola langit dengan replika Bumi kecil di pusatnya, menampilkan Horizon (Hz), Ekuator (Eq), dan Segitiga P-Z-M.")
+
+    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
+    with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 1)"):
+        st.markdown("""
+        **1. Konsep Dasar Segitiga Bola ($P-Z-M$):**
+        * $P$ = Kutub Langit, $Z$ = Zenith pengamat, $M$ = Posisi Bintang.
+        * Sisi $PZ = 90^\circ - L$ (Ko-lintang)
+        * Sisi $PM = 90^\circ - d$ (Ko-deklinasi)
+        * Sisi $ZM = z$ (Jarak Zenith)
+        * Sudut di $P$ adalah Sudut Jam ($t$).
+
+        **2. Penerapan Aturan Kosinus untuk Sisi:**
+        Berdasarkan aturan kosinus umum pada segitiga bola:
+        $$\cos(z) = \cos(90^\circ - L)\cos(90^\circ - d) + \sin(90^\circ - L)\sin(90^\circ - d)\cos(t)$$
+
+        **3. Kondisi Khusus di Ufuk Barat ($z = 90^\circ$):**
+        Karena bintang berada tepat di ufuk, maka jarak zenitnya $z = 90^\circ$, sehingga $\cos(90^\circ) = 0$:
+        $$0 = \sin(L)\sin(d) + \cos(L)\cos(d)\cos(t)$$
+        Pindahkan suku ke ruas kiri dan bagi dengan $\cos(L)\cos(d)$:
+        $$\cos(t) = -\frac{\sin(L)\sin(d)}{\cos(L)\cos(d)} = -\tan(L)\tan(d)$$
+        Rumus inilah yang digunakan untuk menghitung sudut jam $t$ saat bintang terbenam.
+        """)
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
@@ -217,6 +239,27 @@ with tab2:
         st.plotly_chart(fig_globe, use_container_width=True)
         st.caption("Proyeksi Globe 3D: Garis merah menunjukkan Jarak Terpendek (Great Circle) Arah Kiblat.")
 
+    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
+    with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 2)"):
+        st.markdown("""
+        **1. Konsep Segitiga Bola Terestrial ($P-Z-K$):**
+        * $P$ = Kutub Utara Bumi, $Z$ = Posisi Masjid, $K$ = Kota Makkah (Ka'bah).
+        * Sisi $PZ = 90^\circ - L_Z$ (Co-lintang Masjid)
+        * Sisi $PK = 90^\circ - L_K$ (Co-lintang Makkah)
+        * Sudut antara kedua sisi di kutub $P$ adalah Selisih Bujur ($\Delta B = B_Z - B_K$).
+
+        **2. Penurunan Rumus Jarak ($c$):**
+        Menggunakan Aturan Kosinus Sisi pada segitiga $PZK$:
+        $$\cos(c) = \cos(PZ)\cos(PK) + \sin(PZ)\sin(PK)\cos(\Delta B)$$
+        Karena $\cos(90^\circ - L) = \sin(L)$ dan $\sin(90^\circ - L) = \cos(L)$, persamaannya menjadi:
+        $$\cos(c) = \sin(L_Z)\sin(L_K) + \cos(L_Z)\cos(L_K)\cos(\Delta B)$$
+
+        **3. Penurunan Rumus Azimuth Kiblat ($Q$):**
+        Menggunakan rumus kotangen/aturan empat bagian unsur segitiga bola untuk mencari sudut arah kiblat terhadap utara:
+        $$\tan(Q) = \frac{\sin(\Delta B)}{\cos(L_Z)\tan(L_K) - \sin(L_Z)\cos(\Delta B)}$$
+        Hasil sudut $Q$ dikonversi menjadi Azimuth Utara Sejati ($\text{UTS} = 360^\circ - Q$).
+        """)
+
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
     st.info("Coba hitung Arah Kiblat untuk masjid di Jayapura (Papua) yang berada di Bujur 140° BT. Bandingkan nilai Azimuth-nya dengan Semarang. Apakah bergeser semakin ke Utara atau semakin ke Barat?")
@@ -273,6 +316,27 @@ with tab3:
     with col3b:
         st.plotly_chart(plot_horizon_sphere(L_deg, -1.0, A_deg, "Matahari"), use_container_width=True)
         st.caption("Visualisasi 3D: Bola langit dengan bola bumi kecil di pusat, menampilkan Horizon (Hz), Ekuator (Eq), dan posisi Matahari (oranye).")
+
+    # PROSES DEVELOPMENT / PENURUNAN RUMUS DI DALAM SCRIPT
+    with st.expander("🔍 Proses Penurunan Rumus & Development (Soal 3)"):
+        st.markdown("""
+        **1. Konsep Segitiga Bola Astronomis ($P-Z-M$):**
+        * $P$ = Kutub Langit, $Z$ = Zenith, $M$ = Matahari.
+        * Sisi $PZ = 90^\circ - L$ (Co-lintang pengamat)
+        * Sisi $PM = 90^\circ - d$ (Co-deklinasi matahari)
+        * Sisi $ZM = 90^\circ - h$ (Jarak zenith matahari saat tinggi $h$)
+
+        **2. Penurunan Rumus Sudut Jam ($t$):**
+        Menggunakan Aturan Kosinus untuk Sisi pada segitiga $PZM$ dengan sisi $ZM = 90^\circ - h$:
+        $$\cos(90^\circ - h) = \cos(90^\circ - L)\cos(90^\circ - d) + \sin(90^\circ - L)\sin(90^\circ - d)\cos(t)$$
+        Karena $\cos(90^\circ - h) = \sin(h)$, maka persamaannya menjadi:
+        $$\sin(h) = \sin(L)\sin(d) + \cos(L)\cos(d)\cos(t)$$
+
+        **3. Isolasi Variabel Sudut Jam ($t$):**
+        $$\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}$$
+        * Nilai $t$ dikonversi ke jam ($t / 15$).
+        * Waktu Maghrib diperoleh dengan menambahkan selisih waktu tersebut terhadap Waktu Zuhur referensi (11:45:00 WIB).
+        """)
 
     st.divider()
     st.subheader("💡 Soal Pendalaman (Latihan Mandiri)")
