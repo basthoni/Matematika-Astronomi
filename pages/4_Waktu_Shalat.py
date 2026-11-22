@@ -1,6 +1,9 @@
 import streamlit as st
 import datetime
+import json
 import math
+import urllib.request
+import urllib.error
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -12,7 +15,7 @@ st.markdown("Simulasi astronomi bola untuk memahami pengaruh perbedaan kriteria 
 st.divider()
 
 # ==========================================
-# FUNGSI HELPER MATEMATIKA ASTRONOMI & 3D
+# FUNGSI HELPER MATEMATIKA ASTRONOMI, 3D & GSHEET
 # ==========================================
 def slerp(p0, p1, num=50):
     p0 = np.array(p0)
@@ -33,10 +36,8 @@ def slerp(p0, p1, num=50):
 def estimasi_solar_params(tanggal_obj):
     """Menghitung estimasi Deklinasi (d) [derajat] dan Equation of Time (e) [menit] dari tanggal."""
     hari_ke = tanggal_obj.timetuple().tm_yday
-    # Sudut fase tahunan (gamma dalam radian)
     gamma = 2.0 * math.pi * (hari_ke - 1) / 365.0
 
-    # Estimasi Deklinasi Matahari (Spencer / Cooper approximation, derajat)
     d_rad = (
         0.006918
         - 0.399912 * math.cos(gamma)
@@ -48,7 +49,6 @@ def estimasi_solar_params(tanggal_obj):
     )
     d_deg = math.degrees(d_rad)
 
-    # Estimasi Equation of Time (dalam menit)
     eot_menit = 229.18 * (
         0.000075
         + 0.001868 * math.cos(gamma)
@@ -93,10 +93,30 @@ def format_durasi(t_deg):
     d = total_detik % 60
     return f"{j:02d}j {m:02d}m {d:02d}d"
 
+def kirim_ke_gsheet(payload_dict):
+    """Mengirim data percobaan mahasiswa ke Google Apps Script Web App jika dikonfigurasi di st.secrets."""
+    webhook_url = st.secrets.get("gsheet_webhook_url", "").strip()
+    if not webhook_url:
+        return False, "URL Google Sheet belum dikonfigurasi pada st.secrets['gsheet_webhook_url']."
+    try:
+        data_bytes = json.dumps(payload_dict).encode("utf-8")
+        req = urllib.request.Request(
+            webhook_url,
+            data=data_bytes,
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            status_code = resp.getcode()
+        if 200 <= status_code < 300:
+            return True, "Data percobaan berhasil dicatat ke Google Sheets."
+        return False, f"Respons server tidak terduga (HTTP {status_code})."
+    except (urllib.error.URLError, TimeoutError, Exception) as exc:
+        return False, f"Gagal mengirim ke Google Sheets: {exc}"
+
 def plot_perbandingan_3d(L_deg, titik_list):
     fig = go.Figure()
 
-    # 1. Bola Langit Transparan
     u = np.linspace(0, 2 * np.pi, 40)
     v = np.linspace(0, np.pi, 40)
     x_sph = np.outer(np.cos(u), np.sin(v))
@@ -104,11 +124,9 @@ def plot_perbandingan_3d(L_deg, titik_list):
     z_sph = np.outer(np.ones(np.size(u)), np.cos(v))
     fig.add_surface(x=x_sph, y=y_sph, z=z_sph, opacity=0.07, showscale=False, colorscale='Blues', name='Bola Langit')
 
-    # 2. Bola Bumi di Pusat
     r_earth = 0.25
     fig.add_surface(x=r_earth * x_sph, y=r_earth * y_sph, z=r_earth * z_sph, opacity=0.75, showscale=False, colorscale='YlGnBu', name='Bumi (Pusat)')
 
-    # 3. Horizon & Ekuator
     theta = np.linspace(0, 2*np.pi, 100)
     fig.add_trace(go.Scatter3d(x=np.cos(theta), y=np.sin(theta), z=np.zeros_like(theta),
                                mode='lines', line=dict(color='lime', width=4), name='Horizon (Hz)'))
@@ -116,7 +134,6 @@ def plot_perbandingan_3d(L_deg, titik_list):
     fig.add_trace(go.Scatter3d(x=-np.sin(L_rad)*np.sin(theta), y=np.cos(theta), z=np.cos(L_rad)*np.sin(theta),
                                mode='lines', line=dict(color='blue', width=3, dash='dash'), name='Ekuator Langit (Eq)'))
 
-    # 4. Zenith, Kutub, Mata Angin
     fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[1], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
 
@@ -128,7 +145,6 @@ def plot_perbandingan_3d(L_deg, titik_list):
         pole_name = "SCP (P)"
     fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=[pole_name], textposition='top left', name='Kutub (P)'))
 
-    # 5. Plot Titik-Titik Matahari Sesuai Kriteria
     for item in titik_list:
         if item["h"] is None or item["A"] is None:
             continue
@@ -197,14 +213,12 @@ with c6:
 with c7:
     ikhtiyath_menit = st.number_input("Ikhtiyath / Pengaman [menit]", min_value=0, max_value=5, value=2, step=1)
 
-# Perhitungan Zuhur / Meridian Pass (WIB)
 koreksi_bujur_jam = (bujur_daerah - B_deg) / 15.0
 meridian_pass_jam = 12.0 - (eot_menit / 60.0) + koreksi_bujur_jam
 zuhur_wib = meridian_pass_jam + (ikhtiyath_menit / 60.0)
 
-# Koreksi Dip (Kerendahan Ufuk) untuk Terbit & Maghrib
 dip_deg = 0.0347 * math.sqrt(elevasi_m)
-h_maghrib_syuruq = -(0.8333 + dip_deg)  # Refraksi 34' + semi-diameter 16' + dip
+h_maghrib_syuruq = -(0.8333 + dip_deg)
 
 st.info(f"**Waktu Kulminasi (Meridian Pass):** `{format_jam_wib(meridian_pass_jam)}` | **Waktu Zuhur (+Ikhtiyath {ikhtiyath_menit}m):** `{format_jam_wib(zuhur_wib)}` | **Koreksi Dip Ufuk:** `{dip_deg:.4f}°`")
 
@@ -437,7 +451,7 @@ with tab_isya:
         st.caption("Visualisasi 3D: Pergerakan matahari turun di bawah ufuk Barat mulai dari Maghrib hingga kedalaman Isya -15°, -17°, dan -18°.")
 
 # ------------------------------------------
-# TAB 4: REKAP JADWAL & EKSPERIMEN MANDIRI
+# TAB 4: REKAP JADWAL, EKSPERIMEN & KUNCI TERKUNCI
 # ------------------------------------------
 with tab_rekap:
     st.header("📋 Rekapitulasi Jadwal Lengkap & Eksperimen Mahasiswa")
@@ -465,3 +479,59 @@ with tab_rekap:
     2. **Pengaruh Ketinggian Tempat (Dip):** Naikkan Ketinggian Tempat dari `10 m` menjadi `2.000 m` (misal kawasan dataran tinggi Dieng). Amati perubahan nilai `Koreksi Dip Ufuk` dan pergeseran waktu **Syuruq** serta **Maghrib**.
     3. **Eksperimen Lintang Tinggi:** Ubah Lintang Tempat menjadi `+55° LU` (misal Moskow/Kopenhagen) dan Deklinasi `+23.4°` (Juni). Apa yang terjadi pada perhitungan Subuh `-20°` dan Isya `-18°`? Mengapa nilai $\cos(t)$ bisa keluar dari rentang $[-1, 1]$?
     """)
+
+    st.divider()
+    st.subheader("✍️ Form Catatan Percobaan & Pembukaan Kunci Jawaban")
+
+    if "eksperimen_dicoba" not in st.session_state:
+        st.session_state["eksperimen_dicoba"] = False
+
+    col_id1, col_id2 = st.columns([1, 1])
+    with col_id1:
+        nama_mhs = st.text_input("Nama Mahasiswa", placeholder="Contoh: Ahmad Fauzi")
+    with col_id2:
+        presensi_mhs = st.text_input("No. Presensi / NIM", placeholder="Contoh: 12")
+
+    jawaban_eksperimen = st.text_area(
+        "Ringkasan Hasil Eksperimen Anda (1–3 poin):",
+        placeholder="Tuliskan temuan Anda mengenai selisih bujur, efek ketinggian dip, dan kondisi lintang tinggi..."
+    )
+
+    if st.button("📤 Kirim Percobaan & Buka Kunci Jawaban"):
+        if not nama_mhs.strip() or not presensi_mhs.strip() or not jawaban_eksperimen.strip():
+            st.warning("Mohon lengkapi **Nama Mahasiswa**, **No. Presensi/NIM**, dan **Ringkasan Hasil Eksperimen** terlebih dahulu.")
+        else:
+            payload = {
+                "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "nama": nama_mhs.strip(),
+                "presensi_nim": presensi_mhs.strip(),
+                "lintang": L_deg,
+                "bujur": B_deg,
+                "deklinasi": round(d_deg, 4),
+                "eot_menit": round(eot_menit, 2),
+                "elevasi_m": elevasi_m,
+                "jawaban_eksperimen": jawaban_eksperimen.strip()
+            }
+            terkirim, pesan_gsheet = kirim_ke_gsheet(payload)
+            st.session_state["eksperimen_dicoba"] = True
+            if terkirim:
+                st.success(pesan_gsheet)
+            else:
+                st.info(f"Kunci jawaban dibuka untuk sesi Anda. *(Catatan rekap: {pesan_gsheet})*")
+
+    if st.session_state["eksperimen_dicoba"]:
+        with st.expander("🔑 Kunci Jawaban & Pembahasan Tugas Eksperimen", expanded=True):
+            st.markdown(r"""
+            **1. Pengaruh Bujur ($110.42^\circ\text{ BT}$ ke $95.32^\circ\text{ BT}$, Zona WIB $105^\circ\text{ BT}$):**
+            * Selisih bujur $\Delta B = 110.42^\circ - 95.32^\circ = 15.10^\circ$.
+            * Karena $15^\circ = 1\text{ jam} = 60\text{ menit}$, pergeserannya adalah $\frac{15.10^\circ}{15^\circ} \times 60\text{ menit} = 60.4\text{ menit}$ (**sekitar 60 menit 24 detik lebih lambat** pada jam WIB).
+            * Hal ini terjadi karena bujur yang lebih ke barat mengalami kulminasi/meridian lokal lebih lambat terhadap bujur standar $105^\circ\text{ BT}$.
+
+            **2. Pengaruh Ketinggian Tempat ($10\text{ m}$ ke $2.000\text{ m}$):**
+            * Nilai koreksi *dip* ufuk meningkat dari sekitar $0.11^\circ$ menjadi sekitar $1.55^\circ$.
+            * Ufuk tampak lebih rendah sehingga **Syuruq** bergeser lebih awal (maju) dan **Maghrib** bergeser lebih lambat (mundur).
+
+            **3. Eksperimen Lintang Tinggi ($L = +55^\circ\text{ LU}$, $d = +23.4^\circ$):**
+            * Nilai $|\cos(t)|$ dapat melebihi $1$ ($\cos(t) < -1$) sehingga $\arccos(\cos(t))$ tidak memiliki solusi sudut jam riil untuk depresi $-18^\circ$ atau $-20^\circ$.
+            * Secara fisis, matahari pada malam musim panas di lintang tinggi tersebut tidak turun sedalam $-18^\circ$ atau $-20^\circ$ di bawah ufuk (*midnight twilight* / malam putih), sehingga diperlukan pendekatan alternatif penentuan waktu Subuh dan Isya.
+            """)
