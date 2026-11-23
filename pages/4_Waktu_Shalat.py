@@ -261,13 +261,13 @@ with tab_kulminasi:
         st.markdown("**1. Koreksi *Equation of Time* ($e$)**")
         st.markdown("Menyesuaikan waktu matahari hakiki (pukul `12:00:00` saat sudut jam $t = 0^\\circ$) menjadi waktu matahari menengah:")
         st.latex(r"\Delta t_{\text{EoT}} = -\frac{e}{60}")
-        st.latex(rf"\Delta t_{{\text{EoT}}} = -\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\text{{ jam}}")
+        st.latex(f"\\Delta t_{{\\text{{EoT}}}} = -\\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\\text{{ jam}}")
         st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_eot_jam)}`**")
 
         st.markdown(f"**2. Koreksi Selisih Bujur Terhadap Acuan (`{bujur_daerah:.0f}° BT`)**")
         st.markdown("Rotasi Bumi menempuh $15^\\circ$ per jam ($1^\\circ = 4$ menit):")
         st.latex(r"\Delta t_{\text{bujur}} = \frac{B_{\text{standar}} - B_{\text{lokasi}}}{15^\circ}")
-        st.latex(rf"\Delta t_{{\text{bujur}}} = \frac{{{bujur_daerah:.2f}^\circ - {B_deg:.2f}^\circ}}{{15^\circ}} = {koreksi_bujur_jam:+.6f}\text{{ jam}}")
+        st.latex(f"\\Delta t_{{\\text{{bujur}}}} = \\frac{{{bujur_daerah:.2f}^\\circ - {B_deg:.2f}^\\circ}}{{15^\\circ}} = {koreksi_bujur_jam:+.6f}\\text{{ jam}}")
         st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_bujur_jam)}`** (selisih bujur `{selisih_bujur_deg:+.2f}°`)")
 
         st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
@@ -356,9 +356,9 @@ with tab_ashar:
             )
 
             st.markdown("**1. Panjang Bayangan Saat Kulminasi ($B_0$)**")
-            st.latex(rf"z_0 = |L - d| = |{L_deg:.2f}^\circ - ({d_deg:.4f}^\circ)| = {jarak_zenith_kulminasi:.4f}^\circ")
+            st.latex(f"z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ")
             st.latex(r"B_0 = S \cdot \tan|L - d|")
-            st.latex(rf"B_0 = 1.00 \times \tan({jarak_zenith_kulminasi:.4f}^\circ) = {b0_contoh:.5f}\text{{ m}}")
+            st.latex(f"B_0 = 1.00 \\times \\tan({jarak_zenith_kulminasi:.4f}^\\circ) = {b0_contoh:.5f}\\text{{ m}}")
 
             st.markdown("**2. Panjang Bayangan Total Saat Awal Ashar ($B$)**")
             st.latex(r"B = n \cdot S + B_0 = S(n + \tan|L - d|)")
