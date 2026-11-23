@@ -279,7 +279,7 @@ with tab_ashar:
 
         with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Lengkap & Contoh Angka)"):
             st.markdown(
-                f"**Contoh Parameter Aktif:** $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$, dan misalkan tinggi tongkat (gnomon) $S = 1.00\\text{{ m}}$.\n\n"
+                f"**Contoh Parameter Aktif:** $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = 1.00\\text{{ m}}$, **Kulminasi (Meridian Pass)** = `{format_jam_wib(meridian_pass_jam)}`, dan *ikhtiyath* = `{ikhtiyath_menit}` menit.\n\n"
                 f"**1. Panjang Bayangan Saat Kulminasi (Zuhur):**\n"
                 f"Sudut antara garis vertikal (*Zenith*) dan arah matahari saat kulminasi atas adalah jarak zenith kulminasi:\n"
                 f"$$z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ$$\n"
@@ -292,11 +292,11 @@ with tab_ashar:
                 f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{jumhur}}}} = 1.00 + {b0_contoh:.5f} = {b_jumhur_contoh:.5f}\\text{{ m}}$.\n"
                 f"* **Versi Hanafi ($n = 2$):** Panjang bayangan total mencapai $B = 2S + B_0 = S(2 + \\tan|L - d|)$.\n"
                 f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{hanafi}}}} = 2.00 + {b0_contoh:.5f} = {b_hanafi_contoh:.5f}\\text{{ m}}$.\n\n"
-                f"**3. Konversi ke Tinggi Matahari ($h_{{\\text{{ashar}}}}$) & Sudut Jam ($t$):**\n"
+                f"**3. Konversi ke Tinggi Matahari ($h_{{\\text{{ashar}}}}$), Sudut Jam ($t$) & Jam:**\n"
                 f"Karena $\\cot(h_{{\\text{{ashar}}}}) = \\frac{{B}}{{S}} = n + \\tan|L - d|$, maka:\n"
                 f"$$h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{n + \\tan|L - d|}}\\right)$$\n"
-                f"* **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_jumhur_contoh:.5f}}}\\right) = {h_ashar_jumhur:.4f}^\\circ \\implies t = {t_jumhur:.4f}^\\circ$ ({format_durasi(t_jumhur)} setelah kulminasi).\n"
-                f"* **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_hanafi_contoh:.5f}}}\\right) = {h_ashar_hanafi:.4f}^\\circ \\implies t = {t_hanafi:.4f}^\\circ$ ({format_durasi(t_hanafi)} setelah kulminasi).\n\n"
+                f"* **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_jumhur_contoh:.5f}}}\\right) = {h_ashar_jumhur:.4f}^\\circ \\implies t = {t_jumhur:.4f}^\\circ$ ({format_durasi(t_jumhur)} setelah kulminasi) $\\implies$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**.\n"
+                f"* **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_hanafi_contoh:.5f}}}\\right) = {h_ashar_hanafi:.4f}^\\circ \\implies t = {t_hanafi:.4f}^\\circ$ ({format_durasi(t_hanafi)} setelah kulminasi) $\\implies$ **Jam Ashar = `{format_jam_wib(wib_hanafi)}`**.\n\n"
                 f"Nilai $h_{{\\text{{ashar}}}}$ inilah yang disubstitusikan ke rumus sudut jam $\\cos(t) = \\frac{{\\sin(h) - \\sin(L)\\sin(d)}}{{\\cos(L)\\cos(d)}}$."
             )
 
