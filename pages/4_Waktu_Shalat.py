@@ -228,7 +228,11 @@ zuhur_wib = meridian_pass_jam + (ikhtiyath_menit / 60.0)
 dip_deg = 0.0347 * math.sqrt(elevasi_m)
 h_maghrib_syuruq = -(0.8333 + dip_deg)
 
-st.info(f"**Waktu Kulminasi (Meridian Pass):** `{format_jam_wib(meridian_pass_jam)}` | **Waktu Zuhur (+Ikhtiyath {ikhtiyath_menit}m):** `{format_jam_wib(zuhur_wib)}` | **Koreksi Dip Ufuk:** `{dip_deg:.4f}°`")
+st.info(
+    f"**Kulminasi (Meridian Pass):** `{format_jam_wib(meridian_pass_jam)}` | "
+    f"**Zuhur (+Ikhtiyath {ikhtiyath_menit}m):** `{format_jam_wib(zuhur_wib)}` | "
+    f"**Koreksi Dip Ufuk:** `{dip_deg:.4f}°`"
+)
 
 # ==========================================
 # TABS KOMPARASI KRITERIA
@@ -245,7 +249,7 @@ tab_kulminasi, tab_ashar, tab_subuh, tab_isya, tab_rekap = st.tabs([
 # TAB 0: KULMINASI & ZUHUR
 # ------------------------------------------
 with tab_kulminasi:
-    st.header("Asal-Usul & Perhitungan Waktu Kulminasi (Meridian Pass) dan Zuhur")
+    st.header("Asal-Usul & Perhitungan Waktu Kulminasi dan Zuhur")
 
     jarak_zenith_kulminasi = abs(L_deg - d_deg)
     h_kulminasi = 90.0 - jarak_zenith_kulminasi
@@ -254,23 +258,37 @@ with tab_kulminasi:
 
     col_k1, col_k2 = st.columns([1.2, 1])
     with col_k1:
+        st.markdown("**1. Koreksi *Equation of Time* ($e$)**")
+        st.markdown("Menyesuaikan waktu matahari hakiki (pukul `12:00:00` saat sudut jam $t = 0^\\circ$) menjadi waktu matahari menengah:")
+        st.latex(r"\Delta t_{\text{EoT}} = -\frac{e}{60}")
+        st.latex(rf"\Delta t_{{\text{EoT}}} = -\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\text{{ jam}}")
+        st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_eot_jam)}`**")
+
+        st.markdown(f"**2. Koreksi Selisih Bujur Terhadap Acuan (`{bujur_daerah:.0f}° BT`)**")
+        st.markdown("Rotasi Bumi menempuh $15^\\circ$ per jam ($1^\\circ = 4$ menit):")
+        st.latex(r"\Delta t_{\text{bujur}} = \frac{B_{\text{standar}} - B_{\text{lokasi}}}{15^\circ}")
+        st.latex(rf"\Delta t_{{\text{bujur}}} = \frac{{{bujur_daerah:.2f}^\circ - {B_deg:.2f}^\circ}}{{15^\circ}} = {koreksi_bujur_jam:+.6f}\text{{ jam}}")
+        st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_bujur_jam)}`** (selisih bujur `{selisih_bujur_deg:+.2f}°`)")
+
+        st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
         st.markdown(
-            f"**1. Koreksi *Equation of Time* ($e$):**\n"
-            f"Menyesuaikan waktu matahari hakiki (pukul `12:00:00` saat $t = 0^\\circ$) menjadi waktu matahari menengah:\n"
-            f"$$\\Delta t_{{\\text{{EoT}}}} = -\\frac{{e}}{{60}} = -\\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\\text{{ jam}}\\quad ({format_selisih_menit_detik(koreksi_eot_jam)})$$\n\n"
-            f"**2. Koreksi Selisih Bujur Terhadap Meridian Acuan (`{bujur_daerah:.0f}° BT`):**\n"
-            f"Karena rotasi Bumi menempuh $15^\\circ$ per jam ($1^\\circ = 4$ menit):\n"
-            f"$$\\Delta t_{{\\text{{bujur}}}} = \\frac{{B_{{\\text{{standar}}}} - B_{{\\text{{lokasi}}}}}}{{15^\\circ}} = \\frac{{{bujur_daerah:.2f}^\\circ - {B_deg:.2f}^\\circ}}{{15^\\circ}} = \\frac{{{selisih_bujur_deg:+.2f}^\\circ}}{{15^\\circ}} = {koreksi_bujur_jam:+.6f}\\text{{ jam}}\\quad ({format_selisih_menit_detik(koreksi_bujur_jam)})$$\n\n"
-            f"**3. Waktu Kulminasi Atas (*Meridian Pass*):**\n"
-            f"$$\\text{{Meridian Pass}} = 12:00:00 + \\Delta t_{{\\text{{EoT}}}} + \\Delta t_{{\\text{{bujur}}}}$$\n"
-            f"$$\\text{{Meridian Pass}} = 12:00:00 \\; ({format_selisih_menit_detik(koreksi_eot_jam)}) \\; ({format_selisih_menit_detik(koreksi_bujur_jam)}) = \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}$$\n\n"
-            f"**4. Waktu Zuhur (+ *Ikhtiyath* `{ikhtiyath_menit}` menit):**\n"
-            f"$$\\text{{Waktu Zuhur}} = \\text{{Meridian Pass}} + \\frac{{\\text{{Ikhtiyath}}}}{{60}} = {format_jam_wib(meridian_pass_jam)} + 00:0{ikhtiyath_menit}:00 = \\mathbf{{{format_jam_wib(zuhur_wib)}}}$$"
+            f"- Waktu matahari hakiki di meridian: `12:00:00`\n"
+            f"- Koreksi EoT: `{format_selisih_menit_detik(koreksi_eot_jam)}`\n"
+            f"- Koreksi bujur: `{format_selisih_menit_detik(koreksi_bujur_jam)}`\n"
+            f"- **Hasil Kulminasi:** **`{format_jam_wib(meridian_pass_jam)}`**"
+        )
+
+        st.markdown(f"**4. Waktu Zuhur (+ *Ikhtiyath* `{ikhtiyath_menit}` menit)**")
+        st.markdown(
+            f"- Kulminasi: `{format_jam_wib(meridian_pass_jam)}`\n"
+            f"- Tambahan *ikhtiyath*: `+{ikhtiyath_menit}m 00d`\n"
+            f"- **Hasil Zuhur:** **`{format_jam_wib(zuhur_wib)}`**"
         )
 
         st.info(
-            f"**Geometri Saat Kulminasi:** Matahari berada di meridian dengan jarak zenith $z_0 = |L - d| = {jarak_zenith_kulminasi:.4f}^\\circ$ "
-            f"dan tinggi maksimum harian $h_{{\\text{{maks}}}} = 90^\\circ - z_0 = {h_kulminasi:.4f}^\\circ$."
+            f"**Geometri Saat Kulminasi:**\n"
+            f"- Jarak zenith: $z_0 = |L - d| = {jarak_zenith_kulminasi:.4f}^\\circ$\n"
+            f"- Tinggi maksimum matahari: $h_{{\\text{{maks}}}} = 90^\\circ - z_0 = {h_kulminasi:.4f}^\\circ$"
         )
 
     with col_k2:
@@ -332,26 +350,31 @@ with tab_ashar:
 
         with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Lengkap & Contoh Angka)"):
             st.markdown(
-                f"**Contoh Parameter Aktif:** $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = 1.00\\text{{ m}}$, **Kulminasi (Meridian Pass)** = `{format_jam_wib(meridian_pass_jam)}`, dan *ikhtiyath* = `{ikhtiyath_menit}` menit.\n\n"
-                f"**1. Panjang Bayangan Saat Kulminasi (Zuhur):**\n"
-                f"Sudut antara garis vertikal (*Zenith*) dan arah matahari saat kulminasi atas adalah jarak zenith kulminasi:\n"
-                f"$$z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ$$\n"
-                f"Pada segitiga siku-siku dengan tinggi tongkat $S$, panjang bayangan dasar saat kulminasi ($B_0$) adalah:\n"
-                f"$$B_0 = S \\cdot \\tan|L - d|$$\n"
-                f"Dengan $S = 1.00\\text{{ m}}$ dan $\\tan({jarak_zenith_kulminasi:.4f}^\\circ) \\approx {tan_z0:.5f}$, diperoleh:\n"
-                f"$$B_0 = 1.00 \\times {tan_z0:.5f} = {b0_contoh:.5f}\\text{{ m}}$$\n\n"
-                f"**2. Syarat Awal Waktu Ashar:**\n"
-                f"* **Versi Jumhur ($n = 1$):** Panjang bayangan total mencapai $B = S + B_0 = S(1 + \\tan|L - d|)$.\n"
-                f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{jumhur}}}} = 1.00 + {b0_contoh:.5f} = {b_jumhur_contoh:.5f}\\text{{ m}}$.\n"
-                f"* **Versi Hanafi ($n = 2$):** Panjang bayangan total mencapai $B = 2S + B_0 = S(2 + \\tan|L - d|)$.\n"
-                f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{hanafi}}}} = 2.00 + {b0_contoh:.5f} = {b_hanafi_contoh:.5f}\\text{{ m}}$.\n\n"
-                f"**3. Konversi ke Tinggi Matahari ($h_{{\\text{{ashar}}}}$), Sudut Jam ($t$) & Jam:**\n"
-                f"Karena $\\cot(h_{{\\text{{ashar}}}}) = \\frac{{B}}{{S}} = n + \\tan|L - d|$, maka:\n"
-                f"$$h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{n + \\tan|L - d|}}\\right)$$\n"
-                f"* **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_jumhur_contoh:.5f}}}\\right) = {h_ashar_jumhur:.4f}^\\circ \\implies t = {t_jumhur:.4f}^\\circ$ ({format_durasi(t_jumhur)} setelah kulminasi) $\\implies$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**.\n"
-                f"* **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_hanafi_contoh:.5f}}}\\right) = {h_ashar_hanafi:.4f}^\\circ \\implies t = {t_hanafi:.4f}^\\circ$ ({format_durasi(t_hanafi)} setelah kulminasi) $\\implies$ **Jam Ashar = `{format_jam_wib(wib_hanafi)}`**.\n\n"
-                f"Nilai $h_{{\\text{{ashar}}}}$ inilah yang disubstitusikan ke rumus sudut jam $\\cos(t) = \\frac{{\\sin(h) - \\sin(L)\\sin(d)}}{{\\cos(L)\\cos(d)}}$."
+                f"**Acuan Parameter Aktif:**\n"
+                f"- Lintang $L = {L_deg:.2f}^\\circ$, Deklinasi $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = 1.00\\text{{ m}}$\n"
+                f"- Kulminasi: `{format_jam_wib(meridian_pass_jam)}`, *Ikhtiyath*: `{ikhtiyath_menit}` menit"
             )
+
+            st.markdown("**1. Panjang Bayangan Saat Kulminasi ($B_0$)**")
+            st.latex(rf"z_0 = |L - d| = |{L_deg:.2f}^\circ - ({d_deg:.4f}^\circ)| = {jarak_zenith_kulminasi:.4f}^\circ")
+            st.latex(r"B_0 = S \cdot \tan|L - d|")
+            st.latex(rf"B_0 = 1.00 \times \tan({jarak_zenith_kulminasi:.4f}^\circ) = {b0_contoh:.5f}\text{{ m}}")
+
+            st.markdown("**2. Panjang Bayangan Total Saat Awal Ashar ($B$)**")
+            st.latex(r"B = n \cdot S + B_0 = S(n + \tan|L - d|)")
+            st.markdown(
+                f"- **Jumhur ($n = 1$):** $B = 1.00 + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
+                f"- **Hanafi ($n = 2$):** $B = 2.00 + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
+            )
+
+            st.markdown("**3. Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
+            st.latex(r"h_{\text{ashar}} = \arctan\left(\frac{1}{n + \tan|L - d|}\right)")
+            st.markdown(
+                f"- **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_jumhur:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_jumhur:.4f}^\\circ$ (`{format_durasi(t_jumhur)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**\n"
+                f"- **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_hanafi:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_hanafi:.4f}^\\circ$ (`{format_durasi(t_hanafi)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_hanafi)}`**"
+            )
+            st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam:")
+            st.latex(r"\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
     with col_a2:
         titik_ashar = [
@@ -425,18 +448,16 @@ with tab_subuh:
             st.warning("Pada lintang/deklinasi ekstrem ini, salah satu sudut depresi Subuh tidak tercapai secara geometris (`|cos t| > 1`).")
 
         with st.expander("🔍 Proses Penurunan Rumus Subuh & Makna Tanda Negatif"):
-            st.markdown(r"""
-            **1. Posisi Matahari Sebelum Terbit:**
-            Pada waktu Subuh, matahari masih berada di bawah horizon timur sehingga ketinggiannya bernilai negatif ($h < 0^\circ$). Jarak zenithnya adalah:
-            $$z = 90^\circ - h = 90^\circ - (-20^\circ) = 110^\circ$$
+            st.markdown("**1. Posisi Matahari Sebelum Terbit**")
+            st.markdown("Pada waktu Subuh, matahari masih berada di bawah horizon timur sehingga ketinggiannya bernilai negatif ($h < 0^\\circ$):")
+            st.latex(r"z = 90^\circ - h")
 
-            **2. Rumus Sudut Jam Subuh:**
-            $$\cos(t_{\text{subuh}}) = \frac{\sin(h_{\text{subuh}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}$$
+            st.markdown("**2. Rumus Sudut Jam Subuh**")
+            st.latex(r"\cos(t_{\text{subuh}}) = \frac{\sin(h_{\text{subuh}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
-            **3. Pengurangan terhadap Waktu Kulminasi:**
-            Karena peristiwa terjadi sebelum matahari melintasi meridian (sebelah timur), waktu Subuh diperoleh dengan **mengurangkan** konversi jam sudut $t$ dari waktu kulminasi:
-            $$\text{Waktu Subuh} = \text{Meridian Pass} - \frac{t_{\text{subuh}}}{15^\circ} + \text{Ikhtiyath}$$
-            """)
+            st.markdown("**3. Pengurangan terhadap Waktu Kulminasi**")
+            st.markdown("Karena terjadi sebelum matahari melintasi meridian (sisi timur), sudut jam $t$ **dikurangkan** dari waktu kulminasi:")
+            st.latex(r"\text{Waktu Subuh} = \text{Meridian Pass} - \frac{t_{\text{subuh}}}{15^\circ} + \text{Ikhtiyath}")
 
     with col_s2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_subuh), use_container_width=True)
@@ -501,14 +522,12 @@ with tab_isya:
         st.warning(f"**Implikasi Perbedaan:** Dari waktu Maghrib (`{format_jam_wib(wib_maghrib)}`), jeda menuju waktu Isya pada kriteria `-18°` membutuhkan sekitar **{rows_isya[0]['Jeda dari Maghrib']}**, sedangkan pada kriteria `-15°` lebih singkat. Pada bulan-bulan dengan deklinasi ekstrem, durasi senja (*twilight*) memanjang sehingga selisih antar-kriteria ikut melebar.")
 
         with st.expander("🔍 Proses Penurunan Rumus Waktu Isya"):
-            st.markdown(r"""
-            **1. Simetri Senja Astronomis di Ufuk Barat:**
-            Secara geometris, rumus Isya identik dengan rumus Subuh, namun terjadi setelah kulminasi atas (di ufuk barat):
-            $$\cos(t_{\text{isya}}) = \frac{\sin(h_{\text{isya}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}$$
+            st.markdown("**1. Simetri Senja Astronomis di Ufuk Barat**")
+            st.latex(r"\cos(t_{\text{isya}}) = \frac{\sin(h_{\text{isya}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
-            **2. Penambahan terhadap Waktu Kulminasi:**
-            $$\text{Waktu Isya} = \text{Meridian Pass} + \frac{t_{\text{isya}}}{15^\circ} + \text{Ikhtiyath}$$
-            """)
+            st.markdown("**2. Penambahan terhadap Waktu Kulminasi**")
+            st.markdown("Karena terjadi setelah kulminasi atas (sisi barat), sudut jam $t$ **ditambahkan** ke waktu kulminasi:")
+            st.latex(r"\text{Waktu Isya} = \text{Meridian Pass} + \frac{t_{\text{isya}}}{15^\circ} + \text{Ikhtiyath}")
 
     with col_i2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_isya), use_container_width=True)
@@ -538,11 +557,11 @@ with tab_rekap:
     st.table(jadwal_lengkap)
 
     st.subheader("🧪 Tugas Eksperimen Mandiri Mahasiswa")
-    st.info(r"""
-    1. **Pengaruh Bujur dalam Satu Zona Waktu:** Ubah input Bujur Tempat dari `110.42° BT` (Semarang) menjadi `95.32° BT` (Banda Aceh) dengan tetap mempertahankan zona waktu `WIB (105° BT)`. Berapa menit seluruh jadwal shalat bergeser? Mengapa demikian?
-    2. **Pengaruh Ketinggian Tempat (Dip):** Naikkan Ketinggian Tempat dari `10 m` menjadi `2.000 m` (misal kawasan dataran tinggi Dieng). Amati perubahan nilai `Koreksi Dip Ufuk` dan pergeseran waktu **Syuruq** serta **Maghrib**.
-    3. **Eksperimen Lintang Tinggi:** Ubah Lintang Tempat menjadi `+55° LU` (misal Moskow/Kopenhagen) dan Deklinasi `+23.4°` (Juni). Apa yang terjadi pada perhitungan Subuh `-20°` dan Isya `-18°`? Mengapa nilai $\cos(t)$ bisa keluar dari rentang $[-1, 1]$?
-    """)
+    st.info(
+        "1. **Pengaruh Bujur dalam Satu Zona Waktu:** Ubah input Bujur Tempat dari `110.42° BT` (Semarang) menjadi `95.32° BT` (Banda Aceh) dengan tetap mempertahankan zona waktu `WIB (105° BT)`. Berapa menit seluruh jadwal shalat bergeser? Mengapa demikian?\n"
+        "2. **Pengaruh Ketinggian Tempat (Dip):** Naikkan Ketinggian Tempat dari `10 m` menjadi `2.000 m` (misal kawasan dataran tinggi Dieng). Amati perubahan nilai `Koreksi Dip Ufuk` dan pergeseran waktu **Syuruq** serta **Maghrib**.\n"
+        "3. **Eksperimen Lintang Tinggi:** Ubah Lintang Tempat menjadi `+55° LU` (misal Moskow/Kopenhagen) dan Deklinasi `+23.4°` (Juni). Apa yang terjadi pada perhitungan Subuh `-20°` dan Isya `-18°`? Mengapa nilai `cos(t)` bisa keluar dari rentang `[-1, 1]`?"
+    )
 
     st.divider()
     st.subheader("✍️ Form Catatan Percobaan & Pembukaan Kunci Jawaban")
@@ -585,17 +604,15 @@ with tab_rekap:
 
     if st.session_state["eksperimen_dicoba"]:
         with st.expander("🔑 Kunci Jawaban & Pembahasan Tugas Eksperimen", expanded=True):
-            st.markdown(r"""
-            **1. Pengaruh Bujur ($110.42^\circ\text{ BT}$ ke $95.32^\circ\text{ BT}$, Zona WIB $105^\circ\text{ BT}$):**
-            * Selisih bujur $\Delta B = 110.42^\circ - 95.32^\circ = 15.10^\circ$.
-            * Karena $15^\circ = 1\text{ jam} = 60\text{ menit}$, pergeserannya adalah $\frac{15.10^\circ}{15^\circ} \times 60\text{ menit} = 60.4\text{ menit}$ (**sekitar 60 menit 24 detik lebih lambat** pada jam WIB).
-            * Hal ini terjadi karena bujur yang lebih ke barat mengalami kulminasi/meridian lokal lebih lambat terhadap bujur standar $105^\circ\text{ BT}$.
-
-            **2. Pengaruh Ketinggian Tempat ($10\text{ m}$ ke $2.000\text{ m}$):**
-            * Nilai koreksi *dip* ufuk meningkat dari sekitar $0.11^\circ$ menjadi sekitar $1.55^\circ$.
-            * Ufuk tampak lebih rendah sehingga **Syuruq** bergeser lebih awal (maju) dan **Maghrib** bergeser lebih lambat (mundur).
-
-            **3. Eksperimen Lintang Tinggi ($L = +55^\circ\text{ LU}$, $d = +23.4^\circ$):**
-            * Nilai $|\cos(t)|$ dapat melebihi $1$ ($\cos(t) < -1$) sehingga $\arccos(\cos(t))$ tidak memiliki solusi sudut jam riil untuk depresi $-18^\circ$ atau $-20^\circ$.
-            * Secara fisis, matahari pada malam musim panas di lintang tinggi tersebut tidak turun sedalam $-18^\circ$ atau $-20^\circ$ di bawah ufuk (*midnight twilight* / malam putih), sehingga diperlukan pendekatan alternatif penentuan waktu Subuh dan Isya.
-            """)
+            st.markdown(
+                "**1. Pengaruh Bujur (`110.42° BT` ke `95.32° BT`, Zona WIB `105° BT`):**\n"
+                "- Selisih bujur `ΔB = 110.42° - 95.32° = 15.10°`.\n"
+                "- Karena `15° = 1 jam = 60 menit`, pergeserannya adalah `(15.10° / 15°) × 60 menit = 60.4 menit` (**sekitar 60 menit 24 detik lebih lambat** pada jam WIB).\n"
+                "- Bujur yang lebih ke barat mengalami kulminasi/meridian lokal lebih lambat terhadap bujur standar `105° BT`.\n\n"
+                "**2. Pengaruh Ketinggian Tempat (`10 m` ke `2.000 m`):**\n"
+                "- Nilai koreksi *dip* ufuk meningkat dari sekitar `0.11°` menjadi sekitar `1.55°`.\n"
+                "- Ufuk tampak lebih rendah sehingga **Syuruq** bergeser lebih awal (maju) dan **Maghrib** bergeser lebih lambat (mundur).\n\n"
+                "**3. Eksperimen Lintang Tinggi (`L = +55° LU`, `d = +23.4°`):**\n"
+                "- Nilai `|cos(t)|` dapat melebihi `1` (`cos(t) < -1`) sehingga `arccos(cos(t))` tidak memiliki solusi sudut jam riil untuk depresi `-18°` atau `-20°`.\n"
+                "- Secara fisis, matahari pada malam musim panas di lintang tinggi tersebut tidak turun sedalam `-18°` atau `-20°` di bawah ufuk (*midnight twilight* / malam putih), sehingga diperlukan pendekatan alternatif penentuan waktu Subuh dan Isya."
+            )
