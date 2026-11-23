@@ -273,21 +273,32 @@ with tab_ashar:
         
         st.warning(f"**Implikasi Perbedaan:** Waktu Ashar versi Hanafi masuk **{selisih_ashar_menit:.1f} menit lebih lambat** dibandingkan versi Jumhur karena menunggu bayangan gnomon memanjang dua kali lipat tinggi benda (posisi matahari turun dari `{h_ashar_jumhur:.2f}°` ke `{h_ashar_hanafi:.2f}°`).")
 
-        with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar"):
-            st.markdown(r"""
-            **1. Panjang Bayangan Saat Kulminasi (Zuhur):**
-            Jika sebatang tongkat (gnomon) tegak memiliki tinggi $S$, maka saat matahari berkulminasi pada jarak zenith $z_0 = |L - d|$, panjang bayangan dasarnya adalah:
-            $$B_0 = S \cdot \tan|L - d|$$
+        b0_contoh = 1.0 * tan_z0
+        b_jumhur_contoh = 1.0 + b0_contoh
+        b_hanafi_contoh = 2.0 + b0_contoh
 
-            **2. Syarat Awal Waktu Ashar:**
-            * **Versi Jumhur ($n = 1$):** Panjang bayangan total mencapai $B = S + B_0 = S(1 + \tan|L - d|)$.
-            * **Versi Hanafi ($n = 2$):** Panjang bayangan total mencapai $B = 2S + B_0 = S(2 + \tan|L - d|)$.
-
-            **3. Konversi ke Tinggi Matahari ($h_{\text{ashar}}$):**
-            Karena $\cot(h_{\text{ashar}}) = \frac{B}{S}$, maka:
-            $$\cot(h_{\text{ashar}}) = n + \tan|L - d| \implies h_{\text{ashar}} = \arctan\left(\frac{1}{n + \tan|L - d|}\right)$$
-            Nilai $h_{\text{ashar}}$ inilah yang kemudian disubstitusikan ke rumus sudut jam $\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}$.
-            """)
+        with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Lengkap & Contoh Angka)"):
+            st.markdown(
+                f"**Contoh Parameter Aktif:** $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$, dan misalkan tinggi tongkat (gnomon) $S = 1.00\\text{{ m}}$.\n\n"
+                f"**1. Panjang Bayangan Saat Kulminasi (Zuhur):**\n"
+                f"Sudut antara garis vertikal (*Zenith*) dan arah matahari saat kulminasi atas adalah jarak zenith kulminasi:\n"
+                f"$$z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ$$\n"
+                f"Pada segitiga siku-siku dengan tinggi tongkat $S$, panjang bayangan dasar saat kulminasi ($B_0$) adalah:\n"
+                f"$$B_0 = S \\cdot \\tan|L - d|$$\n"
+                f"Dengan $S = 1.00\\text{{ m}}$ dan $\\tan({jarak_zenith_kulminasi:.4f}^\\circ) \\approx {tan_z0:.5f}$, diperoleh:\n"
+                f"$$B_0 = 1.00 \\times {tan_z0:.5f} = {b0_contoh:.5f}\\text{{ m}}$$\n\n"
+                f"**2. Syarat Awal Waktu Ashar:**\n"
+                f"* **Versi Jumhur ($n = 1$):** Panjang bayangan total mencapai $B = S + B_0 = S(1 + \\tan|L - d|)$.\n"
+                f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{jumhur}}}} = 1.00 + {b0_contoh:.5f} = {b_jumhur_contoh:.5f}\\text{{ m}}$.\n"
+                f"* **Versi Hanafi ($n = 2$):** Panjang bayangan total mencapai $B = 2S + B_0 = S(2 + \\tan|L - d|)$.\n"
+                f"  Untuk contoh $S = 1.00\\text{{ m}}$: $B_{{\\text{{hanafi}}}} = 2.00 + {b0_contoh:.5f} = {b_hanafi_contoh:.5f}\\text{{ m}}$.\n\n"
+                f"**3. Konversi ke Tinggi Matahari ($h_{{\\text{{ashar}}}}$) & Sudut Jam ($t$):**\n"
+                f"Karena $\\cot(h_{{\\text{{ashar}}}}) = \\frac{{B}}{{S}} = n + \\tan|L - d|$, maka:\n"
+                f"$$h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{n + \\tan|L - d|}}\\right)$$\n"
+                f"* **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_jumhur_contoh:.5f}}}\\right) = {h_ashar_jumhur:.4f}^\\circ \\implies t = {t_jumhur:.4f}^\\circ$ ({format_durasi(t_jumhur)} setelah kulminasi).\n"
+                f"* **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\arctan\\left(\\frac{{1}}{{{b_hanafi_contoh:.5f}}}\\right) = {h_ashar_hanafi:.4f}^\\circ \\implies t = {t_hanafi:.4f}^\\circ$ ({format_durasi(t_hanafi)} setelah kulminasi).\n\n"
+                f"Nilai $h_{{\\text{{ashar}}}}$ inilah yang disubstitusikan ke rumus sudut jam $\\cos(t) = \\frac{{\\sin(h) - \\sin(L)\\sin(d)}}{{\\cos(L)\\cos(d)}}$."
+            )
 
     with col_a2:
         titik_ashar = [
