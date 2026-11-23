@@ -93,6 +93,13 @@ def format_durasi(t_deg):
     d = total_detik % 60
     return f"{j:02d}j {m:02d}m {d:02d}d"
 
+def format_selisih_menit_detik(jam_desimal):
+    tanda = "-" if jam_desimal < 0 else "+"
+    total_detik = int(round(abs(jam_desimal) * 3600))
+    menit = total_detik // 60
+    detik = total_detik % 60
+    return f"{tanda}{menit}m {detik:02d}d"
+
 def kirim_ke_gsheet(payload_dict):
     """Mengirim data percobaan mahasiswa ke Google Apps Script Web App jika dikonfigurasi di st.secrets."""
     webhook_url = st.secrets.get("gsheet_webhook_url", "").strip()
@@ -213,8 +220,9 @@ with c6:
 with c7:
     ikhtiyath_menit = st.number_input("Ikhtiyath / Pengaman [menit]", min_value=0, max_value=5, value=2, step=1)
 
+koreksi_eot_jam = -(eot_menit / 60.0)
 koreksi_bujur_jam = (bujur_daerah - B_deg) / 15.0
-meridian_pass_jam = 12.0 - (eot_menit / 60.0) + koreksi_bujur_jam
+meridian_pass_jam = 12.0 + koreksi_eot_jam + koreksi_bujur_jam
 zuhur_wib = meridian_pass_jam + (ikhtiyath_menit / 60.0)
 
 dip_deg = 0.0347 * math.sqrt(elevasi_m)
@@ -225,12 +233,57 @@ st.info(f"**Waktu Kulminasi (Meridian Pass):** `{format_jam_wib(meridian_pass_ja
 # ==========================================
 # TABS KOMPARASI KRITERIA
 # ==========================================
-tab_ashar, tab_subuh, tab_isya, tab_rekap = st.tabs([
+tab_kulminasi, tab_ashar, tab_subuh, tab_isya, tab_rekap = st.tabs([
+    "🕛 0. Kulminasi & Zuhur",
     "☀️ 1. Ashar (2 Versi)",
     "🌅 2. Subuh (3 Versi)",
     "🌃 3. Isya (3 Versi)",
     "📋 4. Rekap & Eksperimen Mandiri"
 ])
+
+# ------------------------------------------
+# TAB 0: KULMINASI & ZUHUR
+# ------------------------------------------
+with tab_kulminasi:
+    st.header("Asal-Usul & Perhitungan Waktu Kulminasi (Meridian Pass) dan Zuhur")
+
+    jarak_zenith_kulminasi = abs(L_deg - d_deg)
+    h_kulminasi = 90.0 - jarak_zenith_kulminasi
+    selisih_bujur_deg = bujur_daerah - B_deg
+    az_kulminasi = 180.0 if (L_deg - d_deg) >= 0 else 0.0
+
+    col_k1, col_k2 = st.columns([1.2, 1])
+    with col_k1:
+        st.markdown(
+            f"**1. Koreksi *Equation of Time* ($e$):**\n"
+            f"Menyesuaikan waktu matahari hakiki (pukul `12:00:00` saat $t = 0^\\circ$) menjadi waktu matahari menengah:\n"
+            f"$$\\Delta t_{{\\text{{EoT}}}} = -\\frac{{e}}{{60}} = -\\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\\text{{ jam}}\\quad ({format_selisih_menit_detik(koreksi_eot_jam)})$$\n\n"
+            f"**2. Koreksi Selisih Bujur Terhadap Meridian Acuan (`{bujur_daerah:.0f}° BT`):**\n"
+            f"Karena rotasi Bumi menempuh $15^\\circ$ per jam ($1^\\circ = 4$ menit):\n"
+            f"$$\\Delta t_{{\\text{{bujur}}}} = \\frac{{B_{{\\text{{standar}}}} - B_{{\\text{{lokasi}}}}}}{{15^\\circ}} = \\frac{{{bujur_daerah:.2f}^\\circ - {B_deg:.2f}^\\circ}}{{15^\\circ}} = \\frac{{{selisih_bujur_deg:+.2f}^\\circ}}{{15^\\circ}} = {koreksi_bujur_jam:+.6f}\\text{{ jam}}\\quad ({format_selisih_menit_detik(koreksi_bujur_jam)})$$\n\n"
+            f"**3. Waktu Kulminasi Atas (*Meridian Pass*):**\n"
+            f"$$\\text{{Meridian Pass}} = 12:00:00 + \\Delta t_{{\\text{{EoT}}}} + \\Delta t_{{\\text{{bujur}}}}$$\n"
+            f"$$\\text{{Meridian Pass}} = 12:00:00 \\; ({format_selisih_menit_detik(koreksi_eot_jam)}) \\; ({format_selisih_menit_detik(koreksi_bujur_jam)}) = \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}$$\n\n"
+            f"**4. Waktu Zuhur (+ *Ikhtiyath* `{ikhtiyath_menit}` menit):**\n"
+            f"$$\\text{{Waktu Zuhur}} = \\text{{Meridian Pass}} + \\frac{{\\text{{Ikhtiyath}}}}{{60}} = {format_jam_wib(meridian_pass_jam)} + 00:0{ikhtiyath_menit}:00 = \\mathbf{{{format_jam_wib(zuhur_wib)}}}$$"
+        )
+
+        st.info(
+            f"**Geometri Saat Kulminasi:** Matahari berada di meridian dengan jarak zenith $z_0 = |L - d| = {jarak_zenith_kulminasi:.4f}^\\circ$ "
+            f"dan tinggi maksimum harian $h_{{\\text{{maks}}}} = 90^\\circ - z_0 = {h_kulminasi:.4f}^\\circ$."
+        )
+
+    with col_k2:
+        titik_kulminasi = [
+            {
+                "label": f"Kulminasi ({h_kulminasi:.1f}°)",
+                "h": h_kulminasi,
+                "A": az_kulminasi,
+                "color": "gold"
+            }
+        ]
+        st.plotly_chart(plot_perbandingan_3d(L_deg, titik_kulminasi), use_container_width=True)
+        st.caption("Visualisasi 3D: Posisi Matahari saat melintasi meridian lokal (kulminasi atas) terhadap Horizon dan Ekuator Langit.")
 
 # ------------------------------------------
 # TAB 1: ASHAR (2 VERSI)
