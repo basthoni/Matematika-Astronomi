@@ -121,6 +121,140 @@ def kirim_ke_gsheet(payload_dict):
     except (urllib.error.URLError, TimeoutError, Exception) as exc:
         return False, f"Gagal mengirim ke Google Sheets: {exc}"
 
+def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg, h_hanafi_deg):
+    """Diagram teknis 2D perbandingan panjang bayangan (B0, Jumhur, Hanafi) & tinggi matahari (h_ashar)."""
+    fig = go.Figure()
+
+    max_x = max(b_hanafi * 1.18, S * 2.2)
+    max_y = max(S * 1.45, b_hanafi * 0.45)
+
+    # Bidang tanah
+    fig.add_trace(go.Scatter(
+        x=[-0.25 * S, max_x], y=[0, 0],
+        mode="lines", line=dict(color="#94a3b8", width=3),
+        name="Bidang Datar (Tanah)"
+    ))
+
+    # Tongkat / Gnomon vertikal (tinggi S) di x = 0
+    fig.add_trace(go.Scatter(
+        x=[0, 0], y=[0, S],
+        mode="lines+markers", line=dict(color="#f8fafc", width=5),
+        marker=dict(size=7, color="#f8fafc"),
+        name=f"Gnomon (S = {S:.2f} m)"
+    ))
+
+    # Garis vertikal zenith ke atas dari puncak gnomon (0, S)
+    y_zenith_top = min(S * 1.35, max_y * 0.95)
+    fig.add_trace(go.Scatter(
+        x=[0, 0], y=[S, y_zenith_top],
+        mode="lines", line=dict(color="#cbd5e1", width=1.5, dash="dot"),
+        name="Arah Vertikal / Zenith"
+    ))
+
+    # 1. Bayangan Kulminasi B0 (di tanah dari 0 ke b0) & sinar kulminasi dari (b0, 0) ke puncak gnomon (0, S)
+    fig.add_trace(go.Scatter(
+        x=[0, b0], y=[0, 0],
+        mode="lines+markers", line=dict(color="#38bdf8", width=6),
+        marker=dict(size=6, color="#38bdf8"),
+        name=f"Bayangan Kulminasi B0 ({b0:.3f} m)"
+    ))
+    fig.add_trace(go.Scatter(
+        x=[b0, 0], y=[0, S],
+        mode="lines", line=dict(color="#38bdf8", width=1.8, dash="dash"),
+        name=f"Sinar Kulminasi (z0 = {z0_deg:.2f}°)"
+    ))
+
+    # Busur sudut z0 di puncak gnomon (0, S) antara vertikal (+y) dan sinar kulminasi
+    if z0_deg > 0.5:
+        r_z0 = min(0.32 * S, b0 * 0.65 if b0 > 0.05 else 0.25 * S)
+        ang_z0 = np.linspace(0, math.radians(min(z0_deg, 75.0)), 30)
+        # Vertikal adalah sudut 90 deg dari sumbu +x; sinar kulminasi menuju (b0, 0) dari (0, S)
+        vx = r_z0 * np.sin(ang_z0)
+        vy = S - r_z0 * np.cos(ang_z0)
+        fig.add_trace(go.Scatter(
+            x=vx, y=vy, mode="lines",
+            line=dict(color="#38bdf8", width=2),
+            showlegend=False
+        ))
+        fig.add_annotation(
+            x=vx[-1] + 0.04 * S, y=vy[-1],
+            text=f"z0={z0_deg:.1f}°", showarrow=False,
+            font=dict(color="#38bdf8", size=11)
+        )
+
+    # 2. Bayangan Jumhur (total b_jumhur) & sinar dari (b_jumhur, 0) ke (0, S)
+    fig.add_trace(go.Scatter(
+        x=[b0, b_jumhur], y=[0, 0],
+        mode="lines+markers", line=dict(color="#fb923c", width=5),
+        marker=dict(size=6, color="#fb923c"),
+        name=f"Bayangan Jumhur B_J ({b_jumhur:.3f} m)"
+    ))
+    fig.add_trace(go.Scatter(
+        x=[b_jumhur, 0], y=[0, S],
+        mode="lines", line=dict(color="#fb923c", width=2.2),
+        showlegend=False
+    ))
+
+    # Busur sudut elevasi h_jumhur di ujung bayangan Jumhur (b_jumhur, 0)
+    r_hj = min(0.35 * S, 0.35 * (b_jumhur - b0) if (b_jumhur - b0) > 0.1 else 0.25 * S)
+    ang_hj = np.linspace(0, math.radians(h_jumhur_deg), 30)
+    fig.add_trace(go.Scatter(
+        x=b_jumhur - r_hj * np.cos(ang_hj),
+        y=r_hj * np.sin(ang_hj),
+        mode="lines", line=dict(color="#fb923c", width=2),
+        showlegend=False
+    ))
+    fig.add_annotation(
+        x=b_jumhur - r_hj * 1.15, y=r_hj * 0.55,
+        text=f"h_J={h_jumhur_deg:.1f}°", showarrow=False,
+        font=dict(color="#fb923c", size=11)
+    )
+
+    # 3. Bayangan Hanafi (total b_hanafi) & sinar dari (b_hanafi, 0) ke (0, S)
+    fig.add_trace(go.Scatter(
+        x=[b_jumhur, b_hanafi], y=[0, 0],
+        mode="lines+markers", line=dict(color="#f87171", width=5),
+        marker=dict(size=6, color="#f87171"),
+        name=f"Bayangan Hanafi B_H ({b_hanafi:.3f} m)"
+    ))
+    fig.add_trace(go.Scatter(
+        x=[b_hanafi, 0], y=[0, S],
+        mode="lines", line=dict(color="#f87171", width=2.2, dash="dot"),
+        showlegend=False
+    ))
+
+    # Busur sudut elevasi h_hanafi di ujung bayangan Hanafi (b_hanafi, 0)
+    r_hh = min(0.32 * S, 0.35 * (b_hanafi - b_jumhur) if (b_hanafi - b_jumhur) > 0.1 else 0.22 * S)
+    ang_hh = np.linspace(0, math.radians(h_hanafi_deg), 30)
+    fig.add_trace(go.Scatter(
+        x=b_hanafi - r_hh * np.cos(ang_hh),
+        y=r_hh * np.sin(ang_hh),
+        mode="lines", line=dict(color="#f87171", width=2),
+        showlegend=False
+    ))
+    fig.add_annotation(
+        x=b_hanafi - r_hh * 1.25, y=r_hh * 0.5,
+        text=f"h_H={h_hanafi_deg:.1f}°", showarrow=False,
+        font=dict(color="#f87171", size=11)
+    )
+
+    # Label tinggi tongkat S
+    fig.add_annotation(
+        x=-0.05 * S, y=0.5 * S,
+        text=f"S={S:.1f}m", showarrow=False, xanchor="right",
+        font=dict(color="#f8fafc", size=12)
+    )
+
+    fig.update_layout(
+        title="Geometri Bayangan Gnomon & Sudut Tinggi Matahari (h_ashar)",
+        xaxis=dict(title="Panjang Bayangan di Tanah [m]", range=[-0.25 * S, max_x], zeroline=False),
+        yaxis=dict(title="Ketinggian [m]", range=[-0.12 * S, max_y], scaleanchor="x", scaleratio=1, zeroline=False),
+        height=390,
+        margin=dict(l=10, r=10, t=45, b=10),
+        legend=dict(orientation="h", yanchor="bottom", y=-0.32, xanchor="center", x=0.5)
+    )
+    return fig
+
 def plot_perbandingan_3d(L_deg, titik_list):
     fig = go.Figure()
 
@@ -344,36 +478,47 @@ with tab_ashar:
         
         st.warning(f"**Implikasi Perbedaan:** Waktu Ashar versi Hanafi masuk **{selisih_ashar_menit:.1f} menit lebih lambat** dibandingkan versi Jumhur karena menunggu bayangan gnomon memanjang dua kali lipat tinggi benda (posisi matahari turun dari `{h_ashar_jumhur:.2f}°` ke `{h_ashar_hanafi:.2f}°`).")
 
-        b0_contoh = 1.0 * tan_z0
-        b_jumhur_contoh = 1.0 + b0_contoh
-        b_hanafi_contoh = 2.0 + b0_contoh
+        S_contoh = 1.0
+        b0_contoh = S_contoh * tan_z0
+        b_jumhur_contoh = S_contoh + b0_contoh
+        b_hanafi_contoh = 2.0 * S_contoh + b0_contoh
+
+        st.plotly_chart(
+            plot_geometri_bayangan_ashar(
+                S_contoh, jarak_zenith_kulminasi, b0_contoh,
+                b_jumhur_contoh, b_hanafi_contoh, h_ashar_jumhur, h_ashar_hanafi
+            ),
+            use_container_width=True
+        )
+        st.caption("Ilustrasi Geometri Bayangan (S = 1.00 m): Menghubungkan jarak zenith kulminasi (z0), panjang bayangan (B0, B_J, B_H), dan sudut elevasi matahari (h_ashar).")
 
         with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Lengkap & Contoh Angka)"):
             st.markdown(
                 f"**Acuan Parameter Aktif:**\n"
-                f"- Lintang $L = {L_deg:.2f}^\\circ$, Deklinasi $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = 1.00\\text{{ m}}$\n"
+                f"- Lintang $L = {L_deg:.2f}^\\circ$, Deklinasi $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = {S_contoh:.2f}\\text{{ m}}$\n"
                 f"- Kulminasi: `{format_jam_wib(meridian_pass_jam)}`, *Ikhtiyath*: `{ikhtiyath_menit}` menit"
             )
 
             st.markdown("**1. Panjang Bayangan Saat Kulminasi ($B_0$)**")
             st.latex(f"z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ")
             st.latex(r"B_0 = S \cdot \tan|L - d|")
-            st.latex(f"B_0 = 1.00 \\times \\tan({jarak_zenith_kulminasi:.4f}^\\circ) = {b0_contoh:.5f}\\text{{ m}}")
+            st.latex(f"B_0 = {S_contoh:.2f} \\times \\tan({jarak_zenith_kulminasi:.4f}^\\circ) = {b0_contoh:.5f}\\text{{ m}}")
 
             st.markdown("**2. Panjang Bayangan Total Saat Awal Ashar ($B$)**")
             st.latex(r"B = n \cdot S + B_0 = S(n + \tan|L - d|)")
             st.markdown(
-                f"- **Jumhur ($n = 1$):** $B = 1.00 + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
-                f"- **Hanafi ($n = 2$):** $B = 2.00 + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
+                f"- **Jumhur ($n = 1$):** $B = {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
+                f"- **Hanafi ($n = 2$):** $B = {2*S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
             )
 
-            st.markdown("**3. Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
+            st.markdown("**3. Konversi Bayangan ke Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
+            st.markdown("Pada segitiga siku-siku dengan tinggi tongkat $S$ (sisi depan) dan bayangan $B$ (sisi samping), $\\tan(h_{\\text{ashar}}) = \\frac{S}{B}$ sehingga $\\cot(h_{\\text{ashar}}) = \\frac{B}{S} = n + \\tan|L - d|$:")
             st.latex(r"h_{\text{ashar}} = \arctan\left(\frac{1}{n + \tan|L - d|}\right)")
             st.markdown(
                 f"- **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_jumhur:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_jumhur:.4f}^\\circ$ (`{format_durasi(t_jumhur)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**\n"
                 f"- **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_hanafi:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_hanafi:.4f}^\\circ$ (`{format_durasi(t_hanafi)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_hanafi)}`**"
             )
-            st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam:")
+            st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam bola langit:")
             st.latex(r"\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
     with col_a2:
@@ -383,7 +528,7 @@ with tab_ashar:
             {"label": "Maghrib (Ufuk)", "h": h_maghrib_syuruq, "A": hitung_azimuth_matahari(L_deg, d_deg, h_maghrib_syuruq, True), "color": "purple"}
         ]
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_ashar), use_container_width=True)
-        st.caption("Visualisasi 3D: Perbandingan posisi matahari di langit barat antara Ashar Jumhur (oranye) dan Ashar Hanafi (merah).")
+        st.caption("Visualisasi 3D Bola Langit: Posisi matahari di langit barat antara Ashar Jumhur (oranye) dan Ashar Hanafi (merah).")
 
 # ------------------------------------------
 # TAB 2: SUBUH (3 VERSI)
