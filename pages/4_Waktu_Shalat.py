@@ -126,7 +126,7 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
     fig = go.Figure()
 
     max_x = max(b_hanafi * 1.15, S * 2.2)
-    max_y = max(S * 1.38, b_hanafi * 0.42)
+    max_y = max(S * 1.42, b_hanafi * 0.42)
 
     # Bidang tanah
     fig.add_trace(go.Scatter(
@@ -144,7 +144,7 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
     ))
 
     # Garis vertikal zenith ke atas dari puncak gnomon (0, S)
-    y_zenith_top = min(S * 1.30, max_y * 0.94)
+    y_zenith_top = min(S * 1.32, max_y * 0.94)
     fig.add_trace(go.Scatter(
         x=[0, 0], y=[S, y_zenith_top],
         mode="lines", line=dict(color="#cbd5e1", width=1.5, dash="dot"),
@@ -176,7 +176,7 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         ))
         fig.add_annotation(
             x=vx[-1], y=vy[-1],
-            ax=max(0.28 * S, b0 * 0.8), ay=S + 0.14 * S,
+            ax=max(0.45 * S, b0 * 1.1 + 0.25 * S), ay=S + 0.18 * S,
             text=f"z0={z0_deg:.1f}°",
             showarrow=True, arrowhead=2, arrowsize=0.8, arrowwidth=1.2, arrowcolor="#38bdf8",
             font=dict(color="#38bdf8", size=11),
@@ -515,27 +515,36 @@ with tab_ashar:
         )
         st.caption("Ilustrasi Geometri Bayangan (S = 1.00 m): Menghubungkan jarak zenith kulminasi (z0), panjang bayangan (B0, B_J, B_H), dan sudut elevasi matahari (h_ashar).")
 
-        with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Lengkap & Contoh Angka)"):
+        with st.expander("🔍 Proses Penurunan Rumus Tinggi Matahari Ashar (Langkah 1–3)"):
             st.markdown(
-                f"**Acuan Parameter Aktif:**\n"
-                f"- Lintang $L = {L_deg:.2f}^\\circ$, Deklinasi $d = {d_deg:.4f}^\\circ$, tinggi tongkat $S = {S_contoh:.2f}\\text{{ m}}$\n"
+                f"**Acuan Parameter & Nilai Awal:**\n"
+                f"- Lintang $L = {L_deg:.2f}^\\circ$ dan deklinasi $d = {d_deg:.4f}^\\circ$, sehingga jarak zenith kulminasi $z_0 = |L - d| = {jarak_zenith_kulminasi:.4f}^\\circ$\n"
+                f"- Tinggi tongkat / gnomon tegak $S = {S_contoh:.2f}\\text{{ m}}$\n"
                 f"- Kulminasi: `{format_jam_wib(meridian_pass_jam)}`, *Ikhtiyath*: `{ikhtiyath_menit}` menit"
             )
 
-            st.markdown("**1. Panjang Bayangan Saat Kulminasi ($B_0$)**")
-            st.latex(f"z_0 = |L - d| = |{L_deg:.2f}^\\circ - ({d_deg:.4f}^\\circ)| = {jarak_zenith_kulminasi:.4f}^\\circ")
+            st.markdown("**Langkah 1: Panjang Bayangan Saat Kulminasi ($B_0$)**")
+            st.markdown(
+                "- **Posisi sudut:** Sudut $z_0 = |L - d|$ diukur di **puncak tongkat** (antara garis vertikal/zenith dan sinar matahari saat kulminasi atas).\n"
+                "- **Hubungan trigonometri:** Sisi di depan sudut $z_0$ adalah bayangan kulminasi ($B_0$) dan sisi di sampingnya adalah tinggi tongkat ($S$), sehingga $\\tan(z_0) = \\frac{B_0}{S}$."
+            )
             st.latex(r"B_0 = S \cdot \tan|L - d|")
             st.latex(f"B_0 = {S_contoh:.2f} \\times \\tan({jarak_zenith_kulminasi:.4f}^\\circ) = {b0_contoh:.5f}\\text{{ m}}")
 
-            st.markdown("**2. Panjang Bayangan Total Saat Awal Ashar ($B$)**")
+            st.markdown("**Langkah 2: Panjang Bayangan Total Saat Awal Ashar ($B$)**")
+            st.markdown(
+                "- **Makna syarat bayangan:** Setelah kulminasi, matahari bergerak ke arah barat sehingga bayangan memanjang menjadi bayangan kulminasi ($B_0$) ditambah kelipatan tinggi tongkat ($n \\cdot S$)."
+            )
             st.latex(r"B = n \cdot S + B_0 = S(n + \tan|L - d|)")
             st.markdown(
-                f"- **Jumhur ($n = 1$):** $B = {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
-                f"- **Hanafi ($n = 2$):** $B = {2*S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
+                f"- **Jumhur ($n = 1$):** $B_{{\\text{{jumhur}}}} = {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
+                f"- **Hanafi ($n = 2$):** $B_{{\\text{{hanafi}}}} = {2*S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
             )
 
-            st.markdown("**3. Konversi Bayangan ke Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
-            st.markdown("Pada segitiga siku-siku dengan tinggi tongkat $S$ (sisi depan) dan bayangan $B$ (sisi samping), $\\tan(h_{\\text{ashar}}) = \\frac{S}{B}$ sehingga $\\cot(h_{\\text{ashar}}) = \\frac{B}{S} = n + \\tan|L - d|$:")
+            st.markdown("**Langkah 3: Konversi Bayangan ke Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
+            st.markdown(
+                "- **Mengapa muncul $\\cot(h_{\\text{ashar}})$?** Sudut tinggi matahari $h_{\\text{ashar}}$ diukur di **ujung bayangan di tanah** (antara bidang datar dan sinar matahari), sehingga $\\tan(h_{\\text{ashar}}) = \\frac{S}{B}$ dan kebalikannya adalah $\\cot(h_{\\text{ashar}}) = \\frac{B}{S} = n + \\tan|L - d|$."
+            )
             st.latex(r"h_{\text{ashar}} = \arctan\left(\frac{1}{n + \tan|L - d|}\right)")
             st.markdown(
                 f"- **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_jumhur:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_jumhur:.4f}^\\circ$ (`{format_durasi(t_jumhur)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**\n"
