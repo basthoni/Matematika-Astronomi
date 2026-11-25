@@ -149,26 +149,27 @@ def render_alur_pzm_dan_substitusi(daftar_h_label, L_deg, d_deg):
         sin_h = math.sin(math.radians(h_deg))
         pembilang = sin_h - (sin_L * sin_d)
         cos_t_raw = pembilang / penyebut if abs(penyebut) > 1e-12 else float("nan")
+        durasi_str = format_durasi(math.degrees(math.acos(cos_t_raw))) if abs(cos_t_raw) <= 1.0 else ""
 
         st.markdown(
             f"**Langkah 5 ({label_waktu}): Substitusi $h = {h_deg:.4f}^\\circ$, $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$**"
         )
         st.latex(
-            f"\\begin{aligned}"
-            f"\\cos(t) &= \\frac{{\\sin({h_deg:.4f}^\\circ) - \\sin({L_deg:.2f}^\\circ)\\sin({d_deg:.4f}^\\circ)}}"
-            f"{{\\cos({L_deg:.2f}^\\circ)\\cos({d_deg:.4f}^\\circ)}} \\\\"
-            f"&= \\frac{{{sin_h:+.5f} - ({sin_L:+.5f} \\times {sin_d:+.5f})}}"
-            f"{{{cos_L:.5f} \\times {cos_d:.5f}}}"
-            f"\\end{aligned}"
+            rf"\begin{aligned}"
+            rf"\cos(t) &= \frac{{\sin({h_deg:.4f}^\circ) - \sin({L_deg:.2f}^\circ)\sin({d_deg:.4f}^\circ)}}"
+            rf"{{\cos({L_deg:.2f}^\circ)\cos({d_deg:.4f}^\circ)}} \\"
+            rf"&= \frac{{{sin_h:+.5f} - ({sin_L:+.5f} \times {sin_d:+.5f})}}"
+            rf"{{{cos_L:.5f} \times {cos_d:.5f}}}"
+            rf"\end{aligned}"
         )
 
         if abs(cos_t_raw) <= 1.0:
             t_val = math.degrees(math.acos(cos_t_raw))
             st.latex(
-                f"\\begin{aligned}"
-                f"\\cos(t) &= {cos_t_raw:+.6f} \\\\"
-                f"t &= \\arccos({cos_t_raw:+.6f}) = \\mathbf{{{t_val:.4f}^\\circ}} \\;(\\text{{durasi }} {format_durasi(t_val)})"
-                f"\\end{aligned}"
+                rf"\begin{aligned}"
+                rf"\cos(t) &= {cos_t_raw:+.6f} \\"
+                rf"t &= \arccos({cos_t_raw:+.6f}) = \mathbf{{{t_val:.4f}^\circ}} \;\text{{(durasi {durasi_str})}}"
+                rf"\end{aligned}"
             )
         else:
             st.warning(f"Nilai $\\cos(t) = {cos_t_raw:+.6f}$ berada di luar rentang $[-1, 1]$, sehingga sudut jam riil tidak tercapai pada parameter ini.")
@@ -517,22 +518,22 @@ with tab_kulminasi:
         st.markdown("**1. Koreksi *Equation of Time* ($e$)**")
         st.markdown("Menyesuaikan waktu matahari hakiki (pukul `12:00:00` saat sudut jam $t = 0^\\circ$) menjadi waktu matahari menengah:")
         st.latex(r"\Delta t_{\text{EoT}} = -\frac{e}{60}")
-        st.latex(f"\\Delta t_{{\\text{{EoT}}}} = -\\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\\text{{ jam}}")
+        st.latex(rf"\Delta t_{{\text{{EoT}}}} = -\frac{{{eot_menit:+.2f}}}{{60}} = {koreksi_eot_jam:+.6f}\text{{ jam}}")
         st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_eot_jam)}`**")
 
         st.markdown(f"**2. Koreksi Selisih Bujur Terhadap Acuan (`{bujur_daerah:.0f}° BT`)**")
         st.markdown("Rotasi Bumi menempuh $15^\\circ$ per jam ($1^\\circ = 4$ menit):")
         st.latex(r"\Delta t_{\text{bujur}} = \frac{B_{\text{standar}} - B_{\text{lokasi}}}{15^\circ}")
-        st.latex(f"\\Delta t_{{\\text{{bujur}}}} = \\frac{{{bujur_daerah:.2f}^\\circ - {B_deg:.2f}^\\circ}}{{15^\\circ}} = {koreksi_bujur_jam:+.6f}\\text{{ jam}}")
+        st.latex(rf"\Delta t_{{\text{{bujur}}}} = \frac{{{bujur_daerah:.2f}^\circ - {B_deg:.2f}^\circ}}{{15^\circ}} = {koreksi_bujur_jam:+.6f}\text{{ jam}}")
         st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_bujur_jam)}`** (selisih bujur `{selisih_bujur_deg:+.2f}°`)")
 
         st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
         st.latex(r"T_{\text{kulminasi}} = 12^{\text{j}} + \Delta t_{\text{EoT}} + \Delta t_{\text{bujur}}")
         st.latex(
-            f"\\begin{aligned}"
-            f"T_{{\\text{{kulminasi}}}} &= 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) + ({format_selisih_menit_detik(koreksi_bujur_jam)}) \\\\"
-            f"&= \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
-            f"\\end{aligned}"
+            rf"\begin{aligned}"
+            rf"T_{{\text{{kulminasi}}}} &= 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) + ({format_selisih_menit_detik(koreksi_bujur_jam)}) \\"
+            rf"&= \mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
+            rf"\end{aligned}"
         )
         st.markdown(
             f"- Waktu matahari hakiki di meridian: `12:00:00`\n"
@@ -544,8 +545,8 @@ with tab_kulminasi:
         st.markdown(f"**4. Waktu Zuhur (+ *Ikhtiyath* `{ikhtiyath_menit}` menit)**")
         st.latex(r"T_{\text{zuhur}} = T_{\text{kulminasi}} + \frac{\text{Ikhtiyath}}{60}")
         st.latex(
-            f"T_{{\\text{{zuhur}}}} = {format_jam_wib(meridian_pass_jam)} + (+{ikhtiyath_menit}\\text{{m}}\\ 00\\text{{d}}) "
-            f"= \\mathbf{{{format_jam_wib(zuhur_wib)}}}"
+            rf"T_{{\text{{zuhur}}}} = {format_jam_wib(meridian_pass_jam)} + (+{ikhtiyath_menit}\text{{m}}\ 00\text{{d}}) "
+            rf"= \mathbf{{{format_jam_wib(zuhur_wib)}}}"
         )
         st.markdown(
             f"- Kulminasi ($T_{{\\text{{kulminasi}}}}$): `{format_jam_wib(meridian_pass_jam)}`\n"
@@ -651,7 +652,7 @@ with tab_ashar:
                 "- **Hubungan trigonometri:** Sisi di depan sudut $z_0$ adalah bayangan kulminasi ($B_0$) dan sisi di sampingnya adalah tinggi tongkat ($S$), sehingga $\\tan(z_0) = \\frac{B_0}{S}$."
             )
             st.latex(r"B_0 = S \cdot \tan|L - d|")
-            st.latex(f"B_0 = {S_contoh:.2f} \\times \\tan({jarak_zenith_kulminasi:.4f}^\\circ) = {b0_contoh:.5f}\\text{{ m}}")
+            st.latex(rf"B_0 = {S_contoh:.2f} \times \tan({jarak_zenith_kulminasi:.4f}^\circ) = {b0_contoh:.5f}\text{{ m}}")
 
             st.markdown("**Langkah 2: Panjang Bayangan Total Saat Awal Ashar ($B$)**")
             st.markdown(
