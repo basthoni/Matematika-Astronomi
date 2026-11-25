@@ -155,21 +155,19 @@ def render_alur_pzm_dan_substitusi(daftar_h_label, L_deg, d_deg):
             f"**Langkah 5 ({label_waktu}): Substitusi $h = {h_deg:.4f}^\\circ$, $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$**"
         )
         st.latex(
-            rf"\begin{aligned}"
-            rf"\cos(t) &= \frac{{\sin({h_deg:.4f}^\circ) - \sin({L_deg:.2f}^\circ)\sin({d_deg:.4f}^\circ)}}"
-            rf"{{\cos({L_deg:.2f}^\circ)\cos({d_deg:.4f}^\circ)}} \\"
-            rf"&= \frac{{{sin_h:+.5f} - ({sin_L:+.5f} \times {sin_d:+.5f})}}"
-            rf"{{{cos_L:.5f} \times {cos_d:.5f}}}"
-            rf"\end{aligned}"
+            r"\begin{aligned}"
+            + rf"\cos(t) &= \frac{{\sin({h_deg:.4f}^\circ) - \sin({L_deg:.2f}^\circ)\sin({d_deg:.4f}^\circ)}}{{\cos({L_deg:.2f}^\circ)\cos({d_deg:.4f}^\circ)}} \\"
+            + rf"&= \frac{{{sin_h:+.5f} - ({sin_L:+.5f} \times {sin_d:+.5f})}}{{{cos_L:.5f} \times {cos_d:.5f}}}"
+            + r"\end{aligned}"
         )
 
         if abs(cos_t_raw) <= 1.0:
             t_val = math.degrees(math.acos(cos_t_raw))
             st.latex(
-                rf"\begin{aligned}"
-                rf"\cos(t) &= {cos_t_raw:+.6f} \\"
-                rf"t &= \arccos({cos_t_raw:+.6f}) = \mathbf{{{t_val:.4f}^\circ}} \;\text{{(durasi {durasi_str})}}"
-                rf"\end{aligned}"
+                r"\begin{aligned}"
+                + rf"\cos(t) &= {cos_t_raw:+.6f} \\"
+                + rf"t &= \arccos({cos_t_raw:+.6f}) = \mathbf{{{t_val:.4f}^\circ}} \;\text{{(durasi {durasi_str})}}"
+                + r"\end{aligned}"
             )
         else:
             st.warning(f"Nilai $\\cos(t) = {cos_t_raw:+.6f}$ berada di luar rentang $[-1, 1]$, sehingga sudut jam riil tidak tercapai pada parameter ini.")
@@ -530,10 +528,10 @@ with tab_kulminasi:
         st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
         st.latex(r"T_{\text{kulminasi}} = 12^{\text{j}} + \Delta t_{\text{EoT}} + \Delta t_{\text{bujur}}")
         st.latex(
-            rf"\begin{aligned}"
-            rf"T_{{\text{{kulminasi}}}} &= 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) + ({format_selisih_menit_detik(koreksi_bujur_jam)}) \\"
-            rf"&= \mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
-            rf"\end{aligned}"
+            r"\begin{aligned}"
+            + rf"T_{{\text{{kulminasi}}}} &= 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) + ({format_selisih_menit_detik(koreksi_bujur_jam)}) \\"
+            + rf"&= \mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
+            + r"\end{aligned}"
         )
         st.markdown(
             f"- Waktu matahari hakiki di meridian: `12:00:00`\n"
