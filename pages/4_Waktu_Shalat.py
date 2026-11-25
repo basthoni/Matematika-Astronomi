@@ -125,12 +125,12 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
     """Diagram teknis 2D perbandingan panjang bayangan (B0, Jumhur, Hanafi) & tinggi matahari (h_ashar)."""
     fig = go.Figure()
 
-    max_x = max(b_hanafi * 1.18, S * 2.2)
-    max_y = max(S * 1.45, b_hanafi * 0.45)
+    max_x = max(b_hanafi * 1.15, S * 2.2)
+    max_y = max(S * 1.38, b_hanafi * 0.42)
 
     # Bidang tanah
     fig.add_trace(go.Scatter(
-        x=[-0.25 * S, max_x], y=[0, 0],
+        x=[-0.35 * S, max_x], y=[0, 0],
         mode="lines", line=dict(color="#94a3b8", width=3),
         name="Bidang Datar (Tanah)"
     ))
@@ -144,14 +144,14 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
     ))
 
     # Garis vertikal zenith ke atas dari puncak gnomon (0, S)
-    y_zenith_top = min(S * 1.35, max_y * 0.95)
+    y_zenith_top = min(S * 1.30, max_y * 0.94)
     fig.add_trace(go.Scatter(
         x=[0, 0], y=[S, y_zenith_top],
         mode="lines", line=dict(color="#cbd5e1", width=1.5, dash="dot"),
         name="Arah Vertikal / Zenith"
     ))
 
-    # 1. Bayangan Kulminasi B0 (di tanah dari 0 ke b0) & sinar kulminasi dari (b0, 0) ke puncak gnomon (0, S)
+    # 1. Bayangan Kulminasi B0 & sinar kulminasi
     fig.add_trace(go.Scatter(
         x=[0, b0], y=[0, 0],
         mode="lines+markers", line=dict(color="#38bdf8", width=6),
@@ -164,11 +164,9 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         name=f"Sinar Kulminasi (z0 = {z0_deg:.2f}°)"
     ))
 
-    # Busur sudut z0 di puncak gnomon (0, S) antara vertikal (+y) dan sinar kulminasi
     if z0_deg > 0.5:
-        r_z0 = min(0.32 * S, b0 * 0.65 if b0 > 0.05 else 0.25 * S)
+        r_z0 = min(0.26 * S, max(0.12 * S, b0 * 0.55))
         ang_z0 = np.linspace(0, math.radians(min(z0_deg, 75.0)), 30)
-        # Vertikal adalah sudut 90 deg dari sumbu +x; sinar kulminasi menuju (b0, 0) dari (0, S)
         vx = r_z0 * np.sin(ang_z0)
         vy = S - r_z0 * np.cos(ang_z0)
         fig.add_trace(go.Scatter(
@@ -177,9 +175,12 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
             showlegend=False
         ))
         fig.add_annotation(
-            x=vx[-1] + 0.04 * S, y=vy[-1],
-            text=f"z0={z0_deg:.1f}°", showarrow=False,
-            font=dict(color="#38bdf8", size=11)
+            x=vx[-1], y=vy[-1],
+            ax=max(0.28 * S, b0 * 0.8), ay=S + 0.14 * S,
+            text=f"z0={z0_deg:.1f}°",
+            showarrow=True, arrowhead=2, arrowsize=0.8, arrowwidth=1.2, arrowcolor="#38bdf8",
+            font=dict(color="#38bdf8", size=11),
+            bgcolor="rgba(15,23,42,0.85)", borderpad=2
         )
 
     # 2. Bayangan Jumhur (total b_jumhur) & sinar dari (b_jumhur, 0) ke (0, S)
@@ -195,8 +196,7 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         showlegend=False
     ))
 
-    # Busur sudut elevasi h_jumhur di ujung bayangan Jumhur (b_jumhur, 0)
-    r_hj = min(0.35 * S, 0.35 * (b_jumhur - b0) if (b_jumhur - b0) > 0.1 else 0.25 * S)
+    r_hj = min(0.28 * S, 0.35 * max(b_jumhur - b0, 0.25 * S))
     ang_hj = np.linspace(0, math.radians(h_jumhur_deg), 30)
     fig.add_trace(go.Scatter(
         x=b_jumhur - r_hj * np.cos(ang_hj),
@@ -205,9 +205,12 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         showlegend=False
     ))
     fig.add_annotation(
-        x=b_jumhur - r_hj * 1.15, y=r_hj * 0.55,
-        text=f"h_J={h_jumhur_deg:.1f}°", showarrow=False,
-        font=dict(color="#fb923c", size=11)
+        x=b_jumhur - r_hj * 0.85, y=r_hj * 0.45,
+        ax=b_jumhur - 0.12 * S, ay=0.22 * S,
+        text=f"h_J={h_jumhur_deg:.1f}°",
+        showarrow=True, arrowhead=2, arrowsize=0.8, arrowwidth=1.2, arrowcolor="#fb923c",
+        font=dict(color="#fb923c", size=11),
+        bgcolor="rgba(15,23,42,0.85)", borderpad=2
     )
 
     # 3. Bayangan Hanafi (total b_hanafi) & sinar dari (b_hanafi, 0) ke (0, S)
@@ -223,8 +226,7 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         showlegend=False
     ))
 
-    # Busur sudut elevasi h_hanafi di ujung bayangan Hanafi (b_hanafi, 0)
-    r_hh = min(0.32 * S, 0.35 * (b_hanafi - b_jumhur) if (b_hanafi - b_jumhur) > 0.1 else 0.22 * S)
+    r_hh = min(0.28 * S, 0.35 * max(b_hanafi - b_jumhur, 0.25 * S))
     ang_hh = np.linspace(0, math.radians(h_hanafi_deg), 30)
     fig.add_trace(go.Scatter(
         x=b_hanafi - r_hh * np.cos(ang_hh),
@@ -233,25 +235,45 @@ def plot_geometri_bayangan_ashar(S, z0_deg, b0, b_jumhur, b_hanafi, h_jumhur_deg
         showlegend=False
     ))
     fig.add_annotation(
-        x=b_hanafi - r_hh * 1.25, y=r_hh * 0.5,
-        text=f"h_H={h_hanafi_deg:.1f}°", showarrow=False,
-        font=dict(color="#f87171", size=11)
+        x=b_hanafi - r_hh * 0.85, y=r_hh * 0.45,
+        ax=b_hanafi - 0.05 * S, ay=0.16 * S,
+        text=f"h_H={h_hanafi_deg:.1f}°",
+        showarrow=True, arrowhead=2, arrowsize=0.8, arrowwidth=1.2, arrowcolor="#f87171",
+        font=dict(color="#f87171", size=11),
+        bgcolor="rgba(15,23,42,0.85)", borderpad=2
     )
 
-    # Label tinggi tongkat S
+    # Label tinggi tongkat S di sisi kiri luar tongkat
     fig.add_annotation(
-        x=-0.05 * S, y=0.5 * S,
+        x=-0.04 * S, y=0.5 * S,
         text=f"S={S:.1f}m", showarrow=False, xanchor="right",
-        font=dict(color="#f8fafc", size=12)
+        font=dict(color="#f8fafc", size=11),
+        bgcolor="rgba(15,23,42,0.75)", borderpad=2
     )
 
     fig.update_layout(
-        title="Geometri Bayangan Gnomon & Sudut Tinggi Matahari (h_ashar)",
-        xaxis=dict(title="Panjang Bayangan di Tanah [m]", range=[-0.25 * S, max_x], zeroline=False),
-        yaxis=dict(title="Ketinggian [m]", range=[-0.12 * S, max_y], scaleanchor="x", scaleratio=1, zeroline=False),
-        height=390,
-        margin=dict(l=10, r=10, t=45, b=10),
-        legend=dict(orientation="h", yanchor="bottom", y=-0.32, xanchor="center", x=0.5)
+        xaxis=dict(
+            title=dict(text="Panjang Bayangan di Tanah [m]", standoff=10),
+            range=[-0.35 * S, max_x],
+            zeroline=False
+        ),
+        yaxis=dict(
+            title="Ketinggian [m]",
+            range=[-0.12 * S, max_y],
+            scaleanchor="x",
+            scaleratio=1,
+            zeroline=False
+        ),
+        height=450,
+        margin=dict(l=10, r=10, t=15, b=115),
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.22,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=11)
+        )
     )
     return fig
 
@@ -483,6 +505,7 @@ with tab_ashar:
         b_jumhur_contoh = S_contoh + b0_contoh
         b_hanafi_contoh = 2.0 * S_contoh + b0_contoh
 
+        st.markdown("**Geometri Bayangan Gnomon & Sudut Tinggi Matahari ($h_{\\text{ashar}}$)**")
         st.plotly_chart(
             plot_geometri_bayangan_ashar(
                 S_contoh, jarak_zenith_kulminasi, b0_contoh,
