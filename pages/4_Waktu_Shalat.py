@@ -297,7 +297,8 @@ def plot_perbandingan_3d(L_deg, titik_list):
     fig.add_trace(go.Scatter3d(x=-np.sin(L_rad)*np.sin(theta), y=np.cos(theta), z=np.cos(L_rad)*np.sin(theta),
                                mode='lines', line=dict(color='blue', width=3, dash='dash'), name='Ekuator Langit (Eq)'))
 
-    fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[1], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith'))
+    Z = np.array([0.0, 0.0, 1.0])
+    fig.add_trace(go.Scatter3d(x=[Z[0]], y=[Z[1]], z=[Z[2]], mode='markers+text', marker=dict(color='lime', size=5), text=['Zenith (Z)'], textposition='top center', name='Zenith (Z)'))
     fig.add_trace(go.Scatter3d(x=[1, 0, -1, 0], y=[0, 1, 0, -1], z=[0, 0, 0, 0], mode='text', text=['Utara', 'Timur', 'Selatan', 'Barat'], textposition='bottom center', name='Mata Angin'))
 
     if L_deg >= 0:
@@ -307,6 +308,15 @@ def plot_perbandingan_3d(L_deg, titik_list):
         P = np.array([-np.cos(L_rad), 0, -np.sin(L_rad)])
         pole_name = "SCP (P)"
     fig.add_trace(go.Scatter3d(x=[P[0]], y=[P[1]], z=[P[2]], mode='markers+text', marker=dict(color='red', size=6), text=[pole_name], textposition='top left', name='Kutub (P)'))
+
+    # Sisi dasar segitiga bola: busur P - Z (komplemen lintang 90° - L)
+    s_pz = slerp(P, Z)
+    fig.add_trace(go.Scatter3d(
+        x=s_pz[:, 0], y=s_pz[:, 1], z=s_pz[:, 2],
+        mode='lines',
+        line=dict(color='hotpink', width=4),
+        name='Busur PZ (90° - L)'
+    ))
 
     for item in titik_list:
         if item["h"] is None or item["A"] is None:
@@ -322,11 +332,20 @@ def plot_perbandingan_3d(L_deg, titik_list):
             textposition='middle left',
             name=item["label"]
         ))
+        # Sisi PM (jarak kutub 90° - d)
         s_pm = slerp(P, M)
         fig.add_trace(go.Scatter3d(
             x=s_pm[:,0], y=s_pm[:,1], z=s_pm[:,2],
             mode='lines',
             line=dict(color=item["color"], width=3, dash='dot'),
+            showlegend=False
+        ))
+        # Sisi ZM (jarak zenith z = 90° - h) untuk melengkapi segitiga bola P-Z-M
+        s_zm = slerp(Z, M)
+        fig.add_trace(go.Scatter3d(
+            x=s_zm[:, 0], y=s_zm[:, 1], z=s_zm[:, 2],
+            mode='lines',
+            line=dict(color=item["color"], width=2.5, dash='dash'),
             showlegend=False
         ))
 
@@ -467,7 +486,7 @@ with tab_kulminasi:
             }
         ]
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_kulminasi), use_container_width=True)
-        st.caption("Visualisasi 3D: Posisi Matahari saat melintasi meridian lokal (kulminasi atas) terhadap Horizon dan Ekuator Langit.")
+        st.caption("Visualisasi 3D: Segitiga bola P–Z–M saat Matahari melintasi meridian lokal (kulminasi atas) terhadap Horizon dan Ekuator Langit.")
 
 # ------------------------------------------
 # TAB 1: ASHAR (2 VERSI)
@@ -543,12 +562,18 @@ with tab_ashar:
 
             st.markdown("**Langkah 2: Panjang Bayangan Total Saat Awal Ashar ($B$)**")
             st.markdown(
-                "- **Makna syarat bayangan:** Setelah kulminasi, matahari bergerak ke arah barat sehingga bayangan memanjang menjadi bayangan kulminasi ($B_0$) ditambah kelipatan tinggi tongkat ($n \\cdot S$)."
+                "- **Makna syarat bayangan:** Setelah kulminasi, matahari bergerak ke arah barat sehingga bayangan memanjang menjadi bayangan kulminasi ($B_0$) ditambah kelipatan tinggi tongkat ($n \\cdot S$). Dengan mensubstitusikan $B_0 = S \\cdot \\tan|L - d|$ lalu memfaktorkan $S$:"
             )
-            st.latex(r"B = n \cdot S + B_0 = S(n + \tan|L - d|)")
+            st.latex(r"""
+            \begin{aligned}
+            B &= n \cdot S + B_0 \\
+              &= n \cdot S + S \cdot \tan|L - d| \\
+              &= S\bigl(n + \tan|L - d|\bigr)
+            \end{aligned}
+            """)
             st.markdown(
-                f"- **Jumhur ($n = 1$):** $B_{{\\text{{jumhur}}}} = {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
-                f"- **Hanafi ($n = 2$):** $B_{{\\text{{hanafi}}}} = {2*S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
+                f"- **Jumhur ($n = 1$):** $B_{{\\text{{jumhur}}}} = 1 \\times {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_jumhur_contoh:.5f}\\text{{ m}}}}$\n"
+                f"- **Hanafi ($n = 2$):** $B_{{\\text{{hanafi}}}} = 2 \\times {S_contoh:.2f} + {b0_contoh:.5f} = \\mathbf{{{b_hanafi_contoh:.5f}\\text{{ m}}}}$"
             )
 
             st.markdown("**Langkah 3: Konversi Bayangan ke Tinggi Matahari ($h_{\\text{ashar}}$), Sudut Jam ($t$) & Jam**")
@@ -570,7 +595,7 @@ with tab_ashar:
             {"label": "Maghrib (Ufuk)", "h": h_maghrib_syuruq, "A": hitung_azimuth_matahari(L_deg, d_deg, h_maghrib_syuruq, True), "color": "purple"}
         ]
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_ashar), use_container_width=True)
-        st.caption("Visualisasi 3D Bola Langit: Posisi matahari di langit barat antara Ashar Jumhur (oranye) dan Ashar Hanafi (merah).")
+        st.caption("Visualisasi 3D Bola Langit: Segitiga bola P–Z–M untuk posisi matahari di langit barat antara Ashar Jumhur (oranye) dan Ashar Hanafi (merah).")
 
 # ------------------------------------------
 # TAB 2: SUBUH (3 VERSI)
@@ -648,7 +673,7 @@ with tab_subuh:
 
     with col_s2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_subuh), use_container_width=True)
-        st.caption("Visualisasi 3D: Posisi matahari di bawah ufuk Timur pada kedalaman -20°, -18°, -15°, hingga saat terbit (Syuruq).")
+        st.caption("Visualisasi 3D: Segitiga bola P–Z–M untuk posisi matahari di bawah ufuk Timur pada kedalaman -20°, -18°, -15°, hingga saat terbit (Syuruq).")
 
 # ------------------------------------------
 # TAB 3: ISYA (3 VERSI)
@@ -718,7 +743,7 @@ with tab_isya:
 
     with col_i2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_isya), use_container_width=True)
-        st.caption("Visualisasi 3D: Pergerakan matahari turun di bawah ufuk Barat mulai dari Maghrib hingga kedalaman Isya -15°, -17°, dan -18°.")
+        st.caption("Visualisasi 3D: Segitiga bola P–Z–M untuk pergerakan matahari turun di bawah ufuk Barat mulai dari Maghrib hingga kedalaman Isya -15°, -17°, dan -18°.")
 
 # ------------------------------------------
 # TAB 4: REKAP JADWAL, EKSPERIMEN & KUNCI TERKUNCI
