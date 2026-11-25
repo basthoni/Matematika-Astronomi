@@ -476,6 +476,68 @@ with tab_kulminasi:
             f"- Tinggi maksimum matahari: $h_{{\\text{{maks}}}} = 90^\\circ - z_0 = {h_kulminasi:.4f}^\\circ$"
         )
 
+        with st.expander("📐 Penurunan Lengkap Rumus Sudut Jam cos(t) (Segitiga Bola P–Z–M)"):
+            sin_h_k = math.sin(math.radians(h_kulminasi))
+            sin_L = math.sin(math.radians(L_deg))
+            sin_d = math.sin(math.radians(d_deg))
+            cos_L = math.cos(math.radians(L_deg))
+            cos_d = math.cos(math.radians(d_deg))
+            cos_t_k = (sin_h_k - sin_L * sin_d) / (cos_L * cos_d)
+            cos_t_k_clip = float(np.clip(cos_t_k, -1.0, 1.0))
+            t_k_deg = math.degrees(math.acos(cos_t_k_clip))
+
+            st.markdown(
+                "**Rujukan Fondasi Utama:** Rumus $\\cos(t)$ yang dipakai pada perhitungan **Subuh**, **Ashar**, dan **Isya** adalah rumus tunggal yang berasal dari **Aturan Kosinus Sisi pada Segitiga Bola P–Z–M** (Kutub langit $P$, *Zenith* $Z$, dan posisi Matahari $M$)."
+            )
+
+            st.markdown("**Langkah 1: Identifikasi Tiga Titik & Tiga Sisi Segitiga Bola P–Z–M**")
+            st.markdown(
+                "- **$P$ (Kutub Langit):** Kutub Utara Langit (*NCP*, $L > 0^\\circ$) atau Kutub Selatan Langit (*SCP*, $L < 0^\\circ$).\n"
+                "- **$Z$ (*Zenith*):** Titik puncak tepat di atas kepala pengamat.\n"
+                "- **$M$ (Matahari):** Posisi pusat Matahari pada saat ketinggian $h$.\n"
+                "- **Sudut di Kutub ($\\angle ZPM$):** Sudut jam matahari (**$t$**), diukur dari meridian pengamat ke lingkaran jam Matahari.\n"
+                "- **Panjang ketiga sisi busur segitiga bola:**\n"
+                "  - Sisi $PZ = 90^\\circ - L$ (komplemen lintang tempat $L$)\n"
+                "  - Sisi $PM = 90^\\circ - d$ (komplemen deklinasi $d$)\n"
+                "  - Sisi $ZM = z = 90^\\circ - h$ (jarak *zenith*, komplemen tinggi matahari $h$)"
+            )
+
+            st.markdown("**Langkah 2: Aturan Kosinus Sisi Terhadap Sisi $ZM$**")
+            st.latex(r"\cos(ZM) = \cos(PZ)\cos(PM) + \sin(PZ)\sin(PM)\cos(t)")
+
+            st.markdown("**Langkah 3: Substitusi Sisi $ZM$, $PZ$, dan $PM$ dengan $h$, $L$, dan $d$**")
+            st.markdown(
+                "Menggunakan identitas sudut berpenyiku ($\\cos(90^\\circ - \\theta) = \\sin\\theta$ dan $\\sin(90^\\circ - \\theta) = \\cos\\theta$):"
+            )
+            st.latex(r"""
+            \begin{aligned}
+            \cos(90^\circ - h) &= \cos(90^\circ - L)\cos(90^\circ - d) + \sin(90^\circ - L)\sin(90^\circ - d)\cos(t) \\
+            \sin(h) &= \sin(L)\sin(d) + \cos(L)\cos(d)\cos(t)
+            \end{aligned}
+            """)
+
+            st.markdown("**Langkah 4: Isolasi $\\cos(t)$ dan Sudut Jam $t$**")
+            st.latex(r"""
+            \begin{aligned}
+            \sin(h) - \sin(L)\sin(d) &= \cos(L)\cos(d)\cos(t) \\
+            \cos(t) &= \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)} \\
+            t &= \arccos\left(\frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}\right)
+            \end{aligned}
+            """)
+
+            st.markdown(
+                f"**Contoh Substitusi Nilai Aktif (saat kulminasi $h = {h_kulminasi:.4f}^\\circ$, $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$):**"
+            )
+            st.latex(
+                f"\\cos(t) = \\frac{{\\sin({h_kulminasi:.2f}^\\circ) - \\sin({L_deg:.2f}^\\circ)\\sin({d_deg:.2f}^\\circ)}}"
+                f"{{\\cos({L_deg:.2f}^\\circ)\\cos({d_deg:.2f}^\\circ)}} "
+                f"= \\frac{{{sin_h_k:+.5f} - ({sin_L:+.5f} \\times {sin_d:+.5f})}}"
+                f"{{{cos_L:.5f} \\times {cos_d:.5f}}} = {cos_t_k:+.6f} \\Rightarrow t = {t_k_deg:.4f}^\\circ"
+            )
+            st.markdown(
+                "**Cara memakai di waktu shalat lain:** Cukup ganti nilai **$h$** sesuai kriteria masing-masing (misal $h = h_{\\text{ashar}}$ untuk Ashar, $h = -20^\\circ / -18^\\circ / -15^\\circ$ untuk Subuh, atau $h = -18^\\circ / -17^\\circ / -15^\\circ$ untuk Isya), lalu ubah $t$ menjadi jam dengan membagi $15^\\circ$ per jam ($\\Delta T = t / 15^\\circ$)."
+            )
+
     with col_k2:
         titik_kulminasi = [
             {
@@ -585,7 +647,7 @@ with tab_ashar:
                 f"- **Jumhur ($n = 1$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_jumhur:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_jumhur:.4f}^\\circ$ (`{format_durasi(t_jumhur)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_jumhur)}`**\n"
                 f"- **Hanafi ($n = 2$):** $h_{{\\text{{ashar}}}} = \\mathbf{{{h_ashar_hanafi:.4f}^\\circ}}$ $\\rightarrow$ $t = {t_hanafi:.4f}^\\circ$ (`{format_durasi(t_hanafi)}` setelah kulminasi) $\\rightarrow$ **Jam Ashar = `{format_jam_wib(wib_hanafi)}`**"
             )
-            st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam bola langit:")
+            st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam bola langit (penurunan penuh rumus $\\cos(t)$ dari segitiga bola P–Z–M dapat dirujuk di **Tab 0: Kulminasi & Zuhur**):")
             st.latex(r"\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
     with col_a2:
@@ -665,6 +727,7 @@ with tab_subuh:
             st.latex(r"z = 90^\circ - h")
 
             st.markdown("**2. Rumus Sudut Jam Subuh**")
+            st.markdown("*(Penurunan penuh Aturan Kosinus segitiga bola P–Z–M dapat dirujuk di **Tab 0: Kulminasi & Zuhur**.)*")
             st.latex(r"\cos(t_{\text{subuh}}) = \frac{\sin(h_{\text{subuh}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
             st.markdown("**3. Pengurangan terhadap Waktu Kulminasi**")
@@ -735,6 +798,7 @@ with tab_isya:
 
         with st.expander("🔍 Proses Penurunan Rumus Waktu Isya"):
             st.markdown("**1. Simetri Senja Astronomis di Ufuk Barat**")
+            st.markdown("*(Penurunan penuh Aturan Kosinus segitiga bola P–Z–M dapat dirujuk di **Tab 0: Kulminasi & Zuhur**.)*")
             st.latex(r"\cos(t_{\text{isya}}) = \frac{\sin(h_{\text{isya}}) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
             st.markdown("**2. Penambahan terhadap Waktu Kulminasi**")
