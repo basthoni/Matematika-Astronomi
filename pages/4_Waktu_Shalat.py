@@ -427,16 +427,26 @@ with tab_kulminasi:
         st.markdown(f"Setara dengan: **`{format_selisih_menit_detik(koreksi_bujur_jam)}`** (selisih bujur `{selisih_bujur_deg:+.2f}°`)")
 
         st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
+        st.latex(r"T_{\text{kulminasi}} = 12^{\text{j}} + \Delta t_{\text{EoT}} + \Delta t_{\text{bujur}}")
+        st.latex(
+            f"T_{{\\text{{kulminasi}}}} = 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) "
+            f"+ ({format_selisih_menit_detik(koreksi_bujur_jam)}) = \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
+        )
         st.markdown(
             f"- Waktu matahari hakiki di meridian: `12:00:00`\n"
-            f"- Koreksi EoT: `{format_selisih_menit_detik(koreksi_eot_jam)}`\n"
-            f"- Koreksi bujur: `{format_selisih_menit_detik(koreksi_bujur_jam)}`\n"
+            f"- Koreksi EoT ($\\Delta t_{{\\text{{EoT}}}}$): `{format_selisih_menit_detik(koreksi_eot_jam)}`\n"
+            f"- Koreksi bujur ($\\Delta t_{{\\text{{bujur}}}}$): `{format_selisih_menit_detik(koreksi_bujur_jam)}`\n"
             f"- **Hasil Kulminasi:** **`{format_jam_wib(meridian_pass_jam)}`**"
         )
 
         st.markdown(f"**4. Waktu Zuhur (+ *Ikhtiyath* `{ikhtiyath_menit}` menit)**")
+        st.latex(r"T_{\text{zuhur}} = T_{\text{kulminasi}} + \frac{\text{Ikhtiyath}}{60}")
+        st.latex(
+            f"T_{{\\text{{zuhur}}}} = {format_jam_wib(meridian_pass_jam)} + (+{ikhtiyath_menit}\\text{{m}}\\ 00\\text{{d}}) "
+            f"= \\mathbf{{{format_jam_wib(zuhur_wib)}}}"
+        )
         st.markdown(
-            f"- Kulminasi: `{format_jam_wib(meridian_pass_jam)}`\n"
+            f"- Kulminasi ($T_{{\\text{{kulminasi}}}}$): `{format_jam_wib(meridian_pass_jam)}`\n"
             f"- Tambahan *ikhtiyath*: `+{ikhtiyath_menit}m 00d`\n"
             f"- **Hasil Zuhur:** **`{format_jam_wib(zuhur_wib)}`**"
         )
