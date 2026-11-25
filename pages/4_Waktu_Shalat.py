@@ -100,40 +100,78 @@ def format_selisih_menit_detik(jam_desimal):
     detik = total_detik % 60
     return f"{tanda}{menit}m {detik:02d}d"
 
-def render_blok_substitusi_cos_t(label_waktu, h_deg, L_deg, d_deg):
-    """Menampilkan alur penurunan & substitusi angka rumus cos(t) untuk satu nilai h tertentu."""
-    sin_h = math.sin(math.radians(h_deg))
+def render_alur_pzm_dan_substitusi(daftar_h_label, L_deg, d_deg):
+    """Menampilkan alur penuh Aturan Kosinus segitiga bola P-Z-M + substitusi angka untuk tiap h."""
+    st.markdown("**Langkah 1: Identifikasi Tiga Titik & Tiga Sisi Segitiga Bola P–Z–M**")
+    st.markdown(
+        "- **$P$ (Kutub Langit):** Kutub Utara Langit (*NCP*, $L > 0^\\circ$) atau Kutub Selatan Langit (*SCP*, $L < 0^\\circ$).\n"
+        "- **$Z$ (*Zenith*):** Titik puncak tepat di atas kepala pengamat.\n"
+        "- **$M$ (Matahari):** Posisi pusat Matahari pada ketinggian $h$ yang ditinjau.\n"
+        "- **Sudut di Kutub ($\\angle ZPM$):** Sudut jam matahari (**$t$**), diukur dari meridian pengamat ke lingkaran jam Matahari.\n"
+        "- **Panjang ketiga sisi busur segitiga bola:**\n"
+        "  - Sisi $PZ = 90^\\circ - L$ (komplemen lintang tempat $L$)\n"
+        "  - Sisi $PM = 90^\\circ - d$ (komplemen deklinasi $d$)\n"
+        "  - Sisi $ZM = z = 90^\\circ - h$ (jarak *zenith*, komplemen tinggi matahari $h$)"
+    )
+
+    st.markdown("**Langkah 2: Aturan Kosinus Sisi Terhadap Sisi $ZM$**")
+    st.latex(r"\cos(ZM) = \cos(PZ)\cos(PM) + \sin(PZ)\sin(PM)\cos(t)")
+
+    st.markdown("**Langkah 3: Substitusi Sisi $ZM$, $PZ$, dan $PM$ dengan $h$, $L$, dan $d$**")
+    st.markdown(
+        "Menggunakan identitas sudut berpenyiku ($\\cos(90^\\circ - \\theta) = \\sin\\theta$ dan $\\sin(90^\\circ - \\theta) = \\cos\\theta$):"
+    )
+    st.latex(r"""
+    \begin{aligned}
+    \cos(90^\circ - h) &= \cos(90^\circ - L)\cos(90^\circ - d) + \sin(90^\circ - L)\sin(90^\circ - d)\cos(t) \\
+    \sin(h) &= \sin(L)\sin(d) + \cos(L)\cos(d)\cos(t)
+    \end{aligned}
+    """)
+
+    st.markdown("**Langkah 4: Isolasi $\\cos(t)$ dan Sudut Jam $t$**")
+    st.latex(r"""
+    \begin{aligned}
+    \sin(h) - \sin(L)\sin(d) &= \cos(L)\cos(d)\cos(t) \\
+    \cos(t) &= \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)} \\
+    t &= \arccos\left(\frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}\right)
+    \end{aligned}
+    """)
+
     sin_L = math.sin(math.radians(L_deg))
     sin_d = math.sin(math.radians(d_deg))
     cos_L = math.cos(math.radians(L_deg))
     cos_d = math.cos(math.radians(d_deg))
     penyebut = cos_L * cos_d
-    pembilang = sin_h - (sin_L * sin_d)
-    cos_t_raw = pembilang / penyebut if abs(penyebut) > 1e-12 else float("nan")
 
-    st.markdown(
-        f"**1. Hubungan Segitiga Bola P–Z–M untuk {label_waktu} ($h = {h_deg:.4f}^\\circ$):**\n"
-        f"- Jarak *zenith* sisi $ZM = 90^\\circ - h = {90.0 - h_deg:.4f}^\\circ$ $\\Rightarrow$ $\\cos(ZM) = \\sin(h)$.\n"
-        f"- *(Penurunan penuh Aturan Kosinus segitiga bola P–Z–M dari awal dapat dilihat di **Tab 0: Kulminasi & Zuhur**.)*"
-    )
-    st.latex(r"\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
+    for idx_h, (label_waktu, h_deg) in enumerate(daftar_h_label):
+        if idx_h > 0:
+            st.markdown("---")
+        sin_h = math.sin(math.radians(h_deg))
+        pembilang = sin_h - (sin_L * sin_d)
+        cos_t_raw = pembilang / penyebut if abs(penyebut) > 1e-12 else float("nan")
 
-    st.markdown("**2. Substitusi Nilai Aktif ($L$, $d$, dan $h$):**")
-    st.latex(
-        f"\\cos(t) = \\frac{{\\sin({h_deg:.4f}^\\circ) - \\sin({L_deg:.2f}^\\circ)\\sin({d_deg:.4f}^\\circ)}}"
-        f"{{\\cos({L_deg:.2f}^\\circ)\\cos({d_deg:.4f}^\\circ)}} "
-        f"= \\frac{{{sin_h:+.5f} - ({sin_L:+.5f} \\times {sin_d:+.5f})}}"
-        f"{{{cos_L:.5f} \\times {cos_d:.5f}}}"
-    )
-
-    if abs(cos_t_raw) <= 1.0:
-        t_val = math.degrees(math.acos(cos_t_raw))
-        st.latex(
-            f"\\cos(t) = {cos_t_raw:+.6f} \\implies t = \\arccos({cos_t_raw:+.6f}) = \\mathbf{{{t_val:.4f}^\\circ}} "
-            f"\\;(\\text{{durasi }} {format_durasi(t_val)})"
+        st.markdown(
+            f"**Langkah 5 ({label_waktu}): Substitusi $h = {h_deg:.4f}^\\circ$, $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$**"
         )
-    else:
-        st.warning(f"Nilai $\\cos(t) = {cos_t_raw:+.6f}$ berada di luar rentang $[-1, 1]$, sehingga sudut jam riil tidak tercapai pada parameter ini.")
+        st.latex(
+            f"\\begin{aligned}"
+            f"\\cos(t) &= \\frac{{\\sin({h_deg:.4f}^\\circ) - \\sin({L_deg:.2f}^\\circ)\\sin({d_deg:.4f}^\\circ)}}"
+            f"{{\\cos({L_deg:.2f}^\\circ)\\cos({d_deg:.4f}^\\circ)}} \\\\"
+            f"&= \\frac{{{sin_h:+.5f} - ({sin_L:+.5f} \\times {sin_d:+.5f})}}"
+            f"{{{cos_L:.5f} \\times {cos_d:.5f}}}"
+            f"\\end{aligned}"
+        )
+
+        if abs(cos_t_raw) <= 1.0:
+            t_val = math.degrees(math.acos(cos_t_raw))
+            st.latex(
+                f"\\begin{aligned}"
+                f"\\cos(t) &= {cos_t_raw:+.6f} \\\\"
+                f"t &= \\arccos({cos_t_raw:+.6f}) = \\mathbf{{{t_val:.4f}^\\circ}} \\;(\\text{{durasi }} {format_durasi(t_val)})"
+                f"\\end{aligned}"
+            )
+        else:
+            st.warning(f"Nilai $\\cos(t) = {cos_t_raw:+.6f}$ berada di luar rentang $[-1, 1]$, sehingga sudut jam riil tidak tercapai pada parameter ini.")
 
 def kirim_ke_gsheet(payload_dict):
     """Mengirim data percobaan mahasiswa ke Google Apps Script Web App jika dikonfigurasi di st.secrets."""
@@ -369,7 +407,7 @@ def plot_perbandingan_3d(L_deg, titik_list):
         ))
 
         # Beri sedikit offset radial saat kulminasi agar busur PM & ZM tidak sepenuhnya tertelan busur PZ
-        is_kulminasi_line = abs(math.sin(A_rad)) < 1e-3 and abs(item["h"] - (90.0 - abs(L_deg - math.degrees(math.asin(np.clip(math.sin(math.radians(item["h"])) , -1, 1)))))) < 1e-6
+        is_kulminasi_line = abs(math.sin(A_rad)) < 1e-3 and abs(item["h"] - (90.0 - abs(L_deg - math.degrees(math.asin(np.clip(math.sin(math.radians(item["h"])), -1, 1)))))) < 1e-6
         offset_pm = 1.015 if is_kulminasi_line else 1.003
         offset_zm = 0.985 if is_kulminasi_line else 1.001
 
@@ -491,8 +529,10 @@ with tab_kulminasi:
         st.markdown("**3. Waktu Kulminasi Atas (*Meridian Pass*)**")
         st.latex(r"T_{\text{kulminasi}} = 12^{\text{j}} + \Delta t_{\text{EoT}} + \Delta t_{\text{bujur}}")
         st.latex(
-            f"T_{{\\text{{kulminasi}}}} = 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) "
-            f"+ ({format_selisih_menit_detik(koreksi_bujur_jam)}) = \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
+            f"\\begin{aligned}"
+            f"T_{{\\text{{kulminasi}}}} &= 12:00:00 + ({format_selisih_menit_detik(koreksi_eot_jam)}) + ({format_selisih_menit_detik(koreksi_bujur_jam)}) \\\\"
+            f"&= \\mathbf{{{format_jam_wib(meridian_pass_jam)}}}"
+            f"\\end{aligned}"
         )
         st.markdown(
             f"- Waktu matahari hakiki di meridian: `12:00:00`\n"
@@ -520,62 +560,10 @@ with tab_kulminasi:
         )
 
         with st.expander("📐 Penurunan Lengkap Rumus Sudut Jam cos(t) (Segitiga Bola P–Z–M)"):
-            sin_h_k = math.sin(math.radians(h_kulminasi))
-            sin_L = math.sin(math.radians(L_deg))
-            sin_d = math.sin(math.radians(d_deg))
-            cos_L = math.cos(math.radians(L_deg))
-            cos_d = math.cos(math.radians(d_deg))
-            cos_t_k = (sin_h_k - sin_L * sin_d) / (cos_L * cos_d)
-            cos_t_k_clip = float(np.clip(cos_t_k, -1.0, 1.0))
-            t_k_deg = math.degrees(math.acos(cos_t_k_clip))
-
-            st.markdown(
-                "**Rujukan Fondasi Utama:** Rumus $\\cos(t)$ yang dipakai pada perhitungan **Subuh**, **Ashar**, dan **Isya** adalah rumus tunggal yang berasal dari **Aturan Kosinus Sisi pada Segitiga Bola P–Z–M** (Kutub langit $P$, *Zenith* $Z$, dan posisi Matahari $M$)."
-            )
-
-            st.markdown("**Langkah 1: Identifikasi Tiga Titik & Tiga Sisi Segitiga Bola P–Z–M**")
-            st.markdown(
-                "- **$P$ (Kutub Langit):** Kutub Utara Langit (*NCP*, $L > 0^\\circ$) atau Kutub Selatan Langit (*SCP*, $L < 0^\\circ$).\n"
-                "- **$Z$ (*Zenith*):** Titik puncak tepat di atas kepala pengamat.\n"
-                "- **$M$ (Matahari):** Posisi pusat Matahari pada saat ketinggian $h$.\n"
-                "- **Sudut di Kutub ($\\angle ZPM$):** Sudut jam matahari (**$t$**), diukur dari meridian pengamat ke lingkaran jam Matahari.\n"
-                "- **Panjang ketiga sisi busur segitiga bola:**\n"
-                "  - Sisi $PZ = 90^\\circ - L$ (komplemen lintang tempat $L$)\n"
-                "  - Sisi $PM = 90^\\circ - d$ (komplemen deklinasi $d$)\n"
-                "  - Sisi $ZM = z = 90^\\circ - h$ (jarak *zenith*, komplemen tinggi matahari $h$)"
-            )
-
-            st.markdown("**Langkah 2: Aturan Kosinus Sisi Terhadap Sisi $ZM$**")
-            st.latex(r"\cos(ZM) = \cos(PZ)\cos(PM) + \sin(PZ)\sin(PM)\cos(t)")
-
-            st.markdown("**Langkah 3: Substitusi Sisi $ZM$, $PZ$, dan $PM$ dengan $h$, $L$, dan $d$**")
-            st.markdown(
-                "Menggunakan identitas sudut berpenyiku ($\\cos(90^\\circ - \\theta) = \\sin\\theta$ dan $\\sin(90^\\circ - \\theta) = \\cos\\theta$):"
-            )
-            st.latex(r"""
-            \begin{aligned}
-            \cos(90^\circ - h) &= \cos(90^\circ - L)\cos(90^\circ - d) + \sin(90^\circ - L)\sin(90^\circ - d)\cos(t) \\
-            \sin(h) &= \sin(L)\sin(d) + \cos(L)\cos(d)\cos(t)
-            \end{aligned}
-            """)
-
-            st.markdown("**Langkah 4: Isolasi $\\cos(t)$ dan Sudut Jam $t$**")
-            st.latex(r"""
-            \begin{aligned}
-            \sin(h) - \sin(L)\sin(d) &= \cos(L)\cos(d)\cos(t) \\
-            \cos(t) &= \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)} \\
-            t &= \arccos\left(\frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}\right)
-            \end{aligned}
-            """)
-
-            st.markdown(
-                f"**Contoh Substitusi Nilai Aktif (saat kulminasi $h = {h_kulminasi:.4f}^\\circ$, $L = {L_deg:.2f}^\\circ$, $d = {d_deg:.4f}^\\circ$):**"
-            )
-            st.latex(
-                f"\\cos(t) = \\frac{{\\sin({h_kulminasi:.2f}^\\circ) - \\sin({L_deg:.2f}^\\circ)\\sin({d_deg:.2f}^\\circ)}}"
-                f"{{\\cos({L_deg:.2f}^\\circ)\\cos({d_deg:.2f}^\\circ)}} "
-                f"= \\frac{{{sin_h_k:+.5f} - ({sin_L:+.5f} \\times {sin_d:+.5f})}}"
-                f"{{{cos_L:.5f} \\times {cos_d:.5f}}} = {cos_t_k:+.6f} \\Rightarrow t = {t_k_deg:.4f}^\\circ"
+            render_alur_pzm_dan_substitusi(
+                [("Kulminasi Atas", h_kulminasi)],
+                L_deg,
+                d_deg
             )
             st.markdown(
                 "**Cara memakai di waktu shalat lain:** Cukup ganti nilai **$h$** sesuai kriteria masing-masing (misal $h = h_{\\text{ashar}}$ untuk Ashar, $h = -20^\\circ / -18^\\circ / -15^\\circ$ untuk Subuh, atau $h = -18^\\circ / -17^\\circ / -15^\\circ$ untuk Isya), lalu ubah $t$ menjadi jam dengan membagi $15^\\circ$ per jam ($\\Delta T = t / 15^\\circ$)."
@@ -693,10 +681,15 @@ with tab_ashar:
             st.markdown("Nilai $h_{\\text{ashar}}$ kemudian disubstitusikan ke rumus sudut jam bola langit:")
             st.latex(r"\cos(t) = \frac{\sin(h) - \sin(L)\sin(d)}{\cos(L)\cos(d)}")
 
-        with st.expander("📐 Penurunan Rumus Sudut Jam cos(t) untuk Waktu Ashar"):
-            render_blok_substitusi_cos_t("Ashar Jumhur", h_ashar_jumhur, L_deg, d_deg)
-            st.markdown("---")
-            render_blok_substitusi_cos_t("Ashar Hanafi", h_ashar_hanafi, L_deg, d_deg)
+        with st.expander("📐 Penurunan Lengkap Rumus Sudut Jam cos(t) (Segitiga Bola P–Z–M)"):
+            render_alur_pzm_dan_substitusi(
+                [
+                    ("Ashar Jumhur", h_ashar_jumhur),
+                    ("Ashar Hanafi", h_ashar_hanafi)
+                ],
+                L_deg,
+                d_deg
+            )
 
     with col_a2:
         titik_ashar = [
@@ -781,12 +774,16 @@ with tab_subuh:
             st.markdown("Karena terjadi sebelum matahari melintasi meridian (sisi timur), sudut jam $t$ **dikurangkan** dari waktu kulminasi:")
             st.latex(r"\text{Waktu Subuh} = \text{Meridian Pass} - \frac{t_{\text{subuh}}}{15^\circ} + \text{Ikhtiyath}")
 
-        with st.expander("📐 Penurunan Rumus Sudut Jam cos(t) untuk Waktu Subuh (-20°, -18°, -15°)"):
-            render_blok_substitusi_cos_t("Subuh Kemenag / MABIMS", -20.0, L_deg, d_deg)
-            st.markdown("---")
-            render_blok_substitusi_cos_t("Subuh Muhammadiyah", -18.0, L_deg, d_deg)
-            st.markdown("---")
-            render_blok_substitusi_cos_t("Subuh ISNA", -15.0, L_deg, d_deg)
+        with st.expander("📐 Penurunan Lengkap Rumus Sudut Jam cos(t) (Segitiga Bola P–Z–M)"):
+            render_alur_pzm_dan_substitusi(
+                [
+                    ("Subuh Kemenag / MABIMS", -20.0),
+                    ("Subuh Muhammadiyah", -18.0),
+                    ("Subuh ISNA", -15.0)
+                ],
+                L_deg,
+                d_deg
+            )
 
     with col_s2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_subuh), use_container_width=True)
@@ -858,12 +855,16 @@ with tab_isya:
             st.markdown("Karena terjadi setelah kulminasi atas (sisi barat), sudut jam $t$ **ditambahkan** ke waktu kulminasi:")
             st.latex(r"\text{Waktu Isya} = \text{Meridian Pass} + \frac{t_{\text{isya}}}{15^\circ} + \text{Ikhtiyath}")
 
-        with st.expander("📐 Penurunan Rumus Sudut Jam cos(t) untuk Waktu Isya (-18°, -17°, -15°)"):
-            render_blok_substitusi_cos_t("Isya Kemenag / MABIMS & Muhammadiyah", -18.0, L_deg, d_deg)
-            st.markdown("---")
-            render_blok_substitusi_cos_t("Isya Moderat", -17.0, L_deg, d_deg)
-            st.markdown("---")
-            render_blok_substitusi_cos_t("Isya ISNA", -15.0, L_deg, d_deg)
+        with st.expander("📐 Penurunan Lengkap Rumus Sudut Jam cos(t) (Segitiga Bola P–Z–M)"):
+            render_alur_pzm_dan_substitusi(
+                [
+                    ("Isya Kemenag / MABIMS & Muhammadiyah", -18.0),
+                    ("Isya Moderat", -17.0),
+                    ("Isya ISNA", -15.0)
+                ],
+                L_deg,
+                d_deg
+            )
 
     with col_i2:
         st.plotly_chart(plot_perbandingan_3d(L_deg, titik_isya), use_container_width=True)
